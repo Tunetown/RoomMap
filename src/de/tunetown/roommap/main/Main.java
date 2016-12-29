@@ -22,11 +22,14 @@ public class Main {
 	/**
 	 * Temporary file (here, the last used data will be saved and reloaded on next startup)
 	 */
-	private static final File TEMP_FILE = new File(System.getProperty("user.home") + File.separator + "SE.tmp");
+	//private static final File TEMP_FILE = new File(System.getProperty("user.home") + File.separator + "SE.tmp");
 	
 	private MainFrame frame;
 	//private Menu menu;
-	private Measurements data;
+	private Measurements measurements;
+	
+	private double frequency = 40;
+	private double viewZ = 0;
 	
 	/**
 	 * Main method
@@ -60,14 +63,15 @@ public class Main {
 	 */
 	private void init() {
 		// Load data
-		JFileChooser j = new JFileChooser();
+		JFileChooser j = new JFileChooser("/Users/tweber/git/RoomMap/testdata");
+		j.setMultiSelectionEnabled(true);
 		int answer = j.showOpenDialog(frame);
 		
 		if (answer == JFileChooser.APPROVE_OPTION) {
-			File file = j.getSelectedFile();
+			File[] files = j.getSelectedFiles();
 			
-			data = new Measurements(file);
-			data.load();
+			measurements = new Measurements();
+			measurements.load(files);
 		} else {
 			System.exit(0);
 		}
@@ -81,7 +85,27 @@ public class Main {
 	}
 	
 	public Measurements getMeasurements() {
-		return data;
+		return measurements;
+	}
+
+	public void setFrequency(double value) {
+		this.frequency = value;
+	}
+
+	public double getFrequency() {
+		return frequency;
+	}
+
+	public void setViewZ(double z) {
+		this.viewZ = z;
+	}
+
+	public double getViewZ() {
+		return viewZ;
+	}
+
+	public void repaint() {
+		frame.repaint();
 	}
 }
 

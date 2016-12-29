@@ -1,0 +1,158 @@
+package de.tunetown.roommap.model;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Measurement {
+	
+	private List<Double> frequencies = null;
+	private List<Double> spl = null;
+	private double x = Double.NaN;
+	private double y = Double.NaN;
+	private double z = Double.NaN;
+	
+	public Measurement() {
+	}
+	
+	public void load(File file) {
+		// Load file content
+		String out = getFileContent(file);
+		
+		// Parse metadata
+		if (!parseMeta(file)) return;
+
+		// Parse data
+		parse(out);
+		
+		System.out.println ("SUCCESS: Parsed " + frequencies.size() + " data points at " + x + " " + y + " " + z);
+	}
+
+	public boolean isValid() {
+		return frequencies != null &&
+			   frequencies.size() > 0 && 
+			   spl != null &&
+			   spl.size() == frequencies.size() &&
+			   x != Double.NaN &&
+			   y != Double.NaN &&
+			   z != Double.NaN;
+	}
+	
+	/**
+	 * Get coordinates from the file name
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private boolean parseMeta(File file) {
+		String name = file.getName();
+		String bd = name.substring(0, name.length()-4);
+		String[] c = bd.split(" ");
+		if (c.length != 3) {
+			System.out.println("ERROR: No coordinates in file name: " + name);
+			return false;
+		}
+		
+		try {
+			x = Double.parseDouble(c[0]);
+			y = Double.parseDouble(c[1]);
+			z = Double.parseDouble(c[2]);
+		} catch (NumberFormatException e) {
+			System.out.println("ERROR: Could not parse coordinates from " + name);
+			return false;
+		}
+		
+		return true;
+	}
+
+	/**
+	 * Loads file content as string
+	 * 
+	 * @param file
+	 * @return
+	 */
+	private String getFileContent(File file) {
+		String out = "";
+		try {
+			out = new String(Files.readAllBytes(file.toPath()));
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "";
+		}
+		return out;
+	}
+
+	/**
+	 * Parses the file data into the instance attributes
+	 * 
+	 * @param out
+	 */
+	private void parse(String out) {
+		// Initialize
+		frequencies = new ArrayList<Double>(); 
+		spl = new ArrayList<Double>(); 
+		
+		// Parse
+		String lines[] = out.split("\\r?\\n");
+		
+		for(int i=0; i<lines.length; i++) {
+			// Skip comments
+			if (lines[i].startsWith("*")) continue;
+			
+			// Parse values
+			String line[] = lines[i].split(" ");
+			frequencies.add(Double.parseDouble(line[0]));
+			spl.add(Double.parseDouble(line[1]));
+		}
+	}
+	
+	/**
+	 * For any frequency, this approximates the SPL value.
+	 * Currently, this returns the next bigger frequency´s SPL, or
+	 * NaN if frequency is too high.
+	 * 
+	 * @param freq
+	 */
+	public double getSpl(double freq) {
+		int i = 0;
+		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
+		if (i < frequencies.size()) {
+			return spl.get(i);
+		} else {
+			return Double.NaN;
+		}
+	}
+	
+	public double getX() {
+		return x;
+	}
+
+	public double getY() {
+		return y;
+	}
+
+	public double getZ() {
+		return z;
+	}
+
+	public double getMinSpl() {
+		// TODO buffer
+		double ret = Double.MAX_VALUE;
+		for(double s : spl) {
+			if (s < ret) ret = s;
+		}
+		return ret;
+	}
+
+	public double getMaxSpl() {
+		// TODO buffer
+		double ret = Double.MIN_VALUE;
+		for(double s : spl) {
+			if (s > ret) ret = s;
+		}
+		return ret;
+	}
+}

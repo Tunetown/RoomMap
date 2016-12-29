@@ -34,10 +34,10 @@ public class MainPanel extends JPanel {
 	}
 	
 	private void init() {
-		controls = new Controls(this);
+		controls = new Controls(main);
 		add(controls, BorderLayout.EAST);
 		
-		graphics = new OutputGraphics(this);
+		graphics = new OutputGraphics(main);
 		add(graphics, BorderLayout.CENTER);
 	}
 }
