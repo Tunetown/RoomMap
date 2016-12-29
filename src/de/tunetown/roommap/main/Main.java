@@ -31,17 +31,22 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * - Make parameters (resolution etc.) adjustable somehow
- * - Option: Show aggregated over all frequencies in a defined range
- * - Determine freq range by data
- * - also min height
- * - add margin parameter
- * - add units to values
- * - test negative coords
- * - resize: keep ratio x/y stable
- * - color legend
- * - axis legends
- *
+ * - 0.25 Make parameters (resolution etc.) adjustable somehow
+ * - 1.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
+ * 		- show on f axis also
+ * - 0.25 Determine freq range by data
+ * - 0.25 !!!! also min height
+ * - 0.25 !!!! add margin parameter
+ * - 0.25 add units to values
+ * - 0.25 test negative coords
+ * - 0.25 !!!! resize: keep ratio x/y stable
+ * - 0.5 !!!! color legend
+ * - 0.5 axis legends
+ * - 0.25 resolution bei resize konstant halten
+ * - 2 simple rectangle vector-orientiert paint layer
+ * 		- save in same folder with measurements
+ * - 3 visualize in 3d like amroc (one color only, with alpha)
+ * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
  * @version 0.1
