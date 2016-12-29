@@ -32,6 +32,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * - Make parameters (resolution etc.) adjustable somehow
+ * - Option: Show aggregated over all frequencies in a defined range
  *
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
