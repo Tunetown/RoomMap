@@ -305,13 +305,13 @@ public abstract class DoubleArrayUtil {
 	 */
 	public static double[] meanFilter(double [] weights, int context){
 		double meanFiltered [] = new double [weights.length];
-		double mean = 0;
+		//double mean = 0;
 		for (int i = 0; i < weights.length; i++) {
-			if (i > context / 2){
+			/*if (i > context / 2){
 				mean -= weights[i - (context/2)];
 			} if (i < (weights.length -1) - (context / 2)){
 				mean += weights[i + (context /2)];
-			}
+			}*/
 			if (i < context/2){
 				meanFiltered[i] = computeMean(weights, 0, i);
 			} else if ((i+ context/2) >= weights.length){

@@ -138,6 +138,7 @@ public class SimpleVector implements Serializable {
 	 * Initialize vector with string equivalent
 	 * @param str
 	 */
+	@SuppressWarnings("resource")
 	public void init(final String str) {
 		final String strTrim = str.trim();
 		if ((strTrim.charAt(0) != '[') || (strTrim.charAt(strTrim.length() - 1) != ']')) throw new RuntimeException("Error parsing matrix string!");

@@ -1,16 +1,11 @@
 package edu.stanford.rsl.conrad.geometry.shapes.simple;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import edu.stanford.rsl.conrad.geometry.AbstractCurve;
 import edu.stanford.rsl.conrad.geometry.AbstractShape;
-import edu.stanford.rsl.conrad.geometry.General;
 import edu.stanford.rsl.conrad.geometry.transforms.Transform;
 import edu.stanford.rsl.conrad.numerics.SimpleOperators;
 import edu.stanford.rsl.conrad.numerics.SimpleVector;
-//import edu.stanford.rsl.conrad.utils.Configuration;
-import edu.stanford.rsl.conrad.utils.RegKeys;
 
 /**
  * Class to describe a triangle in 3D.

@@ -7,6 +7,12 @@ import java.util.List;
 import edu.stanford.rsl.conrad.geometry.shapes.simple.PointND;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
+/**
+ * This represents the data model (all measurement points).
+ * 
+ * @author tweber
+ *
+ */
 public class Measurements {
 	
 	private List<Measurement> measurements = new ArrayList<Measurement>();

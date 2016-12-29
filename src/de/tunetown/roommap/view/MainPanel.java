@@ -1,10 +1,6 @@
 package de.tunetown.roommap.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Graphics;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -20,7 +16,7 @@ public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private Main main;
-	private JFrame frame;
+	//private JFrame frame;
 	
 	private Controls controls;
 	private OutputGraphics graphics;
@@ -28,7 +24,7 @@ public class MainPanel extends JPanel {
 	public MainPanel(Main main, JFrame frame) {
 		super(new BorderLayout(3,3));
 		this.main = main;
-		this.frame = frame;
+		//this.frame = frame;
 		
 		init();
 	}

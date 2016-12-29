@@ -10,7 +10,19 @@ import de.tunetown.roommap.model.Measurements;
 import de.tunetown.roommap.view.MainFrame;
 
 /**
- * Application class for RoomMap.
+ * Application class for RoomMap. This application is used to evaluate field measurements made with REW and
+ * exported there as text files. The file name has to contain the coordinates of the measurement mic
+ * position (x,y,z) separated by spaces (see examples folder).
+ * 
+ * The SPL distribution is shown at a specific height (adjust with slider) and at a specific frequency (adjust with slider 
+ * or text input). The graph shows the pressure (SPL) distribution interpolated among the data points (shown as gray dots),
+ * visualized from blue (lowest level) to red (highest level).
+ * 
+ * Just try it with the delivered examples: When the program asks you for files, select all
+ * files inside one example folder and hit OK. 
+ * 
+ * TODO:
+ * - Make parameters (resolution etc.) adjustable somehow
  *
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
@@ -19,13 +31,7 @@ import de.tunetown.roommap.view.MainFrame;
  */
 public class Main {
 
-	/**
-	 * Temporary file (here, the last used data will be saved and reloaded on next startup)
-	 */
-	//private static final File TEMP_FILE = new File(System.getProperty("user.home") + File.separator + "SE.tmp");
-	
 	private MainFrame frame;
-	//private Menu menu;
 	private Measurements measurements;
 	
 	private double frequency = 40;
@@ -63,24 +69,16 @@ public class Main {
 	 */
 	private void init() {
 		// Load data
-		JFileChooser j = new JFileChooser("/Users/tweber/git/RoomMap/testdata");
+		JFileChooser j = new JFileChooser("/Users/tweber/git/RoomMap/examples"); // TODO remove
 		j.setMultiSelectionEnabled(true);
-		int answer = j.showOpenDialog(frame);
+		if (j.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) System.exit(0);
 		
-		if (answer == JFileChooser.APPROVE_OPTION) {
-			File[] files = j.getSelectedFiles();
-			
-			measurements = new Measurements();
-			measurements.load(files);
-		} else {
-			System.exit(0);
-		}
+		File[] files = j.getSelectedFiles();
+		measurements = new Measurements();
+		measurements.load(files);
 		
 		// Create and initialize application frame and menu. Order is critical here for proper display.
 		frame = new MainFrame(this);
-		//menu = new Menu(this, frame);
-		
-		//menu.init();
 		frame.init();
 	}
 	

@@ -1,34 +1,52 @@
 package de.tunetown.roommap.view;
 
+import java.awt.event.ActionEvent;
 import java.text.DecimalFormat;
 import java.util.Hashtable;
 
+import javax.swing.AbstractAction;
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Panel for the controls
+ * 
+ * @author tweber
+ *
+ */
 public class Controls extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
 	private JSlider heightSlider;
 	private JSlider freqSlider;
+	private JTextField freqInput;
 	
 	public Controls(Main main) {
 		super();
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.main = main;
 		
 		init();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void init() {
-		freqSlider = new JSlider(JSlider.HORIZONTAL, 20, 400, (int)main.getFrequency());
+		// Frequency Label
+		JLabel freqLabel = new JLabel("Frequency:");
+		add(freqLabel);
+		
+		// Frequency Slider
+		freqSlider = new JSlider(JSlider.HORIZONTAL, 20, 420, (int)main.getFrequency());
 		Hashtable labelTable = new Hashtable();
-		for(int i=20; i<=400; i+=20) {
+		for(int i=20; i<=420; i+=100) {
 			labelTable.put(i, new JLabel(""+i));
 		}
 		freqSlider.setLabelTable( labelTable );
@@ -41,15 +59,40 @@ public class Controls extends JPanel {
 			public void stateChanged(ChangeEvent e) {
 				int value = ((JSlider)e.getSource()).getValue();
 				setFrequency((double)value);
+				freqInput.setText(""+main.getFrequency());
 			}
 		});
 		add(freqSlider);
 		
+		// Frequency Input
+		freqInput = new JTextField(""+main.getFrequency(), 15);
+		freqInput.addActionListener(new AbstractAction() {
+			private static final long serialVersionUID = 1L;
+			
+			@Override
+		    public void actionPerformed(ActionEvent e) {
+				double val;
+				try {
+					val = Double.parseDouble(e.getActionCommand());
+				} catch (NumberFormatException ex) {
+					return;
+				}
+				setFrequency(val);
+				freqSlider.setValue((int)main.getFrequency());
+		    }
+		});
+		add(freqInput);
+		
+		// Height Label
+		JLabel heightLabel = new JLabel("Z (Height):");
+		add(heightLabel);
+
+		// Height Slider
 		heightSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500);
 		Hashtable labelTable2 = new Hashtable();
 		DecimalFormat df = new DecimalFormat("#.##");
 		for(int i=0; i<=1000; i+=200) {
-			double value = (double)i/1000;
+			double value = ((double)i/1000) * main.getMeasurements().getMaxZ();
 			labelTable2.put(i, new JLabel(df.format(value)));
 		}
 		heightSlider.setLabelTable(labelTable2);

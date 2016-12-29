@@ -10,22 +10,42 @@ import rainbowvis.Rainbow;
 import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.model.Measurement;;
 
+/**
+ * SPL distribution visualization panel
+ * 
+ * @author tweber
+ *
+ */
 public class OutputGraphics extends JPanel {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
 	private Main main;
 	
-	private int resolution = 10;
-	
+	// TODO constants
+	private int resolution = 20;
+	private int maxSize = 800;
+	private int pointDiameter = 20;
+
 	public OutputGraphics(Main main) {
 		this.main = main;
 		
-		Dimension dim = new Dimension(500, 500);
+		Dimension dim = getDimension();
 		this.setPreferredSize(dim);
 		this.setMinimumSize(dim);
+	}
+
+	private Dimension getDimension() {
+		int w;
+		int h;
+		if (main.getMeasurements().getMaxX() > main.getMeasurements().getMaxY()) {
+			w = maxSize;
+			h = (int)((main.getMeasurements().getMaxY() / main.getMeasurements().getMaxX()) * maxSize);
+		} else {
+			w = (int)((main.getMeasurements().getMaxX() / main.getMeasurements().getMaxY()) * maxSize);
+			h = maxSize;
+		}
+			
+		return new Dimension(w, h);
 	}
 
 	@Override
@@ -41,12 +61,12 @@ public class OutputGraphics extends JPanel {
 	
 	private void paintPoints(Graphics g) {
 		g.setColor(Color.DARK_GRAY);
-		int wid = 10;
+
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			int x = convertModelToViewX(m.getX());
 			int y = convertModelToViewY(m.getY());
 
-			g.fillOval(x - wid, y - wid, wid*2, wid*2);
+			g.fillOval(x - pointDiameter/2, y - pointDiameter/2, pointDiameter, pointDiameter);
 		}
 	}
 
@@ -55,8 +75,8 @@ public class OutputGraphics extends JPanel {
 		
 		for(int x=0; x<this.getWidth(); x+=resolution) {
 			for(int y=0; y<this.getHeight(); y+=resolution) {
-				double rx = convertViewToModelX(x); 
-				double ry = convertViewToModelY(y); 
+				double rx = convertViewToModelX(x+resolution/2); 
+				double ry = convertViewToModelY(y+resolution/2); 
 				double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
 				
 				g.setColor(getOutColor(spl));
@@ -66,6 +86,8 @@ public class OutputGraphics extends JPanel {
 	}
 
 	private Color getOutColor(double spl) {
+		if (spl == Double.NaN) return Color.BLACK;
+		
 		double minSpl = main.getMeasurements().getMinSpl(main.getFrequency());
 		double maxSpl = main.getMeasurements().getMaxSpl(main.getFrequency());
 

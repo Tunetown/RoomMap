@@ -150,6 +150,7 @@ public class SimpleMatrix implements Serializable {
 	 * Initialize matrix with data string of the form []
 	 * @param str is data string
 	 */
+	@SuppressWarnings("resource")
 	public void init(final String str) {
 		String strTrim = str.trim();
 		if ((strTrim.charAt(0) != '[') || (strTrim.charAt(strTrim.length() - 1) != ']')) throw new RuntimeException("Error parsing matrix string!");

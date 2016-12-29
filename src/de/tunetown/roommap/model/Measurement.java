@@ -6,6 +6,13 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents one measurement at one spatial point in the room, givven 
+ * by x, y and z coordinaties parsed from the file name.
+ * 
+ * @author tweber
+ *
+ */
 public class Measurement {
 	
 	private List<Double> frequencies = null;
@@ -13,9 +20,6 @@ public class Measurement {
 	private double x = Double.NaN;
 	private double y = Double.NaN;
 	private double z = Double.NaN;
-	
-	public Measurement() {
-	}
 	
 	public void load(File file) {
 		// Load file content
@@ -111,8 +115,10 @@ public class Measurement {
 	
 	/**
 	 * For any frequency, this approximates the SPL value.
-	 * Currently, this returns the next bigger frequency´s SPL, or
-	 * NaN if frequency is too high.
+	 * 
+	 * NOTE: Currently, this returns the next bigger frequency´s SPL, or
+	 * NaN if frequency is too high. Interpolation is not necessary as long as the 
+	 * data is precise enough. REW export files usually are.
 	 * 
 	 * @param freq
 	 */
