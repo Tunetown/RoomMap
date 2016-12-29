@@ -28,7 +28,7 @@ public class Measurements {
 			if (m.isValid()) measurements.add(m);
 		}
 		
-		System.out.println ("Parsed " + measurements.size() + " measurement points");
+		System.out.println ("Parsed " + measurements.size() + " data points"); // TODO determine data size
 	}
 	
 	public List<Measurement> getMeasurements() {
@@ -44,6 +44,7 @@ public class Measurements {
 	 * @return
 	 */
 	public double getSpl(double x, double y, double z, double freq) {
+		// TODO optimize
 		ArrayList<PointND> points = new ArrayList<PointND>();
 		ArrayList<PointND> values = new ArrayList<PointND>();
 		

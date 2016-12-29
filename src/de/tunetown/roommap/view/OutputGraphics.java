@@ -52,7 +52,7 @@ public class OutputGraphics extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(Color.WHITE);
+		g.setColor(Color.WHITE);//TODO
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
 		paintData(g);
@@ -60,7 +60,7 @@ public class OutputGraphics extends JPanel {
 	}
 	
 	private void paintPoints(Graphics g) {
-		g.setColor(Color.DARK_GRAY);
+		g.setColor(Color.DARK_GRAY);//TODO
 
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			int x = convertModelToViewX(m.getX());
@@ -86,7 +86,7 @@ public class OutputGraphics extends JPanel {
 	}
 
 	private Color getOutColor(double spl) {
-		if (spl == Double.NaN) return Color.BLACK;
+		if (spl == Double.NaN) return Color.BLACK;//TODO
 		
 		double minSpl = main.getMeasurements().getMinSpl(main.getFrequency());
 		double maxSpl = main.getMeasurements().getMaxSpl(main.getFrequency());

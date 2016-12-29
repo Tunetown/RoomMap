@@ -44,7 +44,7 @@ public class Controls extends JPanel {
 		add(freqLabel);
 		
 		// Frequency Slider
-		freqSlider = new JSlider(JSlider.HORIZONTAL, 20, 420, (int)main.getFrequency());
+		freqSlider = new JSlider(JSlider.HORIZONTAL, 20, 420, (int)main.getFrequency()); // TODO get from data
 		Hashtable labelTable = new Hashtable();
 		for(int i=20; i<=420; i+=100) {
 			labelTable.put(i, new JLabel(""+i));
@@ -77,7 +77,7 @@ public class Controls extends JPanel {
 				} catch (NumberFormatException ex) {
 					return;
 				}
-				setFrequency(val);
+				setFrequency(val); // TODO update routine
 				freqSlider.setValue((int)main.getFrequency());
 		    }
 		});
@@ -88,7 +88,7 @@ public class Controls extends JPanel {
 		add(heightLabel);
 
 		// Height Slider
-		heightSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500);
+		heightSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500); // TODO values
 		Hashtable labelTable2 = new Hashtable();
 		DecimalFormat df = new DecimalFormat("#.##");
 		for(int i=0; i<=1000; i+=200) {

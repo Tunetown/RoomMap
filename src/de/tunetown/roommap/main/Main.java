@@ -33,6 +33,14 @@ import de.tunetown.roommap.view.MainFrame;
  * TODO:
  * - Make parameters (resolution etc.) adjustable somehow
  * - Option: Show aggregated over all frequencies in a defined range
+ * - Determine freq range by data
+ * - also min height
+ * - add margin parameter
+ * - add units to values
+ * - test negative coords
+ * - resize: keep ratio x/y stable
+ * - color legend
+ * - axis legends
  *
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
@@ -44,7 +52,7 @@ public class Main {
 	private MainFrame frame;
 	private Measurements measurements;
 	
-	private double frequency = 40;
+	private double frequency = 40; // get rid of TODO
 	private double viewZ = 0;
 	
 	/**
