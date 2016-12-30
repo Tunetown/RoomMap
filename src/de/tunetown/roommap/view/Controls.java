@@ -108,8 +108,38 @@ public class Controls extends JPanel {
 			}
 		});
 		add(heightSlider);
+		
+		// Margin Label
+		JLabel marginLabel = new JLabel("Margin:");
+		add(marginLabel);
+
+		// Margin Slider
+		JSlider marginSlider = new JSlider(JSlider.HORIZONTAL, 0, 1000, 500); // TODO values
+		Hashtable labelTable3 = new Hashtable();
+		for(int i=0; i<=1000; i+=200) {
+			double value = ((double)i/1000);
+			labelTable3.put(i, new JLabel(df.format(value)));
+		}
+		marginSlider.setLabelTable(labelTable3);
+		marginSlider.setPaintLabels(true);
+		marginSlider.setMinorTickSpacing(200);
+		marginSlider.setPaintTicks(true);
+		
+		marginSlider.addChangeListener(new ChangeListener() {
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int value = ((JSlider)e.getSource()).getValue();
+				setMargin((double)value / 1000);
+			}
+		});
+		//add(marginSlider);
 	}
 	
+	protected void setMargin(double d) {
+		main.setMargin(d);
+		main.repaint();
+	}
+
 	protected void setFrequency(double value) {
 		main.setFrequency(value);
 		main.repaint();

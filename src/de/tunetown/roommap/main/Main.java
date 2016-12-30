@@ -67,6 +67,7 @@ public class Main {
 	
 	private double frequency = 40; // get rid of TODO
 	private double viewZ = 0;
+	private double margin = 0;
 	
 	/**
 	 * Main method
@@ -136,5 +137,14 @@ public class Main {
 	public void repaint() {
 		frame.repaint();
 	}
+
+	public void setMargin(double d) {
+		margin = d;
+	}
+
+	public double getMargin() {
+		return margin;
+	}
+	
 }
 

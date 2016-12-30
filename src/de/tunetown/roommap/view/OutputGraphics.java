@@ -37,6 +37,8 @@ public class OutputGraphics extends JPanel {
 	private Dimension getDimension() {
 		int w;
 		int h;
+		//int maxSizeX = maxSize + convertModelToViewX(main.getMargin()) * 2;
+		//int maxSizeY = maxSize + convertModelToViewY(main.getMargin()) * 2;
 		if (main.getMeasurements().getMaxX() > main.getMeasurements().getMaxY()) {
 			w = maxSize;
 			h = (int)((main.getMeasurements().getMaxY() / main.getMeasurements().getMaxX()) * maxSize);
@@ -65,8 +67,8 @@ public class OutputGraphics extends JPanel {
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			int x = convertModelToViewX(m.getX());
 			int y = convertModelToViewY(m.getY());
-
-			g.fillOval(x - pointDiameter/2, y - pointDiameter/2, pointDiameter, pointDiameter);
+			// TODO optimize
+			g.fillOval(x - pointDiameter/2 + convertModelToViewX(main.getMargin()), y - pointDiameter/2 + convertModelToViewY(main.getMargin()), pointDiameter, pointDiameter);
 		}
 	}
 
@@ -80,7 +82,8 @@ public class OutputGraphics extends JPanel {
 				double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
 				
 				g.setColor(getOutColor(spl));
-				g.fillRect(x, y, resolution, resolution);
+				// TODO optimize
+				g.fillRect(x + convertModelToViewX(main.getMargin()), y + convertModelToViewY(main.getMargin()), resolution, resolution);
 			}
 		}
 	}
@@ -97,12 +100,12 @@ public class OutputGraphics extends JPanel {
 		return rainbow.colourAt(100 - (int)(val * 100));
 	}
 	
-	private double convertViewToModelY(int y) {
-		return ((double)y / this.getHeight()) * main.getMeasurements().getMaxY();
-	}
-
 	private double convertViewToModelX(int x) {
 		return ((double)x / this.getWidth()) * main.getMeasurements().getMaxX();
+	}
+
+	private double convertViewToModelY(int y) {
+		return ((double)y / this.getHeight()) * main.getMeasurements().getMaxY();
 	}
 
 	private int convertModelToViewX(double x) {
