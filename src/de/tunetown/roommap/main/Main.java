@@ -31,7 +31,7 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * - 1.00 !!!! resize: keep ratio x/y stable
+ * - 1.00 resize: keep ratio x/y stable
  * - 0.50 resolution bei resize konstant halten
  * 
  * - 1.00 Make resolution/point diameter adjustable (sliders)
@@ -40,7 +40,7 @@ import de.tunetown.roommap.view.MainFrame;
  * - 0.50 Determine freq range by data
  *		- Upper boundary: limit to <= 500Hz
  *		- Lower boundary: Limit to lowest data point
- * - 0.50 !!!! determine min height (Z) by data
+ * - 0.50 determine min height (Z) by data
  * 
  * - 0.25 test negative coords
  * 
@@ -50,7 +50,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * - 3.00 simple rectangle vector-orientiert paint layer
+ * - 3.00 !!!! simple rectangle vector-orientiert paint layer
  * 		- save in same folder with measurements
  * 
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
