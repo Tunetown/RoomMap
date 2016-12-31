@@ -148,13 +148,11 @@ public class Grid2D extends NumericGrid implements Transformable {
 	
 	public float getAtIndex(int i, int j) {
 		notifyBeforeRead();
-		//FIXME (maybe use getPixelValue instead)
 		return this.getPixelValue(i, j);
 	}
 	
 	
 	public void setAtIndex(int i, int j, float val) {
-		//FIXME (maybe use putPixelValue instead)
 		 this.putPixelValue(i, j, val);
 		 notifyAfterWrite();
 	}

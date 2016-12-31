@@ -16,7 +16,7 @@ import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 public class Measurements {
 	
 	private List<Measurement> measurements = new ArrayList<Measurement>();
-	
+
 	public Measurements() {
 	}
 	
@@ -60,7 +60,7 @@ public class Measurements {
 	
 	public double getMaxX() {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(Measurement m : measurements) {
 			if (m.getX() > ret) ret = m.getX();
 		}
@@ -69,7 +69,7 @@ public class Measurements {
 	
 	public double getMaxY() {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(Measurement m : measurements) {
 			if (m.getY() > ret) ret = m.getY();
 		}
@@ -78,13 +78,45 @@ public class Measurements {
 	
 	public double getMaxZ() {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(Measurement m : measurements) {
 			if (m.getZ() > ret) ret = m.getZ();
 		}
 		return ret;
 	}
 
+	public double getMinX() {
+		// TODO buffer
+		double ret = Double.MAX_VALUE;
+		for(Measurement m : measurements) {
+			if (m.getX() < ret) ret = m.getX();
+		}
+		return ret;
+	}
+	
+	public double getMinY() {
+		// TODO buffer
+		double ret = Double.MAX_VALUE;
+		for(Measurement m : measurements) {
+			if (m.getY() < ret) ret = m.getY();
+		}
+		return ret; 
+	}
+	
+	public double getMinZ() {
+		// TODO buffer
+		double ret = Double.MAX_VALUE;
+		for(Measurement m : measurements) {
+			if (m.getZ() < ret) ret = m.getZ();
+		}
+		return ret; 
+	}
+
+	/**
+	 * Returns minimum SPL over all frequencies
+	 * 
+	 * @return
+	 */
 	public double getMinSpl() {
 		// TODO buffer
 		double ret = Double.MAX_VALUE;
@@ -103,9 +135,14 @@ public class Measurements {
 		return ret;
 	}
 
+	/**
+	 * Returns maximum SPL over all frequencies
+	 * 
+	 * @return
+	 */
 	public double getMaxSpl() {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(Measurement m : measurements) {
 			if (m.getMaxSpl() > ret) ret = m.getMaxSpl();
 		}
@@ -114,11 +151,10 @@ public class Measurements {
 
 	public double getMaxSpl(double freq) {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(Measurement m : measurements) {
 			if (m.getSpl(freq) > ret) ret = m.getSpl(freq);
 		}
 		return ret;
 	}
-
 }

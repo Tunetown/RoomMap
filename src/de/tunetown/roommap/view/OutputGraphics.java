@@ -22,31 +22,37 @@ public class OutputGraphics extends JPanel {
 	private Main main;
 	
 	// TODO constants
-	private int resolution = 20;
-	private int maxSize = 800;
-	private int pointDiameter = 20;
+	private double resolution = 0.1;  // Resolution (model units, not pixels!)
+	private int maxSize = 800;        // Initial max. Size of data panel (pixels)
+	private int gridWidth = 3;        // Grid width (pixels)
 
 	public OutputGraphics(Main main) {
 		this.main = main;
 		
-		Dimension dim = getDimension();
+		Dimension dim = getPaintDimension(maxSize, maxSize);
 		this.setPreferredSize(dim);
 		this.setMinimumSize(dim);
 	}
 
-	private Dimension getDimension() {
+	private Dimension getPaintDimension() {
+		return getPaintDimension(getWidth(), getHeight());
+	}
+	
+	private Dimension getPaintDimension(int viewWidth, int viewHeight) {
+		double modelSizeX = main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin();
+		double modelSizeY = main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin();
+		double modelRatio = modelSizeX / modelSizeY;
+		double panelRatio = (double)viewWidth / (double)viewHeight;
+
 		int w;
 		int h;
-		//int maxSizeX = maxSize + convertModelToViewX(main.getMargin()) * 2;
-		//int maxSizeY = maxSize + convertModelToViewY(main.getMargin()) * 2;
-		if (main.getMeasurements().getMaxX() > main.getMeasurements().getMaxY()) {
-			w = maxSize;
-			h = (int)((main.getMeasurements().getMaxY() / main.getMeasurements().getMaxX()) * maxSize);
+		if (modelRatio > panelRatio) {
+			w = viewWidth;
+			h = (int)(w / modelRatio);
 		} else {
-			w = (int)((main.getMeasurements().getMaxX() / main.getMeasurements().getMaxY()) * maxSize);
-			h = maxSize;
+			h = viewHeight;
+			w = (int)(h * modelRatio);
 		}
-			
 		return new Dimension(w, h);
 	}
 
@@ -55,35 +61,46 @@ public class OutputGraphics extends JPanel {
 		super.paintComponent(g);
 		
 		g.setColor(Color.WHITE);//TODO
-		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		paintData(g);
+		paintGrid(g);
 		paintPoints(g);
 	}
 	
+	private void paintGrid(Graphics g) {
+		g.setColor(Color.LIGHT_GRAY); // TODO
+	}
+
 	private void paintPoints(Graphics g) {
 		g.setColor(Color.DARK_GRAY);//TODO
 
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
-			int x = convertModelToViewX(m.getX());
-			int y = convertModelToViewY(m.getY());
+			int x = convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX());
+			int y = convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY());
 			// TODO optimize
-			g.fillOval(x - pointDiameter/2 + convertModelToViewX(main.getMargin()), y - pointDiameter/2 + convertModelToViewY(main.getMargin()), pointDiameter, pointDiameter);
+			int diaX = convertModelToViewX(resolution);
+			int diaY = convertModelToViewY(resolution);
+			g.fillOval(x - diaX/2, y - diaY/2, diaX, diaY);
 		}
 	}
 
 	private void paintData(Graphics g) {
-		double modelZ = main.getViewZ() * main.getMeasurements().getMaxZ();
+		double modelZ = main.getViewZ();
 		
-		for(int x=0; x<this.getWidth(); x+=resolution) {
-			for(int y=0; y<this.getHeight(); y+=resolution) {
-				double rx = convertViewToModelX(x+resolution/2); 
-				double ry = convertViewToModelY(y+resolution/2); 
+		Dimension d = getPaintDimension();
+		int resX = convertModelToViewX(resolution);
+		int resY = convertModelToViewX(resolution);
+		
+		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
+			for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
+				double rx = convertViewToModelX(x) - main.getMargin() + main.getMeasurements().getMinX(); 
+				double ry = convertViewToModelY(y) - main.getMargin() + main.getMeasurements().getMinY();
+				
 				double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
 				
 				g.setColor(getOutColor(spl));
-				// TODO optimize
-				g.fillRect(x + convertModelToViewX(main.getMargin()), y + convertModelToViewY(main.getMargin()), resolution, resolution);
+				g.fillRect(x - resX/2, y - resY/2, resX, resY);
 			}
 		}
 	}
@@ -101,18 +118,18 @@ public class OutputGraphics extends JPanel {
 	}
 	
 	private double convertViewToModelX(int x) {
-		return ((double)x / this.getWidth()) * main.getMeasurements().getMaxX();
+		return ((double)x / getPaintDimension().getWidth()) * (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin());
 	}
 
 	private double convertViewToModelY(int y) {
-		return ((double)y / this.getHeight()) * main.getMeasurements().getMaxY();
+		return ((double)y / getPaintDimension().getHeight()) * (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin());
 	}
 
 	private int convertModelToViewX(double x) {
-		return (int)((x / main.getMeasurements().getMaxX()) * this.getWidth());
+		return (int)((x / (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin())) * getPaintDimension().getWidth());
 	}
 	
 	private int convertModelToViewY(double y) {
-		return (int)((y / main.getMeasurements().getMaxY()) * this.getHeight());
+		return (int)((y / (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin())) * getPaintDimension().getHeight());
 	}
 }

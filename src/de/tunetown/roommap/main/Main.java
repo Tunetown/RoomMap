@@ -31,18 +31,15 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * - 1.00 resize: keep ratio x/y stable
- * - 0.50 resolution bei resize konstant halten
- * 
- * - 1.00 Make resolution/point diameter adjustable (sliders)
- * - 0.25 !!!! add margin parameter
+ * - Unified controls mini-framework
+ * 		- Label, Slider, and value input 
+ * 		- as one JLabel 
+ * - Implement Grid
  * 
  * - 0.50 Determine freq range by data
  *		- Upper boundary: limit to <= 500Hz
  *		- Lower boundary: Limit to lowest data point
- * - 0.50 determine min height (Z) by data
  * 
- * - 0.25 test negative coords
  * 
  * - 0.25 add units to values
  * - 1.00 !!!! color legend
@@ -65,10 +62,10 @@ public class Main {
 	private MainFrame frame;
 	private Measurements measurements;
 	
-	private double frequency = 40; // get rid of TODO
-	private double viewZ = 0;
-	private double margin = 0;
-	
+	private double frequency = 40; // TODO determine automatically by data 
+	private double viewZ = 0;  // TODO determine automatically by data 
+	private double margin = 0.5; // TODO determine automatically by data 
+
 	/**
 	 * Main method
 	 *  
@@ -145,6 +142,5 @@ public class Main {
 	public double getMargin() {
 		return margin;
 	}
-	
 }
 
