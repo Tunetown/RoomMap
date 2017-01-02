@@ -22,7 +22,7 @@ public class OutputGraphics extends JPanel {
 	private Main main;
 	
 	// TODO constants
-	private double resolution = 0.01;  // Resolution (model units, not pixels!)
+	private double resolution = 0.1;  // Resolution (model units, not pixels!)
 	private int maxSize = 800;        // Initial max. Size of data panel (pixels)
 
 	public OutputGraphics(Main main) {
@@ -33,10 +33,22 @@ public class OutputGraphics extends JPanel {
 		this.setMinimumSize(dim);
 	}
 
+	/**
+	 * Returns the size for the drawing stage
+	 *  
+	 * @return
+	 */
 	private Dimension getPaintDimension() {
 		return getPaintDimension(getWidth(), getHeight());
 	}
 	
+	/**
+	 * As getPaintDimension(), but has inputs to set the view width/height desired
+	 * 
+	 * @param viewWidth
+	 * @param viewHeight
+	 * @return
+	 */
 	private Dimension getPaintDimension(int viewWidth, int viewHeight) {
 		double modelSizeX = main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin();
 		double modelSizeY = main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin();
@@ -55,6 +67,9 @@ public class OutputGraphics extends JPanel {
 		return new Dimension(w, h);
 	}
 
+	/**
+	 * Paint method
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -63,25 +78,7 @@ public class OutputGraphics extends JPanel {
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		paintData(g);
-		paintGrid(g);
 		paintPoints(g);
-	}
-	
-	private void paintGrid(Graphics g) {
-		g.setColor(Color.LIGHT_GRAY); // TODO
-	}
-
-	private void paintPoints(Graphics g) {
-		g.setColor(Color.DARK_GRAY);//TODO
-
-		for(Measurement m : main.getMeasurements().getMeasurements()) {
-			int x = convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX());
-			int y = convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY());
-			// TODO optimize
-			int diaX = convertModelToViewX(resolution);
-			int diaY = convertModelToViewY(resolution);
-			g.fillOval(x - diaX/2, y - diaY/2, diaX, diaY);
-		}
 	}
 
 	private void paintData(Graphics g) {
@@ -104,6 +101,25 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 
+	private void paintPoints(Graphics g) {
+		g.setColor(Color.DARK_GRAY);//TODO
+
+		for(Measurement m : main.getMeasurements().getMeasurements()) {
+			int x = convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX());
+			int y = convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY());
+			// TODO optimize
+			int diaX = convertModelToViewX(resolution);
+			int diaY = convertModelToViewY(resolution);
+			g.fillOval(x - diaX/2, y - diaY/2, diaX, diaY);
+		}
+	}
+
+	/**
+	 * Get visualization color for a given SPL level
+	 * 
+	 * @param spl
+	 * @return
+	 */
 	public Color getOutColor(double spl) {
 		if (spl == Double.NaN) return Color.BLACK;//TODO
 		
@@ -116,18 +132,42 @@ public class OutputGraphics extends JPanel {
 		return rainbow.colourAt(100 - (int)(val * 100));
 	}
 	
+	/**
+	 * Coordinate conversion
+	 * 
+	 * @param x
+	 * @return
+	 */
 	private double convertViewToModelX(int x) {
 		return ((double)x / getPaintDimension().getWidth()) * (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin());
 	}
 
+	/**
+	 * Coordinate conversion
+	 * 
+	 * @param y
+	 * @return
+	 */
 	private double convertViewToModelY(int y) {
 		return ((double)y / getPaintDimension().getHeight()) * (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin());
 	}
 
+	/**
+	 * Coordinate conversion
+	 * 
+	 * @param x
+	 * @return
+	 */
 	private int convertModelToViewX(double x) {
 		return (int)((x / (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() + 2*main.getMargin())) * getPaintDimension().getWidth());
 	}
 	
+	/**
+	 * Coordinate conversion
+	 * 
+	 * @param y
+	 * @return
+	 */
 	private int convertModelToViewY(double y) {
 		return (int)((y / (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() + 2*main.getMargin())) * getPaintDimension().getHeight());
 	}

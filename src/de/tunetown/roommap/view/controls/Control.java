@@ -35,7 +35,37 @@ public abstract class Control extends JPanel {
 		this.labelText = labelText;
 		this.labelCount = labelCount;
 	}
+
+	/**
+	 * Called when a change has been made to one of the control inputs.
+	 * 
+	 * @param value new value
+	 */
+	protected abstract void changeValue(double value);
 	
+	/**
+	 * Has to update the control instance with the current value of the target parameter
+	 */
+	public abstract void update();
+	
+	/**
+	 * Returns the minimum boundary
+	 * 
+	 * @return
+	 */
+	public abstract double getMin();
+	
+	/**
+	 * Returns the maximum boundary
+	 * 
+	 * @return
+	 */
+	public abstract double getMax();
+
+	/**
+	 * Initialize content (must be called by child classes)
+	 * 
+	 */
 	protected void init() {
 		// Label
 		label = new JLabel(labelText);
@@ -79,6 +109,11 @@ public abstract class Control extends JPanel {
 		update();
 	}
 
+	/**
+	 * Update slider labels etc.
+	 * Must be called explicitly when something has changed
+	 * 
+	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void updateSliderAttributes() {
 		Hashtable labelTable = new Hashtable();
@@ -92,6 +127,11 @@ public abstract class Control extends JPanel {
 		slider.setPaintTicks(true);
 	}
 
+	/**
+	 * Set control value
+	 * 
+	 * @param value
+	 */
 	public void setValue(double value) {
 		DecimalFormat df = new DecimalFormat("#.##");
 		input.setText(df.format(value));
@@ -99,6 +139,11 @@ public abstract class Control extends JPanel {
 		slider.setValue(convertToSlider(value));
 	}
 	
+	/**
+	 * Returns current value
+	 * 
+	 * @return
+	 */
 	public double getValue() {
 		return Double.parseDouble(input.getText());
 	}
@@ -110,12 +155,4 @@ public abstract class Control extends JPanel {
 	private double convertFromSlider(int sl) {
 		return ((double)sl / resolution) * (getMax() - getMin()) + getMin();
 	}
-	
-	protected abstract void changeValue(double val);
-	
-	public abstract void update();
-	
-	public abstract double getMin();
-	
-	public abstract double getMax();
 }

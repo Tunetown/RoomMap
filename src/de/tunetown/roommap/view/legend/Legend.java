@@ -42,6 +42,7 @@ public class Legend extends JPanel {
 		double min = main.getMeasurements().getMinSpl(main.getFrequency());
 		double max = main.getMeasurements().getMaxSpl(main.getFrequency());
 		
+		// Bars
 		double viewMax = this.getHeight()-2*margin;
 		int lineWidth = getWidth()-2*margin-textWidth;
 		for(int y=margin; y<this.getHeight()-margin; y+=resolution) {
@@ -50,6 +51,7 @@ public class Legend extends JPanel {
 			g.fillRect(margin, y, lineWidth, resolution);
 		}
 		
+		// Labels
 		Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setFont(new Font("Helvetica", Font.PLAIN, fontSize)); 
@@ -60,6 +62,4 @@ public class Legend extends JPanel {
         	g2.drawString(df.format(spl), margin + lineWidth + 3, y + fontSize/2);
         }
 	}
-	
-
 }

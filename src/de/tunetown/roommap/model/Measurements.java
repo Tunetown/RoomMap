@@ -38,6 +38,11 @@ public class Measurements {
 		System.out.println ("Parsed " + getDataSize() + " data points"); 
 	}
 	
+	/**
+	 * Returns the overall amount of data points
+	 * 
+	 * @return
+	 */
 	public long getDataSize() {
 		long ret = 0;
 		for(Measurement m : measurements) {

@@ -28,6 +28,9 @@ public class Controls extends JPanel {
 		init();
 	}
 
+	/**
+	 * Initialize all controls
+	 */
 	private void init() {
 		freqControl = new FrequencyControl(main, this);
 		add(freqControl);
@@ -38,9 +41,13 @@ public class Controls extends JPanel {
 		marginControl = new MarginControl(main, this);
 		add(marginControl);
 
+		// Initial update. This sets the initial values of all controls
 		updateControls();
 	}
 	
+	/**
+	 * Update all controls
+	 */
 	public void updateControls() {
 		if (freqControl != null) freqControl.update();
 		if (marginControl != null) marginControl.update();
