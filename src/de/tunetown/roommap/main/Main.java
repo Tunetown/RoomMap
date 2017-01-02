@@ -31,18 +31,19 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * - 0.50 Determine freq range by data
- *		- Upper boundary: limit to <= 500Hz
- *		- Lower boundary: Limit to lowest data point
- * 
- * - 0.25 add units to values
+ * - 0.5  add units to values
  * - 1.00 axis legends
  * 
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
+ * 
  * - 2.00 Import image PNG to lay over data
  * 
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
+ * 
+ * - 0.50 Determine freq range by data
+ *		- Upper boundary: limit to <= 500Hz
+ *		- Lower boundary: Limit to lowest data point
  * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
@@ -55,8 +56,8 @@ public class Main {
 	private Measurements measurements;
 	
 	private double frequency = 40; // TODO determine automatically by data 
-	private double viewZ = 0;  // TODO determine automatically by data 
-	private double margin = 0.5; // TODO determine automatically by data 
+	private double viewZ = 0;      // TODO determine automatically by data 
+	private double margin = 0.5;   // TODO determine automatically by data 
 
 	/**
 	 * Main method

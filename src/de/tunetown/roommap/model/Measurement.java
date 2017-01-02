@@ -15,8 +15,11 @@ import java.util.List;
  */
 public class Measurement {
 	
+	// Measurement data
 	private List<Double> frequencies = null;
 	private List<Double> spl = null;
+	
+	// Coordinates of the measurement
 	private double x = Double.NaN;
 	private double y = Double.NaN;
 	private double z = Double.NaN;
@@ -144,21 +147,31 @@ public class Measurement {
 		return z;
 	}
 
+	private double minSplBuffer = Double.NaN;
+
 	public double getMinSpl() {
-		// TODO buffer
-		double ret = Double.MAX_VALUE;
-		for(double s : spl) {
-			if (s < ret) ret = s;
+		if (Double.isNaN(minSplBuffer)) {
+			minSplBuffer = Double.MAX_VALUE;
+			for(double s : spl) {
+				if (s < minSplBuffer) minSplBuffer = s;
+			}
 		}
-		return ret;
+		return minSplBuffer;
 	}
+	
+	private double maxSplBuffer = Double.NaN;
 
 	public double getMaxSpl() {
-		// TODO buffer
-		double ret = -Double.MAX_VALUE;
-		for(double s : spl) {
-			if (s > ret) ret = s;
+		if (Double.isNaN(maxSplBuffer)) {
+			maxSplBuffer = -Double.MAX_VALUE;
+			for(double s : spl) {
+				if (s > maxSplBuffer) maxSplBuffer = s;
+			}
 		}
-		return ret;
+		return maxSplBuffer;
+	}
+
+	public long getSize() {
+		return spl.size();
 	}
 }

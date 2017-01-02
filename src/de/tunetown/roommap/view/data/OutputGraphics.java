@@ -22,7 +22,7 @@ public class OutputGraphics extends JPanel {
 	private Main main;
 	
 	// TODO constants
-	private double resolution = 0.1;  // Resolution (model units, not pixels!)
+	private double resolution = 0.01;  // Resolution (model units, not pixels!)
 	private int maxSize = 800;        // Initial max. Size of data panel (pixels)
 
 	public OutputGraphics(Main main) {
