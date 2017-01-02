@@ -226,4 +226,28 @@ public class Measurements {
 		}
 		return maxSPLFBuffer;
 	}
+	
+	private double minFreqBuffer = Double.NaN;
+	
+	public double getMinFrequency() {
+		if (Double.isNaN(minFreqBuffer)) {
+			minFreqBuffer = Double.MAX_VALUE;
+			for(Measurement m : measurements) {
+				if (m.getMinFrequency() < minFreqBuffer) minFreqBuffer = m.getMinFrequency();
+			}
+		}
+		return minFreqBuffer; 
+	}
+
+	private double maxFreqBuffer = Double.NaN;
+	
+	public double getMaxFrequency() {
+		if (Double.isNaN(maxFreqBuffer)) {
+			maxFreqBuffer = -Double.MAX_VALUE;
+			for(Measurement m : measurements) {
+				if (m.getMaxFrequency() > maxFreqBuffer) maxFreqBuffer = m.getMaxFrequency();
+			}
+		}
+		return maxFreqBuffer; 
+	}
 }

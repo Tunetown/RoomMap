@@ -123,8 +123,16 @@ public class OutputGraphics extends JPanel {
 	public Color getOutColor(double spl) {
 		if (spl == Double.NaN) return Color.BLACK;//TODO
 		
-		double minSpl = main.getMeasurements().getMinSpl(main.getFrequency());
-		double maxSpl = main.getMeasurements().getMaxSpl(main.getFrequency());
+		double minSpl;
+		double maxSpl;
+		
+		if (main.getNormalizeByFrequency()){ 
+			minSpl = main.getMeasurements().getMinSpl(main.getFrequency());
+			maxSpl = main.getMeasurements().getMaxSpl(main.getFrequency());
+		} else {
+			minSpl = main.getMeasurements().getMinSpl();
+			maxSpl = main.getMeasurements().getMaxSpl();
+		}
 
 		double val = (spl - minSpl) / (maxSpl - minSpl);
 

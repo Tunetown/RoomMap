@@ -20,7 +20,7 @@ public class Legend extends JPanel {
 	
 	// TODO constants
 	private int legendWidth = 100;       // Width of legend panel
-	private int margin = 10;             // Panel margin
+	private int margin = 20;             // Panel margin
 	private int resolution = 10;         // Resolution of legend colors
 	private int textResolution = 50;     // Text resolution (determines in which intervals the SPL is shown)
 	private int textWidth = 25;          // Width of text area
@@ -39,8 +39,15 @@ public class Legend extends JPanel {
 		
 		OutputGraphics o = new OutputGraphics(main);
 
-		double min = main.getMeasurements().getMinSpl(main.getFrequency());
-		double max = main.getMeasurements().getMaxSpl(main.getFrequency());
+		double min;
+		double max;
+		if (main.getNormalizeByFrequency()){ 
+			min = main.getMeasurements().getMinSpl(main.getFrequency());
+			max = main.getMeasurements().getMaxSpl(main.getFrequency());
+		} else {
+			min = main.getMeasurements().getMinSpl();
+			max = main.getMeasurements().getMaxSpl();
+		}
 		
 		// Bars
 		double viewMax = this.getHeight()-2*margin;
@@ -61,5 +68,6 @@ public class Legend extends JPanel {
         	double spl = ((double)(y - margin) / viewMax) * (max - min) + min;
         	g2.drawString(df.format(spl), margin + lineWidth + 3, y + fontSize/2);
         }
+        g2.drawString("dB(SPL)", margin + lineWidth + 3, 2 + fontSize);
 	}
 }

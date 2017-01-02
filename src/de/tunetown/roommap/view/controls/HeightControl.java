@@ -8,7 +8,7 @@ public class HeightControl extends Control {
 	private Main main;
 	
 	public HeightControl(Main main, Controls parent) {
-		super(parent, "Height (Z):", 4);
+		super(parent, "Height (m):", 4);
 		this.main = main;
 		
 		init();

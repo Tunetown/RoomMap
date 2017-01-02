@@ -25,7 +25,7 @@ import de.tunetown.roommap.view.MainFrame;
  * - CONRAD, a biomedical library which is being used here for thin plate spline interpolation in 3D. Just the necessary 
  *   classes are included as source, slightly modified to kill eclipse warnings.
  * - rainbowvis: This is also included as source, and used for Color interpolation. This has also been modified to produce
- *   Color instanes instead of CSS strings.
+ *   Color instances instead of CSS strings.
  * - ij.jar: Used by CONRAD, included as jar archive
  * - Jama-1.0.2.jar: Used by CONRAD, included as jar archive
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
@@ -36,14 +36,8 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * 
  * - 2.00 Import image PNG to lay over data
- * 
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
- * 
- * - 0.50 Determine freq range by data
- *		- Upper boundary: limit to <= 500Hz
- *		- Lower boundary: Limit to lowest data point
  * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
@@ -55,9 +49,10 @@ public class Main {
 	private MainFrame frame;
 	private Measurements measurements;
 	
-	private double frequency = 40; // TODO determine automatically by data 
-	private double viewZ = 0;      // TODO determine automatically by data 
-	private double margin = 0.5;   // TODO determine automatically by data 
+	private double frequency = 0;  
+	private double viewZ = 0;       
+	private double margin = 0.5;               // TODO determine automatically by data
+	private boolean normalizeByFrequency = false;
 
 	/**
 	 * Main method
@@ -99,6 +94,10 @@ public class Main {
 		measurements = new Measurements();
 		measurements.load(files);
 		
+		// Get initial control values
+		frequency = measurements.getMinFrequency();
+		viewZ = measurements.getMinZ();
+		
 		// Create and initialize application frame and menu. Order is critical here for proper display.
 		frame = new MainFrame(this);
 		frame.init();
@@ -134,6 +133,14 @@ public class Main {
 
 	public double getMargin() {
 		return margin;
+	}
+	
+	public boolean getNormalizeByFrequency() {
+		return normalizeByFrequency;
+	}
+
+	public void setNormalizeByFrequency(boolean b) {
+		normalizeByFrequency = b;
 	}
 }
 

@@ -1,6 +1,10 @@
 package de.tunetown.roommap.view.controls;
 
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import de.tunetown.roommap.main.Main;
@@ -19,6 +23,7 @@ public class Controls extends JPanel {
 	private Control freqControl;
 	private Control heightControl;
 	private Control marginControl;
+	private JCheckBox normalizeToFreqSwitch;
 	
 	public Controls(Main main) {
 		super();
@@ -41,6 +46,17 @@ public class Controls extends JPanel {
 		marginControl = new MarginControl(main, this);
 		add(marginControl);
 
+		normalizeToFreqSwitch = new JCheckBox("Normalize SPL range for selected frequency");
+		normalizeToFreqSwitch.setSelected(true);
+		normalizeToFreqSwitch.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				main.setNormalizeByFrequency(e.getStateChange() == ItemEvent.SELECTED);
+				main.repaint();
+			}
+		});
+		add(normalizeToFreqSwitch);
+		
 		// Initial update. This sets the initial values of all controls
 		updateControls();
 	}
@@ -52,5 +68,6 @@ public class Controls extends JPanel {
 		if (freqControl != null) freqControl.update();
 		if (marginControl != null) marginControl.update();
 		if (heightControl != null) heightControl.update();
+		if (normalizeToFreqSwitch != null) normalizeToFreqSwitch.setSelected(main.getNormalizeByFrequency());
 	}
 }

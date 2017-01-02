@@ -8,7 +8,7 @@ public class MarginControl extends Control {
 	private Main main;
 	
 	public MarginControl(Main main, Controls parent) {
-		super(parent, "Margin (Zoom):", 4);
+		super(parent, "Margin (m):", 4);
 		this.main = main;
 		
 		init();

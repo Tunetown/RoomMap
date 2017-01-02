@@ -171,6 +171,30 @@ public class Measurement {
 		return maxSplBuffer;
 	}
 
+	private double minFreqBuffer = Double.NaN;
+
+	public double getMinFrequency() {
+		if (Double.isNaN(minFreqBuffer)) {
+			minFreqBuffer = Double.MAX_VALUE;
+			for(double f : frequencies) {
+				if (f < minFreqBuffer) minFreqBuffer = f;
+			}
+		}
+		return minFreqBuffer;
+	}
+	
+	private double maxFreqBuffer = Double.NaN;
+
+	public double getMaxFrequency() {
+		if (Double.isNaN(maxFreqBuffer)) {
+			maxFreqBuffer = -Double.MAX_VALUE;
+			for(double f : frequencies) {
+				if (f > maxFreqBuffer) maxFreqBuffer = f;
+			}
+		}
+		return maxFreqBuffer;
+	}
+	
 	public long getSize() {
 		return spl.size();
 	}

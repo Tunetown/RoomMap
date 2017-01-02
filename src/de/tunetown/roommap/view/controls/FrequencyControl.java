@@ -8,7 +8,7 @@ public class FrequencyControl extends Control {
 	private Main main;
 	
 	public FrequencyControl(Main main, Controls parent) {
-		super(parent, "Frequency:", 4);
+		super(parent, "Frequency (Hz):", 4);
 		this.main = main;
 		
 		init();
