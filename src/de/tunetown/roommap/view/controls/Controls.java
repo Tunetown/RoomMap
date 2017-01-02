@@ -24,6 +24,7 @@ public class Controls extends JPanel {
 	private Control heightControl;
 	private Control marginControl;
 	private JCheckBox normalizeToFreqSwitch;
+	private JCheckBox projectionOfPointsSwitch;
 	
 	public Controls(Main main) {
 		super();
@@ -47,7 +48,6 @@ public class Controls extends JPanel {
 		add(marginControl);
 
 		normalizeToFreqSwitch = new JCheckBox("Normalize SPL range for selected frequency");
-		normalizeToFreqSwitch.setSelected(true);
 		normalizeToFreqSwitch.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -56,7 +56,17 @@ public class Controls extends JPanel {
 			}
 		});
 		add(normalizeToFreqSwitch);
-		
+
+		projectionOfPointsSwitch = new JCheckBox("3D projection of data points");
+		projectionOfPointsSwitch.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				main.setPointProjection(e.getStateChange() == ItemEvent.SELECTED);
+				main.repaint();
+			}
+		});
+		add(projectionOfPointsSwitch);
+
 		// Initial update. This sets the initial values of all controls
 		updateControls();
 	}
@@ -69,5 +79,6 @@ public class Controls extends JPanel {
 		if (marginControl != null) marginControl.update();
 		if (heightControl != null) heightControl.update();
 		if (normalizeToFreqSwitch != null) normalizeToFreqSwitch.setSelected(main.getNormalizeByFrequency());
+		if (projectionOfPointsSwitch != null) projectionOfPointsSwitch.setSelected(main.getPointProjection());
 	}
 }

@@ -53,7 +53,8 @@ public class Main {
 	private double viewZ = 0;       
 	private double margin = 0.3;
 	private boolean normalizeByFrequency = true;
-
+	private boolean projectionOfPoints = true;
+	
 	/**
 	 * Main method
 	 *  
@@ -141,6 +142,14 @@ public class Main {
 
 	public void setNormalizeByFrequency(boolean b) {
 		normalizeByFrequency = b;
+	}
+
+	public boolean getPointProjection() {
+		return projectionOfPoints;
+	}
+
+	public void setPointProjection(boolean b) {
+		projectionOfPoints = b;
 	}
 }
 

@@ -22,8 +22,9 @@ public class OutputGraphics extends JPanel {
 	private Main main;
 	
 	// TODO constants
-	private double resolution = 0.1;  // Resolution (model units, not pixels!)
-	private int maxSize = 800;        // Initial max. Size of data panel (pixels)
+	private double resolution = 0.1;       // Resolution (model units, not pixels!)
+	private int maxSize = 800;             // Initial max. Size of data panel (pixels)
+	private double projectionDepth = 100;  // Depth of 3d data point projection
 
 	public OutputGraphics(Main main) {
 		this.main = main;
@@ -115,12 +116,6 @@ public class OutputGraphics extends JPanel {
 		int diaX = convertModelToViewX(resolution);
 		int diaY = convertModelToViewY(resolution);
 		
-		int minAplha = 10;
-		int maxAlpha = 255;
-		
-		double minZ = main.getMeasurements().getMinZ();
-		double maxZ = main.getMeasurements().getMaxZ();
-		
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			double z = main.getViewZ() - m.getZ(); 
 			int x = getProjectionX(convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX()), z);
@@ -131,16 +126,52 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 
+	/**
+	 * Simple 3d projection of room data points
+	 * 
+	 * @param x
+	 * @param z
+	 * @return
+	 */
 	private int getProjectionX(int x, double z) {
-		return x;
+		if (!main.getPointProjection()) return x; 
+		Dimension d = getPaintDimension();
+		int x0 = x - (int)(d.getWidth() / 2);
+		x0 = x0 - (int)(z * x0 / projectionDepth) ;
+		return x0 + (int)(d.getWidth() / 2);
 	}
 	
+	/**
+	 * Simple 3d projection of room data points
+	 * 
+	 * @param y
+	 * @param z
+	 * @return
+	 */
 	private int getProjectionY(int y, double z) {
-		return y;
+		if (!main.getPointProjection()) return y;
+		Dimension d = getPaintDimension();
+		int y0 = y - (int)(d.getHeight() / 2);
+		y0 = y0 - (int)(z * y0 / projectionDepth) ;
+		return y0 + (int)(d.getHeight() / 2);
 	}
 
+	/**
+	 * Alpha value for 3d projection
+	 * 
+	 * @param z
+	 * @return
+	 */
 	private int getAlpha(double z) {
-		return 100;
+		if (!main.getPointProjection()) return 255;
+		int minAlpha = 30;
+		int maxAlpha = 255;
+
+		if (Math.abs(z) <= 0.5) {
+			return (int)(minAlpha + (maxAlpha - minAlpha) * (0.5 - Math.abs(z)) * 2);
+		} else {
+			return minAlpha;
+		}
 	}
 
 	/**
