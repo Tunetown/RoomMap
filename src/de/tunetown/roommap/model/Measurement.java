@@ -24,6 +24,12 @@ public class Measurement {
 	private double y = Double.NaN;
 	private double z = Double.NaN;
 	
+	private Measurements parent;
+	
+	public Measurement(Measurements parent) {
+		this.parent = parent;
+	}
+	
 	public void load(File file) {
 		// Load file content
 		String out = getFileContent(file);
@@ -150,10 +156,12 @@ public class Measurement {
 	private double minSplBuffer = Double.NaN;
 
 	public double getMinSpl() {
-		if (Double.isNaN(minSplBuffer)) {
-			minSplBuffer = Double.MAX_VALUE;
-			for(double s : spl) {
-				if (s < minSplBuffer) minSplBuffer = s;
+		synchronized(parent) {
+			if (Double.isNaN(minSplBuffer)) {
+				minSplBuffer = Double.MAX_VALUE;
+				for(double s : spl) {
+					if (s < minSplBuffer) minSplBuffer = s;
+				}
 			}
 		}
 		return minSplBuffer;
@@ -162,10 +170,12 @@ public class Measurement {
 	private double maxSplBuffer = Double.NaN;
 
 	public double getMaxSpl() {
-		if (Double.isNaN(maxSplBuffer)) {
-			maxSplBuffer = -Double.MAX_VALUE;
-			for(double s : spl) {
-				if (s > maxSplBuffer) maxSplBuffer = s;
+		synchronized(parent) {
+			if (Double.isNaN(maxSplBuffer)) {
+				maxSplBuffer = -Double.MAX_VALUE;
+				for(double s : spl) {
+					if (s > maxSplBuffer) maxSplBuffer = s;
+				}
 			}
 		}
 		return maxSplBuffer;
@@ -174,10 +184,12 @@ public class Measurement {
 	private double minFreqBuffer = Double.NaN;
 
 	public double getMinFrequency() {
-		if (Double.isNaN(minFreqBuffer)) {
-			minFreqBuffer = Double.MAX_VALUE;
-			for(double f : frequencies) {
-				if (f < minFreqBuffer) minFreqBuffer = f;
+		synchronized(parent) {
+			if (Double.isNaN(minFreqBuffer)) {
+				minFreqBuffer = Double.MAX_VALUE;
+				for(double f : frequencies) {
+					if (f < minFreqBuffer) minFreqBuffer = f;
+				}
 			}
 		}
 		return minFreqBuffer;
@@ -186,10 +198,12 @@ public class Measurement {
 	private double maxFreqBuffer = Double.NaN;
 
 	public double getMaxFrequency() {
-		if (Double.isNaN(maxFreqBuffer)) {
-			maxFreqBuffer = -Double.MAX_VALUE;
-			for(double f : frequencies) {
-				if (f > maxFreqBuffer) maxFreqBuffer = f;
+		synchronized(parent) {
+			if (Double.isNaN(maxFreqBuffer)) {
+				maxFreqBuffer = -Double.MAX_VALUE;
+				for(double f : frequencies) {
+					if (f > maxFreqBuffer) maxFreqBuffer = f;
+				}
 			}
 		}
 		return maxFreqBuffer;

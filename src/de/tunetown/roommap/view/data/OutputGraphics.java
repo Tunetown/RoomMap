@@ -3,6 +3,13 @@ package de.tunetown.roommap.view.data;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 import javax.swing.JPanel;
 
@@ -40,6 +47,7 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	private Dimension getPaintDimension() {
+		// TODO buffer
 		return getPaintDimension(getWidth(), getHeight());
 	}
 	
@@ -78,7 +86,11 @@ public class OutputGraphics extends JPanel {
 		g.setColor(Color.WHITE);//TODO
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		paintData(g);
+		if (main.getPooled()) {
+			paintDataPooled(g);
+		} else {
+			paintData(g);
+		}
 		paintPoints(g);
 	}
 
@@ -89,11 +101,10 @@ public class OutputGraphics extends JPanel {
 	 */
 	private void paintData(Graphics g) {
 		double modelZ = main.getViewZ();
-		
-		Dimension d = getPaintDimension();
-		int resX = convertModelToViewX(resolution);
 		int resY = convertModelToViewX(resolution);
-		
+		int resX = convertModelToViewX(resolution);
+		Dimension d = getPaintDimension();
+
 		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
 			for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
 				double rx = convertViewToModelX(x) - main.getMargin() + main.getMeasurements().getMinX(); 
@@ -107,6 +118,67 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 
+	/**
+	 * Paint data visualization
+	 * 
+	 * @param g
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void paintDataPooled(Graphics g) {
+		int resX = convertModelToViewX(resolution);
+		Dimension d = getPaintDimension();
+		// TODO cleanup
+		//System.out.println("Starting threads - " + (Runtime.getRuntime().availableProcessors() - 2));
+		List<Future> futures = new ArrayList<Future>();
+		ExecutorService pool = Executors.newWorkStealingPool(Runtime.getRuntime().availableProcessors() - 2);
+		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
+			futures.add(pool.submit(new PaintExecutor(this, x)));
+		}
+		pool.shutdown();
+		//System.out.println("Started " + futures.size()+ " threads");
+		try {
+			if (!pool.awaitTermination(Long.MAX_VALUE, TimeUnit.SECONDS)) {
+				// Error
+				System.out.println("Error: Threads not terminated correctly.");
+				System.exit(8);
+			}
+			//System.out.println("Ended threads");
+			try {
+				for(Future f : futures) {
+					ArrayList<PaintBuffer> buffers = (ArrayList<PaintBuffer>)(f.get());
+					for(PaintBuffer buf : buffers) {
+						g.setColor(buf.getColor());
+						g.fillRect(buf.getX(), buf.getY(), buf.getW(), buf.getH());
+					}
+				}
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public List<PaintBuffer> calculateX(int x) {
+		List<PaintBuffer> ret = new ArrayList<PaintBuffer>();
+		
+		double modelZ = main.getViewZ();
+		Dimension d = getPaintDimension();
+		int resX = convertModelToViewX(resolution);
+		int resY = convertModelToViewX(resolution);
+
+		for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
+			double rx = convertViewToModelX(x) - main.getMargin() + main.getMeasurements().getMinX(); 
+			double ry = convertViewToModelY(y) - main.getMargin() + main.getMeasurements().getMinY();
+			
+			double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
+			
+			ret.add(new PaintBuffer(getOutColor(spl), x - resX/2, y - resY/2, resX, resY));
+		}
+		return ret;
+	}
+	
 	/**
 	 * Paint points visualization
 	 * 

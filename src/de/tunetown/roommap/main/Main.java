@@ -1,11 +1,9 @@
 package de.tunetown.roommap.main;
 
 import java.io.File;
-
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
-
 import de.tunetown.roommap.model.Measurements;
 import de.tunetown.roommap.view.MainFrame;
 
@@ -54,6 +52,8 @@ public class Main {
 	private double margin = 0.3;
 	private boolean normalizeByFrequency = true;
 	private boolean projectionOfPoints = true;
+	
+	private boolean pooled = true;
 	
 	/**
 	 * Main method
@@ -150,6 +150,14 @@ public class Main {
 
 	public void setPointProjection(boolean b) {
 		projectionOfPoints = b;
+	}
+	
+	public boolean getPooled() {
+		return pooled;
+	}
+
+	public void setPooled(boolean b) {
+		pooled = b;
 	}
 }
 

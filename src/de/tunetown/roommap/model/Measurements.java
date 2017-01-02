@@ -31,7 +31,7 @@ public class Measurements {
 	public void load(File[] files) {
 		measurements = new ArrayList<Measurement>();
 		for(File file : files) {
-			Measurement m = new Measurement();
+			Measurement m = new Measurement(this);
 			m.load(file);
 			if (m.isValid()) measurements.add(m);
 		}
@@ -79,16 +79,18 @@ public class Measurements {
 	 * @return
 	 */
 	private ThinPlateSplineInterpolation getInterpolator(double freq) {
-		if (freq != interpolatorFrequency) {
-			ArrayList<PointND> points = new ArrayList<PointND>();
-			ArrayList<PointND> values = new ArrayList<PointND>();
-			
-			for(Measurement m : measurements) {
-				points.add(new PointND(m.getX(), m.getY(), m.getZ()));
-				values.add(new PointND(m.getSpl(freq)));
+		synchronized(this) {
+			if (freq != interpolatorFrequency) {
+				ArrayList<PointND> points = new ArrayList<PointND>();
+				ArrayList<PointND> values = new ArrayList<PointND>();
+				
+				for(Measurement m : measurements) {
+					points.add(new PointND(m.getX(), m.getY(), m.getZ()));
+					values.add(new PointND(m.getSpl(freq)));
+				}
+				interpolator = new ThinPlateSplineInterpolation(3, points, values);
+				interpolatorFrequency = freq;
 			}
-			interpolator = new ThinPlateSplineInterpolation(3, points, values);
-			interpolatorFrequency = freq;
 		}
 		return interpolator;
 	}
@@ -96,10 +98,12 @@ public class Measurements {
 	private double maxXBuffer = Double.NaN;
 	
 	public double getMaxX() {
-		if (Double.isNaN(maxXBuffer)) {
-			maxXBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getX() > maxXBuffer) maxXBuffer = m.getX();
+		synchronized(this) {
+			if (Double.isNaN(maxXBuffer)) {
+				maxXBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getX() > maxXBuffer) maxXBuffer = m.getX();
+				}
 			}
 		}
 		return maxXBuffer;
@@ -108,10 +112,12 @@ public class Measurements {
 	private double maxYBuffer = Double.NaN;
 
 	public double getMaxY() {
-		if (Double.isNaN(maxYBuffer)) {
-			maxYBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getY() > maxYBuffer) maxYBuffer = m.getY();
+		synchronized(this) {
+			if (Double.isNaN(maxYBuffer)) {
+				maxYBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getY() > maxYBuffer) maxYBuffer = m.getY();
+				}
 			}
 		}
 		return maxYBuffer;
@@ -120,10 +126,12 @@ public class Measurements {
 	private double maxZBuffer = Double.NaN;
 
 	public double getMaxZ() {
-		if (Double.isNaN(maxZBuffer)) {
-			maxZBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getZ() > maxZBuffer) maxZBuffer = m.getZ();
+		synchronized(this) {
+			if (Double.isNaN(maxZBuffer)) {
+				maxZBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getZ() > maxZBuffer) maxZBuffer = m.getZ();
+				}
 			}
 		}
 		return maxZBuffer;
@@ -132,10 +140,12 @@ public class Measurements {
 	private double minXBuffer = Double.NaN;
 
 	public double getMinX() {
-		if (Double.isNaN(minXBuffer)) {
-			minXBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getX() < minXBuffer) minXBuffer = m.getX();
+		synchronized(this) {
+			if (Double.isNaN(minXBuffer)) {
+				minXBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getX() < minXBuffer) minXBuffer = m.getX();
+				}
 			}
 		}
 		return minXBuffer;
@@ -144,10 +154,12 @@ public class Measurements {
 	private double minYBuffer = Double.NaN;
 	
 	public double getMinY() {
-		if (Double.isNaN(minYBuffer)) {
-			minYBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getY() < minYBuffer) minYBuffer = m.getY();
+		synchronized(this) {
+			if (Double.isNaN(minYBuffer)) {
+				minYBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getY() < minYBuffer) minYBuffer = m.getY();
+				}
 			}
 		}
 		return minYBuffer; 
@@ -156,10 +168,12 @@ public class Measurements {
 	private double minZBuffer = Double.NaN;
 	
 	public double getMinZ() {
-		if (Double.isNaN(minZBuffer)) {
-			minZBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getZ() < minZBuffer) minZBuffer = m.getZ();
+		synchronized(this) {
+			if (Double.isNaN(minZBuffer)) {
+				minZBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getZ() < minZBuffer) minZBuffer = m.getZ();
+				}
 			}
 		}
 		return minZBuffer; 
@@ -173,10 +187,12 @@ public class Measurements {
 	 * @return
 	 */
 	public double getMinSpl() {
-		if (Double.isNaN(minSPLBuffer)) {
-			minSPLBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getMinSpl() < minSPLBuffer) minSPLBuffer = m.getMinSpl();
+		synchronized(this) {
+			if (Double.isNaN(minSPLBuffer)) {
+				minSPLBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getMinSpl() < minSPLBuffer) minSPLBuffer = m.getMinSpl();
+				}
 			}
 		}
 		return minSPLBuffer;
@@ -186,12 +202,14 @@ public class Measurements {
 	private double minSPLFBufferFreq = 0;
 
 	public double getMinSpl(double freq) {
-		if (Double.isNaN(Double.NaN) || minSPLFBufferFreq != freq) {
-			minSPLFBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getSpl(freq) < minSPLFBuffer) minSPLFBuffer = m.getSpl(freq);
+		synchronized(this) {
+			if (Double.isNaN(Double.NaN) || minSPLFBufferFreq != freq) {
+				minSPLFBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getSpl(freq) < minSPLFBuffer) minSPLFBuffer = m.getSpl(freq);
+				}
+				minSPLFBufferFreq = freq;
 			}
-			minSPLFBufferFreq = freq;
 		}
 		return minSPLFBuffer;
 	}
@@ -204,10 +222,12 @@ public class Measurements {
 	 * @return
 	 */
 	public double getMaxSpl() {
-		if (Double.isNaN(maxSPLBuffer)) {
-			maxSPLBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getMaxSpl() > maxSPLBuffer) maxSPLBuffer = m.getMaxSpl();
+		synchronized(this) {
+			if (Double.isNaN(maxSPLBuffer)) {
+				maxSPLBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getMaxSpl() > maxSPLBuffer) maxSPLBuffer = m.getMaxSpl();
+				}
 			}
 		}
 		return maxSPLBuffer;
@@ -217,12 +237,14 @@ public class Measurements {
 	private double maxSPLFBufferFreq = 0;
 
 	public double getMaxSpl(double freq) {
-		if (Double.isNaN(maxSPLFBuffer) || maxSPLFBufferFreq != freq) {
-			maxSPLFBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getSpl(freq) > maxSPLFBuffer) maxSPLFBuffer = m.getSpl(freq);
+		synchronized(this) {
+			if (Double.isNaN(maxSPLFBuffer) || maxSPLFBufferFreq != freq) {
+				maxSPLFBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getSpl(freq) > maxSPLFBuffer) maxSPLFBuffer = m.getSpl(freq);
+				}
+				maxSPLFBufferFreq = freq;
 			}
-			maxSPLFBufferFreq = freq;
 		}
 		return maxSPLFBuffer;
 	}
@@ -230,10 +252,12 @@ public class Measurements {
 	private double minFreqBuffer = Double.NaN;
 	
 	public double getMinFrequency() {
-		if (Double.isNaN(minFreqBuffer)) {
-			minFreqBuffer = Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getMinFrequency() < minFreqBuffer) minFreqBuffer = m.getMinFrequency();
+		synchronized(this) {
+			if (Double.isNaN(minFreqBuffer)) {
+				minFreqBuffer = Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getMinFrequency() < minFreqBuffer) minFreqBuffer = m.getMinFrequency();
+				}
 			}
 		}
 		return minFreqBuffer; 
@@ -242,10 +266,12 @@ public class Measurements {
 	private double maxFreqBuffer = Double.NaN;
 	
 	public double getMaxFrequency() {
-		if (Double.isNaN(maxFreqBuffer)) {
-			maxFreqBuffer = -Double.MAX_VALUE;
-			for(Measurement m : measurements) {
-				if (m.getMaxFrequency() > maxFreqBuffer) maxFreqBuffer = m.getMaxFrequency();
+		synchronized(this) {
+			if (Double.isNaN(maxFreqBuffer)) {
+				maxFreqBuffer = -Double.MAX_VALUE;
+				for(Measurement m : measurements) {
+					if (m.getMaxFrequency() > maxFreqBuffer) maxFreqBuffer = m.getMaxFrequency();
+				}
 			}
 		}
 		return maxFreqBuffer; 

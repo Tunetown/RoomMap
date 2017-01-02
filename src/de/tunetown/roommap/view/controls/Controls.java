@@ -25,6 +25,7 @@ public class Controls extends JPanel {
 	private Control marginControl;
 	private JCheckBox normalizeToFreqSwitch;
 	private JCheckBox projectionOfPointsSwitch;
+	private JCheckBox pooledSwitch;
 	
 	public Controls(Main main) {
 		super();
@@ -67,6 +68,16 @@ public class Controls extends JPanel {
 		});
 		add(projectionOfPointsSwitch);
 
+		pooledSwitch = new JCheckBox("Multithreading");
+		pooledSwitch.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				main.setPooled(e.getStateChange() == ItemEvent.SELECTED);
+				main.repaint();
+			}
+		});
+		add(pooledSwitch);
+
 		// Initial update. This sets the initial values of all controls
 		updateControls();
 	}
@@ -80,5 +91,6 @@ public class Controls extends JPanel {
 		if (heightControl != null) heightControl.update();
 		if (normalizeToFreqSwitch != null) normalizeToFreqSwitch.setSelected(main.getNormalizeByFrequency());
 		if (projectionOfPointsSwitch != null) projectionOfPointsSwitch.setSelected(main.getPointProjection());
+		if (pooledSwitch != null) pooledSwitch.setSelected(main.getPooled());
 	}
 }
