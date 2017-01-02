@@ -51,8 +51,8 @@ public class Main {
 	
 	private double frequency = 0;  
 	private double viewZ = 0;       
-	private double margin = 0.5;               // TODO determine automatically by data
-	private boolean normalizeByFrequency = false;
+	private double margin = 0.3;
+	private boolean normalizeByFrequency = true;
 
 	/**
 	 * Main method

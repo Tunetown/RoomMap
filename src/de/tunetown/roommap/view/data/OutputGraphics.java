@@ -81,6 +81,11 @@ public class OutputGraphics extends JPanel {
 		paintPoints(g);
 	}
 
+	/**
+	 * Paint data visualization
+	 * 
+	 * @param g
+	 */
 	private void paintData(Graphics g) {
 		double modelZ = main.getViewZ();
 		
@@ -101,17 +106,41 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 
+	/**
+	 * Paint points visualization
+	 * 
+	 * @param g
+	 */
 	private void paintPoints(Graphics g) {
-		g.setColor(Color.DARK_GRAY);//TODO
-
+		int diaX = convertModelToViewX(resolution);
+		int diaY = convertModelToViewY(resolution);
+		
+		int minAplha = 10;
+		int maxAlpha = 255;
+		
+		double minZ = main.getMeasurements().getMinZ();
+		double maxZ = main.getMeasurements().getMaxZ();
+		
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
-			int x = convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX());
-			int y = convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY());
-			// TODO optimize
-			int diaX = convertModelToViewX(resolution);
-			int diaY = convertModelToViewY(resolution);
+			double z = main.getViewZ() - m.getZ(); 
+			int x = getProjectionX(convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX()), z);
+			int y = getProjectionY(convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY()), z);
+			
+			g.setColor(new Color(0, 0, 0, getAlpha(z)));
 			g.fillOval(x - diaX/2, y - diaY/2, diaX, diaY);
 		}
+	}
+
+	private int getProjectionX(int x, double z) {
+		return x;
+	}
+	
+	private int getProjectionY(int y, double z) {
+		return y;
+	}
+
+	private int getAlpha(double z) {
+		return 100;
 	}
 
 	/**
