@@ -1,4 +1,4 @@
-package de.tunetown.roommap.view;
+package de.tunetown.roommap.view.data;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,7 +24,6 @@ public class OutputGraphics extends JPanel {
 	// TODO constants
 	private double resolution = 0.1;  // Resolution (model units, not pixels!)
 	private int maxSize = 800;        // Initial max. Size of data panel (pixels)
-	private int gridWidth = 3;        // Grid width (pixels)
 
 	public OutputGraphics(Main main) {
 		this.main = main;
@@ -105,7 +104,7 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 
-	private Color getOutColor(double spl) {
+	public Color getOutColor(double spl) {
 		if (spl == Double.NaN) return Color.BLACK;//TODO
 		
 		double minSpl = main.getMeasurements().getMinSpl(main.getFrequency());

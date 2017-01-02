@@ -31,24 +31,16 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * - Unified controls mini-framework
- * 		- Label, Slider, and value input 
- * 		- as one JLabel 
- * - Implement Grid
- * 
  * - 0.50 Determine freq range by data
  *		- Upper boundary: limit to <= 500Hz
  *		- Lower boundary: Limit to lowest data point
  * 
- * 
  * - 0.25 add units to values
- * - 1.00 !!!! color legend
  * - 1.00 axis legends
  * 
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * - 3.00 !!!! simple rectangle vector-orientiert paint layer
- * 		- save in same folder with measurements
+ * - 2.00 Import image PNG to lay over data
  * 
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 

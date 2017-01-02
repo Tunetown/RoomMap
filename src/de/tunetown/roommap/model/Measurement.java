@@ -155,7 +155,7 @@ public class Measurement {
 
 	public double getMaxSpl() {
 		// TODO buffer
-		double ret = Double.MIN_VALUE;
+		double ret = -Double.MAX_VALUE;
 		for(double s : spl) {
 			if (s > ret) ret = s;
 		}
