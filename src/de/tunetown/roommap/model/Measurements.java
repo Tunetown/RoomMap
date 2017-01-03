@@ -18,7 +18,7 @@ public class Measurements {
 	private List<Measurement> measurements;
 
 	private double interpolatorFrequency = 0;
-	private ThinPlateSplineInterpolation interpolator;
+	private ThinPlateSplineInterpolation interpolator = null;
 	
 	public Measurements() {
 	}
@@ -80,7 +80,7 @@ public class Measurements {
 	 */
 	private ThinPlateSplineInterpolation getInterpolator(double freq) {
 		synchronized(this) {
-			if (freq != interpolatorFrequency) {
+			if (interpolator == null || freq != interpolatorFrequency) {
 				ArrayList<PointND> points = new ArrayList<PointND>();
 				ArrayList<PointND> values = new ArrayList<PointND>();
 				

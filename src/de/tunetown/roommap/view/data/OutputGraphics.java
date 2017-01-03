@@ -253,7 +253,7 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	public Color getOutColor(double spl) {
-		if (spl == Double.NaN) return Color.BLACK;//TODO
+		if (Double.isNaN(spl)) return Color.BLACK;//TODO
 		
 		double minSpl;
 		double maxSpl;
