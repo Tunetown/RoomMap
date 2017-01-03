@@ -36,7 +36,7 @@ import de.tunetown.roommap.view.MainFrame;
  * - 1.00 Do not paint data outside of current Z´s x and y bounds (+margin)
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
- * 				- Only allow frequencies which do exist in measurement 0
+ * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 
  * 					-> Stateful measurements.frequency attribute
  * 					-> Show correct frequency in text input
  * - 1.00 add units to values
