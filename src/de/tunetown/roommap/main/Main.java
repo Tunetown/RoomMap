@@ -19,6 +19,9 @@ import de.tunetown.roommap.view.MainFrame;
  * Just try it with the delivered examples: When the program asks you for files, select all
  * files inside one example folder and hit OK. 
  * 
+ * Features:
+ * - Mulithreaded interpolation 
+ * 
  * Dependencies to external libraries/sources: 
  * - CONRAD, a biomedical library which is being used here for thin plate spline interpolation in 3D. Just the necessary 
  *   classes are included as source, slightly modified to kill eclipse warnings.
