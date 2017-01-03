@@ -41,7 +41,7 @@ public class Legend extends JPanel {
 
 		double min;
 		double max;
-		if (main.getNormalizeByFrequency()){ 
+		if (main.getNormalizeByFrequency()) { 
 			min = main.getMeasurements().getMinSpl(main.getFrequency());
 			max = main.getMeasurements().getMaxSpl(main.getFrequency());
 		} else {

@@ -20,29 +20,29 @@ public class ThinPlateSplineInterpolation {
 	/**
 	 * Input control points
 	 */
-	private ArrayList<PointND> gridPoints;
+	protected ArrayList<PointND> gridPoints;
 	/**
 	 * Corresponding values to the gridPoints
 	 */
-	private ArrayList<PointND> values;
+	protected ArrayList<PointND> values;
 	/**
 	 * Dimension of the points
 	 */
-	private int dim;
+	protected int dim;
 	/**
 	 * TPS Interpolation coefficients
 	 */
-	private SimpleMatrix coefficients;
+	protected SimpleMatrix coefficients;
 	/**
 	 * Polynomial Ax+b
 	 */
-	private SimpleMatrix A;
+	protected SimpleMatrix A;
 
 	/**
 	 * Polynomial Ax+b
 	 */
-	private SimpleVector b;
-	private boolean debug = false;
+	protected SimpleVector b;
+	protected boolean debug = false;
 
 	public float[] getAsFloatPoints() {
 		float[] pts = new float[gridPoints.size()*dim];
@@ -116,7 +116,7 @@ public class ThinPlateSplineInterpolation {
 	 * Estimates the coefficients for the augmented TPS interpolation (including
 	 * polynomial)
 	 */
-	private void estimateCoefficients() {
+	protected void estimateCoefficients() {
 
 		long start = 0;
 		if (debug)
@@ -194,7 +194,7 @@ public class ThinPlateSplineInterpolation {
 	 *            Point 2
 	 * @return euclidean distance between two points
 	 */
-	private double kernel(PointND p1, PointND p2) {
+	protected double kernel(PointND p1, PointND p2) {
 		return p1.euclideanDistance(p2);
 	}
 
@@ -205,7 +205,7 @@ public class ThinPlateSplineInterpolation {
 	 * @param p2
 	 * @return
 	 */
-	private SimpleMatrix G(PointND p1, PointND p2) {
+	protected SimpleMatrix G(PointND p1, PointND p2) {
 		SimpleMatrix G = new SimpleMatrix(dim, dim);
 		G.identity();
 		double val = kernel(p1, p2);

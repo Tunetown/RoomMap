@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.tunetown.roommap.main.Main;
 import edu.stanford.rsl.conrad.geometry.shapes.simple.PointND;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
@@ -15,12 +16,14 @@ import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
  */
 public class Measurements {
 	
+	private Main main;
+	
 	private List<Measurement> measurements;
-
 	private double interpolatorFrequency = 0;
 	private ThinPlateSplineInterpolation interpolator = null;
 	
-	public Measurements() {
+	public Measurements(Main main) {
+		this.main = main;
 	}
 	
 	/**
@@ -88,11 +91,19 @@ public class Measurements {
 					points.add(new PointND(m.getX(), m.getY(), m.getZ()));
 					values.add(new PointND(m.getSpl(freq)));
 				}
-				interpolator = new ThinPlateSplineInterpolation(3, points, values);
+				if (main.getPooledFreqChange()) {
+					interpolator = new ThinPlateSplineInterpolationPooled(3, points, values);
+				} else {
+					interpolator = new ThinPlateSplineInterpolation(3, points, values);
+				}
 				interpolatorFrequency = freq;
 			}
 		}
 		return interpolator;
+	}
+	
+	public void resetInterpolator() {
+		interpolator = null;
 	}
 	
 	private double maxXBuffer = Double.NaN;
@@ -203,7 +214,7 @@ public class Measurements {
 
 	public double getMinSpl(double freq) {
 		synchronized(this) {
-			if (Double.isNaN(Double.NaN) || minSPLFBufferFreq != freq) {
+			if (Double.isNaN(minSPLFBuffer) || minSPLFBufferFreq != freq) {
 				minSPLFBuffer = Double.MAX_VALUE;
 				for(Measurement m : measurements) {
 					if (m.getSpl(freq) < minSPLFBuffer) minSPLFBuffer = m.getSpl(freq);

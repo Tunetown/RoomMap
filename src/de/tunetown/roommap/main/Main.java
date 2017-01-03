@@ -53,7 +53,8 @@ public class Main {
 	private boolean normalizeByFrequency = true;
 	private boolean projectionOfPoints = true;
 	
-	private boolean pooled = true;
+	private boolean pooledInterpolation = true;
+	private boolean pooledFreqChange = true;
 	
 	/**
 	 * Main method
@@ -92,7 +93,7 @@ public class Main {
 		if (j.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) System.exit(0);
 		
 		File[] files = j.getSelectedFiles();
-		measurements = new Measurements();
+		measurements = new Measurements(this);
 		measurements.load(files);
 		
 		// Get initial control values
@@ -152,12 +153,21 @@ public class Main {
 		projectionOfPoints = b;
 	}
 	
-	public boolean getPooled() {
-		return pooled;
+	public boolean getPooledInterpolation() {
+		return pooledInterpolation;
 	}
 
 	public void setPooled(boolean b) {
-		pooled = b;
+		pooledInterpolation = b;
+	}
+
+	public void setPooledFreqChange(boolean b) {
+		pooledFreqChange = b;
+		measurements.resetInterpolator();
+	}
+
+	public boolean getPooledFreqChange() {
+		return pooledFreqChange;
 	}
 }
 
