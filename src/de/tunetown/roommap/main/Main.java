@@ -31,6 +31,7 @@ import de.tunetown.roommap.view.MainFrame;
  * TODO:
  * - 3.00 Pre-determine coefficients for interpolation 
  * 				- Only allow integer frequencies
+ * 				- Store one interpolator per frequency
  * - 0.5  add units to values
  * - 1.00 axis legends
  * 
