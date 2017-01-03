@@ -29,12 +29,14 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
+ * - 3.00 Pre-determine coefficients for interpolation 
+ * 				- Only allow integer frequencies
  * - 0.5  add units to values
  * - 1.00 axis legends
  * 
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * - 2.00 Import image PNG to lay over data
+ * - 1.00 Import image PNG to lay over data
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 
  * @author Thomas Weber, 2016/2017

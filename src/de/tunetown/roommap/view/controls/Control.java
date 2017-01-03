@@ -117,14 +117,17 @@ public abstract class Control extends JPanel {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	protected void updateSliderAttributes() {
 		Hashtable labelTable = new Hashtable();
-		DecimalFormat df = new DecimalFormat("#.##");
 		for(int i=0; i<=1000; i+=(1000 / labelCount)) {
-			labelTable.put(i, new JLabel(df.format(convertFromSlider(i))));
+			labelTable.put(i, new JLabel(formatValue(convertFromSlider(i))));
 		}
 		slider.setLabelTable(labelTable);
 		slider.setPaintLabels(true);
-		//slider.setMinorTickSpacing(20);
 		slider.setPaintTicks(true);
+	}
+	
+	protected String formatValue(double value) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(value);
 	}
 
 	/**
