@@ -9,9 +9,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
-
 import javax.swing.JPanel;
-
 import rainbowvis.Rainbow;
 import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.model.Measurement;;
