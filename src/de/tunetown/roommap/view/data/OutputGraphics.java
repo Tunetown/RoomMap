@@ -29,6 +29,8 @@ public class OutputGraphics extends JPanel {
 	private double resolution = 0.2;       // Resolution (model units, not pixels!)
 	private int maxSize = 800;             // Initial max. Size of data panel (pixels)
 	private double projectionDepth = 100;  // Depth of 3d data point projection
+	private int minAlpha = 20;
+	private int maxAlpha = 255;
 
 	public OutputGraphics(Main main) {
 		this.main = main;
@@ -184,8 +186,8 @@ public class OutputGraphics extends JPanel {
 	 * @param g
 	 */
 	private void paintPoints(Graphics g) {
-		int diaX = convertModelToViewX(resolution);
-		int diaY = convertModelToViewY(resolution);
+		int diaX = convertModelToViewX(resolution/2);
+		int diaY = convertModelToViewY(resolution/2);
 		
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			double z = main.getViewZ() - m.getZ(); 
@@ -235,8 +237,6 @@ public class OutputGraphics extends JPanel {
 	 */
 	private int getAlpha(double z) {
 		if (!main.getPointProjection()) return 255;
-		int minAlpha = 30;
-		int maxAlpha = 255;
 
 		if (Math.abs(z) <= 0.5) {
 			return (int)(minAlpha + (maxAlpha - minAlpha) * (0.5 - Math.abs(z)) * 2);

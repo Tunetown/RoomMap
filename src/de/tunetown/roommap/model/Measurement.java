@@ -141,6 +141,16 @@ public class Measurement {
 		}
 	}
 	
+	public double getNextFrequency(double freq) {
+		int i = 0;
+		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
+		if (i < frequencies.size()) {
+			return spl.get(i);
+		} else {
+			return Double.NaN;
+		}
+	}
+	
 	public double getX() {
 		return x;
 	}

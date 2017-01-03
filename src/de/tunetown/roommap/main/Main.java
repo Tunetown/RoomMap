@@ -29,12 +29,15 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
+ * Finish current features:
+ * - 1.00 Do not paint data outside of current Z´s x and y bounds (+margin)
  * - 3.00 Pre-determine coefficients for interpolation 
  * 				- Only allow integer frequencies
  * 				- Store one interpolator per frequency
- * - 0.5  add units to values
+ * - 1.00 add units to values
  * - 1.00 axis legends
  * 
+ * New features:
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
  * - 1.00 Import image PNG to lay over data
@@ -53,7 +56,7 @@ public class Main {
 	private double frequency = 0;  
 	private double viewZ = 0;       
 	private double margin = 0.3;
-	private boolean normalizeByFrequency = true;
+	private boolean normalizeByFrequency = false;
 	private boolean projectionOfPoints = true;
 	
 	private boolean pooledInterpolation = true;
