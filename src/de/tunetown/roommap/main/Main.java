@@ -33,6 +33,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
+ * - Invert SPL Legend!
  * - 1.00 Do not paint data outside of current Z´s x and y bounds (+margin)
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
