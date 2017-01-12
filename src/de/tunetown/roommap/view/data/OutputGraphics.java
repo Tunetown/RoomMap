@@ -83,9 +83,6 @@ public class OutputGraphics extends JPanel {
 		return new Dimension(w, h);
 	}
 
-	/**
-	 * Paint method
-	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
