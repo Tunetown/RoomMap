@@ -33,6 +33,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
+ * - Frequency: Show real value
  * - Split view classes up (data, points etc)
  * - Keep aspect ratio of window
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 

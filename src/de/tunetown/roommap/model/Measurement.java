@@ -140,7 +140,7 @@ public class Measurement {
 			return Double.NaN;
 		}
 	}
-	
+	/*
 	public double getNextFrequency(double freq) {
 		int i = 0;
 		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
@@ -150,7 +150,7 @@ public class Measurement {
 			return Double.NaN;
 		}
 	}
-	
+	*/
 	public double getX() {
 		return x;
 	}
