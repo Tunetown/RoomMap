@@ -24,7 +24,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * Dependencies to external libraries/sources: 
  * - CONRAD, a biomedical library which is being used here for thin plate spline interpolation in 3D. Just the necessary 
- *   classes are included as source, slightly modified to kill eclipse warnings.
+ *   classes are included as source, slightly modified to kill eclipse warnings etc.
  * - rainbowvis: This is also included as source, and used for Color interpolation. This has also been modified to produce
  *   Color instances instead of CSS strings.
  * - ij.jar: Used by CONRAD, included as jar archive
@@ -33,16 +33,15 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
- * - 1.00 Do not paint data outside of current Z´s x and y bounds (+margin)
+ * - 1.00 Grid (3d)
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
  * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 
  * 					-> Stateful measurements.frequency attribute
  * 					-> Show correct frequency in text input
- * - 1.00 add units to values
- * - 1.00 axis legends
  * 
  * New features:
+ * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
  * - 1.00 Import image PNG to lay over data
@@ -62,7 +61,7 @@ public class Main {
 	private double viewZ = 0;       
 	private double margin = 0.3;
 	private boolean normalizeByFrequency = false;
-	private boolean projectionOfPoints = true;
+	private boolean projectionOfPoints = false;
 	
 	private boolean pooledInterpolation = true;
 	private boolean pooledFreqChange = true;

@@ -2,14 +2,20 @@ package de.tunetown.roommap.view.data;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
+
 import javax.swing.JPanel;
+
 import rainbowvis.Rainbow;
 import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.model.Measurement;;
@@ -31,7 +37,9 @@ public class OutputGraphics extends JPanel {
 	private double projectionDepth = 100;  // Depth of 3d data point projection
 	private int minAlpha = 20;
 	private int maxAlpha = 255;
-
+	private int labelWidth = 20;
+	private int fontSize = 12;
+	
 	public OutputGraphics(Main main) {
 		this.main = main;
 		
@@ -66,10 +74,10 @@ public class OutputGraphics extends JPanel {
 		int w;
 		int h;
 		if (modelRatio > panelRatio) {
-			w = viewWidth;
+			w = viewWidth - labelWidth;
 			h = (int)(w / modelRatio);
 		} else {
-			h = viewHeight;
+			h = viewHeight - labelWidth;
 			w = (int)(h * modelRatio);
 		}
 		return new Dimension(w, h);
@@ -91,6 +99,38 @@ public class OutputGraphics extends JPanel {
 			paintData(g);
 		}
 		paintPoints(g);
+		paintAxes(g);
+	}
+
+	private void paintAxes(Graphics g) {
+		Graphics2D g2 = (Graphics2D)g;
+		g2.setColor(Color.BLACK); // TODO
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g2.setFont(new Font("Helvetica", Font.PLAIN, fontSize)); 
+        DecimalFormat df = new DecimalFormat("#.##");
+        double margin = main.getMargin();
+        double res = 1;
+        
+        if (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() >= 20) res = 2; 
+        if (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() >= 100) res = 10; 
+        int vy = getHeight() - fontSize - 2;
+        double x = new Double((int)main.getMeasurements().getMinX());
+        while(x <= main.getMeasurements().getMaxX()) {
+			int vx = convertModelToViewX(x + margin - main.getMeasurements().getMinX());
+        	g2.drawString(df.format(x), vx, vy + fontSize);
+        	x+=res;
+        }
+
+        res = 1;
+        if (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() >= 20) res = 2; 
+        if (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() >= 100) res = 10; 
+        int vx = getWidth() - fontSize/4 - 2;
+        double y = new Double((int)main.getMeasurements().getMinY());
+        while(y <= main.getMeasurements().getMaxY()) {
+        	int vy2 = convertModelToViewY(y + margin - main.getMeasurements().getMinY());
+        	g2.drawString(df.format(y), vx - fontSize/4, vy2);
+        	y+=res;
+        }
 	}
 
 	/**
@@ -107,9 +147,11 @@ public class OutputGraphics extends JPanel {
 		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
 			double x1 = convertViewToModelX(x);
 			for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
-				double rx = x1 - main.getMargin() + main.getMeasurements().getMinX(); 
-				double ry = convertViewToModelY(y) - main.getMargin() + main.getMeasurements().getMinY();
+				double y1 = convertViewToModelY(y);
+				if (!isInside(x1, y1, modelZ)) continue;
 				
+				double rx = x1 - main.getMargin() + main.getMeasurements().getMinX(); 
+				double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 				double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
 				
 				g.setColor(getOutColor(spl));
@@ -170,16 +212,37 @@ public class OutputGraphics extends JPanel {
 		double x1 = convertViewToModelX(x);
 
 		for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
-			double rx = x1 - main.getMargin() + main.getMeasurements().getMinX(); 
-			double ry = convertViewToModelY(y) - main.getMargin() + main.getMeasurements().getMinY();
-			
+			double y1 = convertViewToModelY(y);
+			if (!isInside(x1, y1, modelZ)) continue; 
+
+			double rx = x1 - main.getMargin() + main.getMeasurements().getMinX();
+			double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 			double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
-			
+
 			ret.add(new PaintBuffer(getOutColor(spl), x - resX/2, y - resY/2, resX, resY));
 		}
 		return ret;
 	}
 	
+	/**
+	 * Are these model coordinates inside the rectangular boundaries of the model data points (+ margin)?
+	 * (deactivated)
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	private boolean isInside(double x, double y, double z) {
+		return true;
+		/*
+		double m = main.getMargin();
+		return x >= main.getMeasurements().getMinX() - m && x <= main.getMeasurements().getMaxX() + m &&
+				y >= main.getMeasurements().getMinY() - m && y <= main.getMeasurements().getMaxY() + m &&
+				z >= main.getMeasurements().getMinZ() - m && z <= main.getMeasurements().getMaxZ() + m;
+				//*/
+	}
+
 	/**
 	 * Paint points visualization
 	 * 
@@ -236,7 +299,7 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	private int getAlpha(double z) {
-		if (!main.getPointProjection()) return 255;
+		//if (!main.getPointProjection()) return 255;
 
 		if (Math.abs(z) <= 0.5) {
 			return (int)(minAlpha + (maxAlpha - minAlpha) * (0.5 - Math.abs(z)) * 2);
