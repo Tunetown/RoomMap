@@ -38,7 +38,7 @@ public class OutputGraphics extends JPanel {
 	private int minAlpha = 20;
 	private int maxAlpha = 255;
 	private int labelWidth = 20;
-	private int fontSize = 12;
+	private int fontSize = 10;
 	
 	public OutputGraphics(Main main) {
 		this.main = main;
@@ -98,8 +98,14 @@ public class OutputGraphics extends JPanel {
 		} else {
 			paintData(g);
 		}
+		paintGrid(g);
 		paintPoints(g);
 		paintAxes(g);
+	}
+
+	private void paintGrid(Graphics g) {
+		g.setColor(Color.LIGHT_GRAY);
+		// TODO Grid between min/max
 	}
 
 	private void paintAxes(Graphics g) {
@@ -117,7 +123,7 @@ public class OutputGraphics extends JPanel {
         double x = new Double((int)main.getMeasurements().getMinX());
         while(x <= main.getMeasurements().getMaxX()) {
 			int vx = convertModelToViewX(x + margin - main.getMeasurements().getMinX());
-        	g2.drawString(df.format(x), vx, vy + fontSize);
+        	g2.drawString(df.format(x), vx - fontSize/4, vy + fontSize);
         	x+=res;
         }
 
@@ -128,7 +134,7 @@ public class OutputGraphics extends JPanel {
         double y = new Double((int)main.getMeasurements().getMinY());
         while(y <= main.getMeasurements().getMaxY()) {
         	int vy2 = convertModelToViewY(y + margin - main.getMeasurements().getMinY());
-        	g2.drawString(df.format(y), vx - fontSize/4, vy2);
+        	g2.drawString(df.format(y), vx - fontSize/4, vy2 + fontSize/2);
         	y+=res;
         }
 	}

@@ -33,7 +33,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
- * - 1.00 Grid (3d)
+ * - 1.00 Grid (3d) 
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
  * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 
