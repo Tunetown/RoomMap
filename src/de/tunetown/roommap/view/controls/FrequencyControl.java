@@ -12,7 +12,6 @@ public class FrequencyControl extends Control {
 	public FrequencyControl(Main main, Controls parent) {
 		super(parent, "Frequency (Hz):", 3);
 		this.main = main;
-		
 		init();
 	}
 
@@ -20,6 +19,11 @@ public class FrequencyControl extends Control {
 	protected void changeValue(double val) {
 		main.setFrequency(val);
 		main.repaint();
+	}
+
+	@Override
+	protected double determineValue() {
+		return main.getFrequency();
 	}
 
 	@Override
@@ -39,9 +43,12 @@ public class FrequencyControl extends Control {
 
 	@Override
 	protected String formatValue(double value) {
-		DecimalFormat df = new DecimalFormat("#");
+		DecimalFormat df = new DecimalFormat("#.##");
 		return df.format(value);
 	}
-	
-	
+
+	@Override
+	protected double getStep(double value) {
+		return 0.5;
+	}
 }

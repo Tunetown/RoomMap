@@ -1,5 +1,7 @@
 package de.tunetown.roommap.view.controls;
 
+import java.text.DecimalFormat;
+
 import de.tunetown.roommap.main.Main;
 
 public class MarginControl extends Control {
@@ -10,7 +12,6 @@ public class MarginControl extends Control {
 	public MarginControl(Main main, Controls parent) {
 		super(parent, "Margin (m):", 4);
 		this.main = main;
-		
 		init();
 	}
 	
@@ -19,6 +20,11 @@ public class MarginControl extends Control {
 		main.setMargin(val);
 		parent.updateControls(); // On a mragin change, we also update the height slider value and labels
 		main.repaint();
+	}
+
+	@Override
+	protected double determineValue() {
+		return main.getMargin();
 	}
 
 	@Override
@@ -35,4 +41,16 @@ public class MarginControl extends Control {
 	public double getMax() {
 		return 1;
 	}
+	
+	@Override
+	protected String formatValue(double value) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(value);
+	}
+
+	@Override
+	public double getStep(double value) {
+		return 0.05;
+	}
+
 }

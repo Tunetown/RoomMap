@@ -27,7 +27,6 @@ public class Controls extends JPanel {
 	private JCheckBox normalizeToFreqSwitch;
 	private JCheckBox projectionOfPointsSwitch;
 	private JCheckBox pooledInterpolationSwitch;
-	private JCheckBox pooledFreqChangeSwitch;
 	private JCheckBox showGridSwitch;
 	
 	public Controls(Main main) {
@@ -88,21 +87,11 @@ public class Controls extends JPanel {
 		pooledInterpolationSwitch.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				main.setPooled(e.getStateChange() == ItemEvent.SELECTED);
+				main.setPooledInterpolation(e.getStateChange() == ItemEvent.SELECTED);
 				main.repaint();
 			}
 		});
 		add(pooledInterpolationSwitch);
-
-		pooledFreqChangeSwitch = new JCheckBox("Multithreading (frequency change)");
-		pooledFreqChangeSwitch.addItemListener(new ItemListener() {
-			@Override
-			public void itemStateChanged(ItemEvent e) {
-				main.setPooledFreqChange(e.getStateChange() == ItemEvent.SELECTED);
-				main.repaint();
-			}
-		});
-		add(pooledFreqChangeSwitch);
 
 		// Initial update. This sets the initial values of all controls
 		updateControls();
@@ -118,7 +107,6 @@ public class Controls extends JPanel {
 		if (normalizeToFreqSwitch != null) normalizeToFreqSwitch.setSelected(main.getNormalizeByFrequency());
 		if (projectionOfPointsSwitch != null) projectionOfPointsSwitch.setSelected(main.getPointProjection());
 		if (pooledInterpolationSwitch != null) pooledInterpolationSwitch.setSelected(main.getPooledInterpolation());
-		if (pooledFreqChangeSwitch != null) pooledFreqChangeSwitch.setSelected(main.getPooledFreqChange());
 		if (showGridSwitch != null) showGridSwitch.setSelected(main.getShowGrid());
 	}
 }

@@ -2,9 +2,7 @@ package de.tunetown.roommap.view.controls;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.text.DecimalFormat;
 import java.util.Hashtable;
-
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -27,6 +25,8 @@ public abstract class Control extends JPanel {
 	private String labelText;
 	private int labelCount;
 	
+	private boolean disableSlider = false;
+	
 	public Control(Controls parent, String labelText, int labelCount) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
@@ -37,11 +37,26 @@ public abstract class Control extends JPanel {
 	}
 
 	/**
+	 * This has to return the current model value to the control
+	 * 
+	 * @param value new value
+	 */
+	protected abstract double determineValue();
+
+	/**
 	 * Called when a change has been made to one of the control inputs.
 	 * 
 	 * @param value new value
 	 */
 	protected abstract void changeValue(double value);
+	
+	/**
+	 * Formatting for output in text field
+	 * 
+	 * @param value
+	 * @return
+	 */
+	protected abstract String formatValue(double value);
 	
 	/**
 	 * Has to update the control instance with the current value of the target parameter
@@ -63,7 +78,19 @@ public abstract class Control extends JPanel {
 	public abstract double getMax();
 
 	/**
-	 * Initialize content (must be called by child classes)
+	 * Returns the step for the control. Override this to implement stepping, 
+	 * if needed also dependent on the current value.
+	 * If NaN is returned, no stepping/rounding will be done.
+	 * 
+	 * @param value
+	 * @return
+	 */
+	protected double getStep(double value) {
+		return Double.NaN;
+	}
+
+	/**
+	 * Initialize content (must be called by child classes at the end of the constructor)
 	 * 
 	 */
 	protected void init() {
@@ -78,9 +105,15 @@ public abstract class Control extends JPanel {
 		slider.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
+				if (disableSlider) {
+					disableSlider = false;
+					return;
+				}
 				double value = convertFromSlider(((JSlider)e.getSource()).getValue());
+				value = doStep(value);
+				if (value == determineValue()) return;
 				changeValue(value);
-				input.setText("" + value);
+				input.setText(formatValue(value));
 			}
 		});
 		add(slider);
@@ -98,6 +131,7 @@ public abstract class Control extends JPanel {
 				} catch (NumberFormatException ex) {
 					return;
 				}
+				disableSlider = true;
 				changeValue(val); 
 				slider.setValue(convertToSlider(val));
 		    }
@@ -109,10 +143,6 @@ public abstract class Control extends JPanel {
 		update();
 	}
 	
-	public double getStep(double value) {
-		return Double.NaN;
-	}
-
 	/**
 	 * Update slider labels etc.
 	 * Must be called explicitly when something has changed
@@ -122,29 +152,32 @@ public abstract class Control extends JPanel {
 	protected void updateSliderAttributes() {
 		Hashtable labelTable = new Hashtable();
 		for(int i=0; i<=1000; i+=(1000 / labelCount)) {
-			labelTable.put(i, new JLabel(formatValue(convertFromSlider(i))));
+			labelTable.put(i, new JLabel(formatValue(doStep(convertFromSlider(i)))));
 		}
 		slider.setLabelTable(labelTable);
 		slider.setPaintLabels(true);
 		slider.setPaintTicks(true);
 	}
 	
-	protected String formatValue(double value) {
-		DecimalFormat df = new DecimalFormat("#.##");
-		return df.format(value);
-	}
-
 	/**
-	 * Set control value
+	 * Set control value TODO cleanup
 	 * 
 	 * @param value
 	 */
-	public void setValue(double value) {
-		DecimalFormat df = new DecimalFormat("#.##");
-		input.setText(df.format(value));
-		
-		//double valueSt = TODO getStep 
+	protected void setValue(double value) {
+		input.setText(formatValue(value));
 		slider.setValue(convertToSlider(value));
+	}
+	
+	/**
+	 * 
+	 */
+	protected double doStep(double value) {
+		if (!Double.isNaN(getStep(value))) {
+			return Math.floor(value / getStep(value)) * getStep(value);
+		} else {
+			return value;
+		}
 	}
 	
 	/**

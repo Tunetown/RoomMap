@@ -1,5 +1,7 @@
 package de.tunetown.roommap.view.controls;
 
+import java.text.DecimalFormat;
+
 import de.tunetown.roommap.main.Main;
 
 public class ResolutionControl extends Control {
@@ -10,7 +12,6 @@ public class ResolutionControl extends Control {
 	public ResolutionControl(Main main, Controls parent) {
 		super(parent, "Resolution (m):", 4);
 		this.main = main;
-		
 		init();
 	}
 	
@@ -18,6 +19,11 @@ public class ResolutionControl extends Control {
 	protected void changeValue(double val) {
 		main.setResolution(val);
 		main.repaint();
+	}
+
+	@Override
+	protected double determineValue() {
+		return main.getResolution();
 	}
 
 	@Override
@@ -34,9 +40,15 @@ public class ResolutionControl extends Control {
 	public double getMax() {
 		return 0.5;
 	}
-/*
+
 	@Override
-	public double getStep() {
-		return 0.5;
-	}*/
+	protected String formatValue(double value) {
+		DecimalFormat df = new DecimalFormat("#.##");
+		return df.format(value);
+	}
+
+	@Override
+	public double getStep(double value) {
+		return 0.05;
+	}
 }

@@ -3,8 +3,6 @@ package de.tunetown.roommap.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import de.tunetown.roommap.main.Main;
 import edu.stanford.rsl.conrad.geometry.shapes.simple.PointND;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
@@ -16,14 +14,11 @@ import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
  */
 public class Measurements {
 	
-	private Main main;
-	
 	private List<Measurement> measurements;
-	private double interpolatorFrequency = 0;
-	private ThinPlateSplineInterpolation interpolator = null;
+	private InterpolatorBuffer interpolators;
 	
-	public Measurements(Main main) {
-		this.main = main;
+	public Measurements() {
+		 interpolators = new InterpolatorBuffer(this);
 	}
 	
 	/**
@@ -38,6 +33,9 @@ public class Measurements {
 			m.load(file);
 			if (m.isValid()) measurements.add(m);
 		}
+		
+		interpolators.initialize();
+		
 		System.out.println ("Parsed " + getDataSize() + " data points from " + files.length + " files"); 
 	}
 	
@@ -83,27 +81,12 @@ public class Measurements {
 	 */
 	private ThinPlateSplineInterpolation getInterpolator(double freq) {
 		synchronized(this) {
-			if (interpolator == null || freq != interpolatorFrequency) {
-				ArrayList<PointND> points = new ArrayList<PointND>();
-				ArrayList<PointND> values = new ArrayList<PointND>();
-				
-				for(Measurement m : measurements) {
-					points.add(new PointND(m.getX(), m.getY(), m.getZ()));
-					values.add(new PointND(m.getSpl(freq)));
-				}
-				if (main.getPooledFreqChange()) {
-					interpolator = new ThinPlateSplineInterpolationPooled(3, points, values);
-				} else {
-					interpolator = new ThinPlateSplineInterpolation(3, points, values);
-				}
-				interpolatorFrequency = freq;
-			}
+			return interpolators.getInterpolator(freq);
 		}
-		return interpolator;
 	}
-	
-	public void resetInterpolator() {
-		interpolator = null;
+
+	public void resetInterpolators() {
+		interpolators.initialize();
 	}
 	
 	private double maxXBuffer = Double.NaN;

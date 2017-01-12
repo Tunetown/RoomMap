@@ -132,6 +132,8 @@ public class Measurement {
 	 * @param freq
 	 */
 	public double getSplStepped(double freq) {
+		if (freq < getMinFrequency() || freq > getMaxFrequency()) return Double.NaN;
+		
 		int i = 0;
 		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
 		if (i < frequencies.size()) {
@@ -147,6 +149,8 @@ public class Measurement {
 	 * @param freq
 	 */
 	public double getSpl(double freq) {
+		if (Math.floor(freq)+1 < getMinFrequency() || Math.floor(freq) > getMaxFrequency()) return Double.NaN;
+		
 		int high = 0;
 		while(high < frequencies.size()-1 && frequencies.get(high) < freq) high++;
 

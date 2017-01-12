@@ -1,9 +1,11 @@
 package de.tunetown.roommap.main;
 
 import java.io.File;
+
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+
 import de.tunetown.roommap.model.Measurements;
 import de.tunetown.roommap.view.MainFrame;
 
@@ -34,7 +36,6 @@ import de.tunetown.roommap.view.MainFrame;
  * TODO:
  * Finish current features:
  * 
- * - Split view classes up (data, points etc)
  * - Keep aspect ratio of window
  * - Frequency: Interpolate instead of average
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
@@ -70,7 +71,6 @@ public class Main {
 	private boolean showGrid = true;
 	
 	private boolean pooledInterpolation = true;
-	private boolean pooledFreqChange = true;
 	
 	/**
 	 * Main method
@@ -109,11 +109,11 @@ public class Main {
 		if (j.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) System.exit(0);
 		
 		File[] files = j.getSelectedFiles();
-		measurements = new Measurements(this);
+		measurements = new Measurements();
 		measurements.load(files);
 		
 		// Get initial control values
-		frequency = measurements.getMinFrequency();
+		frequency = (measurements.getMaxFrequency() + measurements.getMinFrequency()) / 2;
 		viewZ = measurements.getMinZ();
 		
 		// Create and initialize application frame and menu. Order is critical here for proper display.
@@ -173,10 +173,10 @@ public class Main {
 		return pooledInterpolation;
 	}
 
-	public void setPooled(boolean b) {
+	public void setPooledInterpolation(boolean b) {
 		pooledInterpolation = b;
 	}
-
+/* TODO
 	public void setPooledFreqChange(boolean b) {
 		pooledFreqChange = b;
 		measurements.resetInterpolator();
@@ -185,7 +185,7 @@ public class Main {
 	public boolean getPooledFreqChange() {
 		return pooledFreqChange;
 	}
-
+*/
 	public void setShowGrid(boolean b) {
 		showGrid = b;
 	}

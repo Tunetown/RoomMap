@@ -14,6 +14,12 @@ import edu.stanford.rsl.conrad.numerics.SimpleMatrix;
 import edu.stanford.rsl.conrad.numerics.SimpleVector;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
+/**
+ * TODO NOT USED ANYMORE: The performance gain was not sufficient, sometimes even slower.
+ * 
+ * @author tweber
+ *
+ */
 public class ThinPlateSplineInterpolationPooled extends ThinPlateSplineInterpolation {
 
 	public ThinPlateSplineInterpolationPooled(int dimension, ArrayList<PointND> points, ArrayList<PointND> values) {
