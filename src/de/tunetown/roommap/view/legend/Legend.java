@@ -53,7 +53,7 @@ public class Legend extends JPanel {
 		double viewMax = this.getHeight()-2*margin;
 		int lineWidth = getWidth()-2*margin-textWidth;
 		for(int y=margin; y<this.getHeight()-margin; y+=resolution) {
-			double spl = ((double)(y - margin) / viewMax) * (max - min) + min;
+			double spl = getSpl(y, viewMax, max, min);
 			g.setColor(o.getOutColor(spl));
 			g.fillRect(margin, y, lineWidth, resolution);
 		}
@@ -65,9 +65,22 @@ public class Legend extends JPanel {
 		g2.setColor(Color.BLACK); // TODO
 		DecimalFormat df = new DecimalFormat("#.##");
         for(int y=margin; y<this.getHeight()-margin; y+=textResolution) {
-        	double spl = ((double)(y - margin) / viewMax) * (max - min) + min;
+        	double spl = getSpl(y, viewMax, max, min);
         	g2.drawString(df.format(spl), margin + lineWidth + 3, y + fontSize/2);
         }
         g2.drawString("dB(SPL)", margin + lineWidth + 3, 2 + fontSize);
+	}
+	
+	/**
+	 * Helper
+	 * 
+	 * @param y
+	 * @param viewMax
+	 * @param max
+	 * @param min
+	 * @return
+	 */
+	private double getSpl(int y, double viewMax, double max, double min) {
+		return ((double)(getHeight() - margin - y) / viewMax) * (max - min) + min;
 	}
 }
