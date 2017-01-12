@@ -18,7 +18,8 @@ import javax.swing.JPanel;
 
 import rainbowvis.Rainbow;
 import de.tunetown.roommap.main.Main;
-import de.tunetown.roommap.model.Measurement;;
+import de.tunetown.roommap.model.Measurement;
+import de.tunetown.roommap.view.ViewProperties;
 
 /**
  * SPL distribution visualization panel
@@ -32,13 +33,14 @@ public class OutputGraphics extends JPanel {
 	private Main main;
 	
 	// TODO constants
-	private double resolution = 0.2;       // Resolution (model units, not pixels!)
 	private int maxSize = 800;             // Initial max. Size of data panel (pixels)
-	private double projectionDepth = 100;  // Depth of 3d data point projection
+	
+	private double projectionDepth = 50;  // Depth of 3d data point projection
 	private int minAlpha = 20;
 	private int maxAlpha = 255;
-	private int labelWidth = 20;
+
 	private int fontSize = 10;
+	private int labelWidth = 20;
 	
 	public OutputGraphics(Main main) {
 		this.main = main;
@@ -87,7 +89,7 @@ public class OutputGraphics extends JPanel {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		
-		g.setColor(Color.WHITE);//TODO
+		g.setColor(ViewProperties.BGCOLOR);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		if (main.getPooledInterpolation()) {
@@ -95,19 +97,12 @@ public class OutputGraphics extends JPanel {
 		} else {
 			paintData(g);
 		}
-		paintGrid(g);
-		paintPoints(g);
 		paintAxes(g);
-	}
-
-	private void paintGrid(Graphics g) {
-		g.setColor(Color.LIGHT_GRAY);
-		// TODO Grid between min/max
+		paintPoints(g);
 	}
 
 	private void paintAxes(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
-		g2.setColor(Color.BLACK); // TODO
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setFont(new Font("Helvetica", Font.PLAIN, fontSize)); 
         DecimalFormat df = new DecimalFormat("#.##");
@@ -120,7 +115,15 @@ public class OutputGraphics extends JPanel {
         double x = new Double((int)main.getMeasurements().getMinX());
         while(x <= main.getMeasurements().getMaxX()) {
 			int vx = convertModelToViewX(x + margin - main.getMeasurements().getMinX());
+			
+			g2.setColor(ViewProperties.FGCOLOR);
         	g2.drawString(df.format(x), vx - fontSize/4, vy + fontSize);
+        	
+        	if (main.getShowGrid()) {
+	        	g2.setColor(ViewProperties.GRIDCOLOR);
+	        	g2.drawLine(vx, 0, vx, vy - 2);
+        	}
+        	
         	x+=res;
         }
 
@@ -131,9 +134,20 @@ public class OutputGraphics extends JPanel {
         double y = new Double((int)main.getMeasurements().getMinY());
         while(y <= main.getMeasurements().getMaxY()) {
         	int vy2 = convertModelToViewY(y + margin - main.getMeasurements().getMinY());
+        	
+        	g2.setColor(ViewProperties.FGCOLOR);
         	g2.drawString(df.format(y), vx - fontSize/4, vy2 + fontSize/2);
+        	
+        	if (main.getShowGrid()) {
+	        	g2.setColor(ViewProperties.GRIDCOLOR);
+	        	g2.drawLine(0, vy2, vx - 2, vy2);
+        	}
+        	
         	y+=res;
         }
+        
+        g2.setColor(ViewProperties.FGCOLOR);
+    	g2.drawString("m", getWidth() - fontSize - 2, getHeight() - fontSize - 2);
 	}
 
 	/**
@@ -143,8 +157,8 @@ public class OutputGraphics extends JPanel {
 	 */
 	private void paintData(Graphics g) {
 		double modelZ = main.getViewZ();
-		int resY = convertModelToViewX(resolution);
-		int resX = convertModelToViewX(resolution);
+		int resY = convertModelToViewX(main.getResolution());
+		int resX = convertModelToViewX(main.getResolution());
 		Dimension d = getPaintDimension();
 
 		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
@@ -170,7 +184,7 @@ public class OutputGraphics extends JPanel {
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void paintDataPooled(Graphics g) {
-		int resX = convertModelToViewX(resolution);
+		int resX = convertModelToViewX(main.getResolution());
 		Dimension d = getPaintDimension();
 
 		// Create new thread pool
@@ -210,8 +224,8 @@ public class OutputGraphics extends JPanel {
 		
 		double modelZ = main.getViewZ();
 		Dimension d = getPaintDimension();
-		int resX = convertModelToViewX(resolution);
-		int resY = convertModelToViewX(resolution);
+		int resX = convertModelToViewX(main.getResolution());
+		int resY = convertModelToViewX(main.getResolution());
 		double x1 = convertViewToModelX(x);
 
 		for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
@@ -252,15 +266,20 @@ public class OutputGraphics extends JPanel {
 	 * @param g
 	 */
 	private void paintPoints(Graphics g) {
-		int diaX = convertModelToViewX(resolution/2);
-		int diaY = convertModelToViewY(resolution/2);
+		int diaX = convertModelToViewX(main.getResolution()/4);
+		int diaY = convertModelToViewY(main.getResolution()/4);
+		if (diaX < ViewProperties.POINTS_MIN_DIAMETER) diaX = ViewProperties.POINTS_MIN_DIAMETER;
+		if (diaX > ViewProperties.POINTS_MAX_DIAMETER) diaX = ViewProperties.POINTS_MAX_DIAMETER;
+		if (diaY < ViewProperties.POINTS_MIN_DIAMETER) diaY = ViewProperties.POINTS_MIN_DIAMETER;
+		if (diaY > ViewProperties.POINTS_MAX_DIAMETER) diaY = ViewProperties.POINTS_MAX_DIAMETER;
 		
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
 			double z = main.getViewZ() - m.getZ(); 
 			int x = getProjectionX(convertModelToViewX(m.getX() + main.getMargin() - main.getMeasurements().getMinX()), z);
 			int y = getProjectionY(convertModelToViewY(m.getY() + main.getMargin() - main.getMeasurements().getMinY()), z);
 			
-			g.setColor(new Color(0, 0, 0, getAlpha(z)));
+			Color c = ViewProperties.DATA_COLOR_POINTS;
+			g.setColor(new Color(c.getRed(), c.getGreen(), c.getBlue(), getAlpha(z)));
 			g.fillOval(x - diaX/2, y - diaY/2, diaX, diaY);
 		}
 	}
@@ -302,8 +321,6 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	private int getAlpha(double z) {
-		//if (!main.getPointProjection()) return 255;
-
 		if (Math.abs(z) <= 0.5) {
 			return (int)(minAlpha + (maxAlpha - minAlpha) * (0.5 - Math.abs(z)) * 2);
 		} else {
@@ -318,7 +335,7 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	public Color getOutColor(double spl) {
-		if (Double.isNaN(spl)) return Color.BLACK;//TODO
+		if (Double.isNaN(spl)) return ViewProperties.DATA_COLOR_NAN;
 		
 		double minSpl;
 		double maxSpl;

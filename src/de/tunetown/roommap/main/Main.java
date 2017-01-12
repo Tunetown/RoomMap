@@ -33,8 +33,8 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
- * - Change color to black in background?
- * - 1.00 Grid (3d) 
+ * - Split view classes up (data, points etc)
+ * - Keep aspect ratio of window
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
  * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 
@@ -58,11 +58,14 @@ public class Main {
 	private MainFrame frame;
 	private Measurements measurements;
 	
+	// Defaults
 	private double frequency = 0;  
 	private double viewZ = 0;       
-	private double margin = 0.3;
+	private double margin = 0.3; // TODO?
+	private double resolution = 0.2;       // Resolution (model units, not pixels!)
 	private boolean normalizeByFrequency = false;
 	private boolean projectionOfPoints = false;
+	private boolean showGrid = true;
 	
 	private boolean pooledInterpolation = true;
 	private boolean pooledFreqChange = true;
@@ -179,6 +182,22 @@ public class Main {
 
 	public boolean getPooledFreqChange() {
 		return pooledFreqChange;
+	}
+
+	public void setShowGrid(boolean b) {
+		showGrid = b;
+	}
+
+	public boolean getShowGrid() {
+		return showGrid;
+	}
+
+	public void setResolution(double val) {
+		resolution = val;
+	}
+
+	public double getResolution() {
+		return resolution;
 	}
 }
 

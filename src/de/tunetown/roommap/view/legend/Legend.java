@@ -1,6 +1,5 @@
 package de.tunetown.roommap.view.legend;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -11,6 +10,7 @@ import java.text.DecimalFormat;
 import javax.swing.JPanel;
 
 import de.tunetown.roommap.main.Main;
+import de.tunetown.roommap.view.ViewProperties;
 import de.tunetown.roommap.view.data.OutputGraphics;
 
 public class Legend extends JPanel {
@@ -34,7 +34,7 @@ public class Legend extends JPanel {
 	
 	@Override
 	protected void paintComponent(Graphics g) {
-		g.setColor(Color.WHITE);//TODO
+		g.setColor(ViewProperties.BGCOLOR);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
 		OutputGraphics o = new OutputGraphics(main);
@@ -62,7 +62,7 @@ public class Legend extends JPanel {
 		Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setFont(new Font("Helvetica", Font.PLAIN, fontSize)); 
-		g2.setColor(Color.BLACK); // TODO
+		g2.setColor(ViewProperties.FGCOLOR);
 		DecimalFormat df = new DecimalFormat("#.##");
         for(int y=margin; y<this.getHeight()-margin; y+=textResolution) {
         	double spl = getSpl(y, viewMax, max, min);

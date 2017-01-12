@@ -23,10 +23,12 @@ public class Controls extends JPanel {
 	private Control freqControl;
 	private Control heightControl;
 	private Control marginControl;
+	private Control resolutionControl;
 	private JCheckBox normalizeToFreqSwitch;
 	private JCheckBox projectionOfPointsSwitch;
 	private JCheckBox pooledInterpolationSwitch;
 	private JCheckBox pooledFreqChangeSwitch;
+	private JCheckBox showGridSwitch;
 	
 	public Controls(Main main) {
 		super();
@@ -49,6 +51,9 @@ public class Controls extends JPanel {
 		marginControl = new MarginControl(main, this);
 		add(marginControl);
 
+		resolutionControl = new ResolutionControl(main, this);
+		add(resolutionControl);
+
 		normalizeToFreqSwitch = new JCheckBox("Normalize SPL range for selected frequency");
 		normalizeToFreqSwitch.addItemListener(new ItemListener() {
 			@Override
@@ -58,6 +63,16 @@ public class Controls extends JPanel {
 			}
 		});
 		add(normalizeToFreqSwitch);
+
+		showGridSwitch = new JCheckBox("Show grid");
+		showGridSwitch.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				main.setShowGrid(e.getStateChange() == ItemEvent.SELECTED);
+				main.repaint();
+			}
+		});
+		add(showGridSwitch);
 
 		projectionOfPointsSwitch = new JCheckBox("3D projection of data points");
 		projectionOfPointsSwitch.addItemListener(new ItemListener() {
@@ -104,5 +119,6 @@ public class Controls extends JPanel {
 		if (projectionOfPointsSwitch != null) projectionOfPointsSwitch.setSelected(main.getPointProjection());
 		if (pooledInterpolationSwitch != null) pooledInterpolationSwitch.setSelected(main.getPooledInterpolation());
 		if (pooledFreqChangeSwitch != null) pooledFreqChangeSwitch.setSelected(main.getPooledFreqChange());
+		if (showGridSwitch != null) showGridSwitch.setSelected(main.getShowGrid());
 	}
 }
