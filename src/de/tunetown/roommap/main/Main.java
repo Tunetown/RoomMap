@@ -33,6 +33,7 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
+ * - Change color to black in background?
  * - 1.00 Grid (3d) 
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency

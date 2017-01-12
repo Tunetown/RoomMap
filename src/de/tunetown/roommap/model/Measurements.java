@@ -38,7 +38,7 @@ public class Measurements {
 			m.load(file);
 			if (m.isValid()) measurements.add(m);
 		}
-		System.out.println ("Parsed " + getDataSize() + " data points"); 
+		System.out.println ("Parsed " + getDataSize() + " data points from " + files.length + " files"); 
 	}
 	
 	/**
