@@ -33,9 +33,10 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Finish current features:
- * - Frequency: Show real value
+ * 
  * - Split view classes up (data, points etc)
  * - Keep aspect ratio of window
+ * - Frequency: Interpolate instead of average
  * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
  * 				- Store one interpolator per frequency
  * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 

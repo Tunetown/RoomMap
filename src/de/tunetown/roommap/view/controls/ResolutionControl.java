@@ -34,4 +34,9 @@ public class ResolutionControl extends Control {
 	public double getMax() {
 		return 0.5;
 	}
+/*
+	@Override
+	public double getStep() {
+		return 0.5;
+	}*/
 }

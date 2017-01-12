@@ -108,6 +108,10 @@ public abstract class Control extends JPanel {
 		// Initial update
 		update();
 	}
+	
+	public double getStep(double value) {
+		return Double.NaN;
+	}
 
 	/**
 	 * Update slider labels etc.
@@ -139,6 +143,7 @@ public abstract class Control extends JPanel {
 		DecimalFormat df = new DecimalFormat("#.##");
 		input.setText(df.format(value));
 		
+		//double valueSt = TODO getStep 
 		slider.setValue(convertToSlider(value));
 	}
 	

@@ -131,26 +131,32 @@ public class Measurement {
 	 * 
 	 * @param freq
 	 */
+	public double getSplStepped(double freq) {
+		int i = 0;
+		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
+		if (i < frequencies.size()) {
+			return spl.get(i);
+		} else {
+			return Double.NaN;
+		}
+	}
+
+	/**
+	 * For any frequency, this approximates the SPL value, averaged between the next two frequencies available. 
+	 * 
+	 * @param freq
+	 */
 	public double getSpl(double freq) {
-		int i = 0;
-		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
-		if (i < frequencies.size()) {
-			return spl.get(i);
-		} else {
-			return Double.NaN;
-		}
+		int high = 0;
+		while(high < frequencies.size()-1 && frequencies.get(high) < freq) high++;
+
+		int low = frequencies.size()-1;
+		while(low > 0 && frequencies.get(low) > freq) low--;
+
+		// TODO interpolate cleanly
+		return (spl.get(high) + spl.get(low)) / 2;
 	}
-	/*
-	public double getNextFrequency(double freq) {
-		int i = 0;
-		while(i < frequencies.size() && frequencies.get(i) < freq) i++;
-		if (i < frequencies.size()) {
-			return spl.get(i);
-		} else {
-			return Double.NaN;
-		}
-	}
-	*/
+
 	public double getX() {
 		return x;
 	}
