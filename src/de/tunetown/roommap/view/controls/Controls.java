@@ -47,11 +47,11 @@ public class Controls extends JPanel {
 			int curr = main.getMeasurements().getInterpolatorBuffer().getSize();
 			int all = main.getMeasurements().getInterpolatorBuffer().getAll();
 			int perc = (int)(100 * (double)curr / (double)all);
-			if (perc == 100) {
+			/*if (perc == 100) {
 				freqBufferStateSwitch.setText(precalcText  + " (finished)");
-			} else {
-				freqBufferStateSwitch.setText(precalcText  + " (" + perc + "%)");
-			}
+			} else {*/
+			freqBufferStateSwitch.setText(precalcText  + " (" + perc + "%)");
+			//}
 		}
 	}
 
