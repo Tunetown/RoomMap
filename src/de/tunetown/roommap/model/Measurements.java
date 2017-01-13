@@ -3,6 +3,8 @@ package de.tunetown.roommap.model;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import de.tunetown.roommap.main.Main;
 import edu.stanford.rsl.conrad.geometry.shapes.simple.PointND;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
@@ -17,8 +19,8 @@ public class Measurements {
 	private List<Measurement> measurements;
 	private InterpolatorBuffer interpolators;
 	
-	public Measurements() {
-		 interpolators = new InterpolatorBuffer(this);
+	public Measurements(Main main) {
+		 interpolators = new InterpolatorBuffer(main);
 	}
 	
 	/**
@@ -269,5 +271,9 @@ public class Measurements {
 			}
 		}
 		return maxFreqBuffer; 
+	}
+
+	public InterpolatorBuffer getInterpolatorBuffer() {
+		return interpolators;
 	}
 }

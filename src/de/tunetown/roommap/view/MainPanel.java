@@ -44,4 +44,8 @@ public class MainPanel extends JPanel {
 		legend = new Legend(main);
 		add(legend, BorderLayout.WEST);
 	}
+	
+	public Controls getControls() {
+		return controls;
+	}
 }

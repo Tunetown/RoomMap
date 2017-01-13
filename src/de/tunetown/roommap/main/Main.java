@@ -71,6 +71,7 @@ public class Main {
 	private boolean showGrid = true;
 	
 	private boolean pooledInterpolation = true;
+	private boolean precalculation = false;
 	
 	/**
 	 * Main method
@@ -109,7 +110,7 @@ public class Main {
 		if (j.showOpenDialog(frame) != JFileChooser.APPROVE_OPTION) System.exit(0);
 		
 		File[] files = j.getSelectedFiles();
-		measurements = new Measurements();
+		measurements = new Measurements(this);
 		measurements.load(files);
 		
 		// Get initial control values
@@ -119,8 +120,21 @@ public class Main {
 		// Create and initialize application frame and menu. Order is critical here for proper display.
 		frame = new MainFrame(this);
 		frame.init();
+		
+		// Start interpolator coefficient pre-calculation in background threads
+		if (this.getPrecalculation()) measurements.getInterpolatorBuffer().startPrecalculation(20, 200, 0.5); // TODO Derive from control
 	}
 	
+	public void stopPrecalculation() {
+		if (!getPrecalculation()) return;
+		measurements.getInterpolatorBuffer().stopPrecalculation();
+	}
+
+	public void resumePrecalculation() {
+		if (!getPrecalculation()) return;
+		measurements.getInterpolatorBuffer().resumePrecalculation();
+	}
+
 	public Measurements getMeasurements() {
 		return measurements;
 	}
@@ -176,16 +190,7 @@ public class Main {
 	public void setPooledInterpolation(boolean b) {
 		pooledInterpolation = b;
 	}
-/* TODO
-	public void setPooledFreqChange(boolean b) {
-		pooledFreqChange = b;
-		measurements.resetInterpolator();
-	}
 
-	public boolean getPooledFreqChange() {
-		return pooledFreqChange;
-	}
-*/
 	public void setShowGrid(boolean b) {
 		showGrid = b;
 	}
@@ -200,6 +205,27 @@ public class Main {
 
 	public double getResolution() {
 		return resolution;
+	}
+
+	public void updatePrecalculationStats() { 
+		frame.getMainPanel().getControls().updateFreqBufferStateOutput();
+	}
+
+	public void setPrecalculation(boolean b) {
+		precalculation = b;
+		if (precalculation) {
+			if (measurements.getInterpolatorBuffer().isPrecalculationStarted()) {
+				measurements.getInterpolatorBuffer().resumePrecalculation();
+			} else {
+				measurements.getInterpolatorBuffer().startPrecalculation(20, 200, 0.5); // TODO Derive from control
+			}
+		} else {
+			measurements.getInterpolatorBuffer().stopPrecalculation();
+		}
+	}
+
+	public boolean getPrecalculation() {
+		return precalculation;
 	}
 }
 

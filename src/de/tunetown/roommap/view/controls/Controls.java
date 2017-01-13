@@ -8,6 +8,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import de.tunetown.roommap.main.Main;
+import de.tunetown.roommap.main.ThreadManagement;
 
 /**
  * Panel for the controls
@@ -28,13 +29,30 @@ public class Controls extends JPanel {
 	private JCheckBox projectionOfPointsSwitch;
 	private JCheckBox pooledInterpolationSwitch;
 	private JCheckBox showGridSwitch;
+	private JCheckBox freqBufferStateSwitch;
+
+	private String precalcText;
 	
 	public Controls(Main main) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.main = main;
-		
+		ThreadManagement m = new ThreadManagement();
+		this.precalcText = "Precalculate in Background with " + m.getNumOfProcessorsInterpolatorPrecalculation() + " Threads";
 		init();
+	}
+	
+	public void updateFreqBufferStateOutput() {
+		if (main.getMeasurements().getInterpolatorBuffer().isPrecalculationStarted()) {
+			int curr = main.getMeasurements().getInterpolatorBuffer().getSize();
+			int all = main.getMeasurements().getInterpolatorBuffer().getAll();
+			int perc = (int)(100 * (double)curr / (double)all);
+			if (perc == 100) {
+				freqBufferStateSwitch.setText(precalcText  + " (finished)");
+			} else {
+				freqBufferStateSwitch.setText(precalcText  + " (" + perc + "%)");
+			}
+		}
 	}
 
 	/**
@@ -83,7 +101,8 @@ public class Controls extends JPanel {
 		});
 		add(projectionOfPointsSwitch);
 
-		pooledInterpolationSwitch = new JCheckBox("Multithreading (interpolation)");
+		ThreadManagement m = new ThreadManagement();
+		pooledInterpolationSwitch = new JCheckBox("Multithreaded interpolation with " + m.getNumOfProcessorsInterpolation() + " Threads");
 		pooledInterpolationSwitch.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
@@ -92,6 +111,15 @@ public class Controls extends JPanel {
 			}
 		});
 		add(pooledInterpolationSwitch);
+		
+		freqBufferStateSwitch = new JCheckBox(precalcText);
+		freqBufferStateSwitch.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				main.setPrecalculation(e.getStateChange() == ItemEvent.SELECTED);
+			}
+		});
+		add(freqBufferStateSwitch);
 
 		// Initial update. This sets the initial values of all controls
 		updateControls();
@@ -108,5 +136,6 @@ public class Controls extends JPanel {
 		if (projectionOfPointsSwitch != null) projectionOfPointsSwitch.setSelected(main.getPointProjection());
 		if (pooledInterpolationSwitch != null) pooledInterpolationSwitch.setSelected(main.getPooledInterpolation());
 		if (showGridSwitch != null) showGridSwitch.setSelected(main.getShowGrid());
+		if (freqBufferStateSwitch != null) freqBufferStateSwitch.setSelected(main.getPrecalculation());
 	}
 }

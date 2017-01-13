@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 
 import rainbowvis.Rainbow;
 import de.tunetown.roommap.main.Main;
+import de.tunetown.roommap.main.ThreadManagement;
 import de.tunetown.roommap.model.Measurement;
 import de.tunetown.roommap.view.ViewProperties;
 
@@ -92,7 +93,9 @@ public class OutputGraphics extends JPanel {
 		g.setColor(ViewProperties.BGCOLOR);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
-		if (main.getPooledInterpolation()) {
+		ThreadManagement m = new ThreadManagement();
+		
+		if (main.getPooledInterpolation() && m.getNumOfProcessorsInterpolation() > 1) {
 			paintDataPooled(g);
 		} else {
 			paintData(g);
@@ -187,9 +190,13 @@ public class OutputGraphics extends JPanel {
 		int resX = convertModelToViewX(main.getResolution());
 		Dimension d = getPaintDimension();
 
+		// Stop interpolator precalculation
+		main.stopPrecalculation();
+		
 		// Create new thread pool
 		List<Future> futures = new ArrayList<Future>();
-		ExecutorService pool = Executors.newWorkStealingPool(Runtime.getRuntime().availableProcessors() - 2);
+		ThreadManagement m = new ThreadManagement();
+		ExecutorService pool = Executors.newWorkStealingPool(m.getNumOfProcessorsInterpolation());
 		
 		// Add workers to the pool
 		for(int x=0; x<d.getWidth()+resX/2; x+=resX) {
@@ -217,6 +224,7 @@ public class OutputGraphics extends JPanel {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		main.resumePrecalculation();
 	}
 
 	public List<PaintBuffer> calculateX(int x) {

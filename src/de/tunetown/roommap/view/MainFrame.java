@@ -41,6 +41,11 @@ public class MainFrame extends JFrame {
         });
         */
 	}
+	
+	public MainPanel getMainPanel() {
+		return mainPanel;
+	}
+	
 	/*
 	private static void resizePreview(JPanel innerPanel, JFrame container) {
         int w = container.getWidth();
