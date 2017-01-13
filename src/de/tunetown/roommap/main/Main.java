@@ -34,21 +34,18 @@ import de.tunetown.roommap.view.MainFrame;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * Finish current features:
+ * Current state:
+ * - Rework layout of controls (fixed size while precalculating)
+ * - Keep aspect ratio of window on frame resize
  * 
- * - Keep aspect ratio of window
- * - Frequency: Interpolate instead of average
- * - 3.00 Runtime at frequency change: Pre-determine coefficients for interpolation 
- * 				- Store one interpolator per frequency
- * 				- Only allow frequencies which do exist in measurement 0. If not found, take next higher (warn if delta > 0.5Hz) 
- * 					-> Stateful measurements.frequency attribute
- * 					-> Show correct frequency in text input
- * 
- * New features:
- * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
+ * Next new features:
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * - 1.00 Import image PNG to lay over data
+ * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
+ * 
+ * Will not happen in near future:
+ * - Frequency: Interpolate instead of average (PRIO LOW, not necessary)
+ * - 2.00 Import image PNG to lay over data
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 
  * @author Thomas Weber, 2016/2017
