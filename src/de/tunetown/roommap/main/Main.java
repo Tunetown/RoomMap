@@ -39,6 +39,7 @@ import de.tunetown.roommap.view.MainFrame;
  * - Keep aspect ratio of window on frame resize
  * 
  * Next new features:
+ * - Publish to Win and OSX
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
  * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
