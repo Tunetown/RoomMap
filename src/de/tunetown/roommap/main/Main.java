@@ -24,7 +24,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * files inside one example folder and hit OK. 
  * 
  * Features:
- * - Mulithreaded interpolation 
+ * - Mulithreaded thin plate spline interpolation 
+ * - Precalculation of interpolation coefficients for each selectable frequency, in background (multithreaded)
  * 
  * Dependencies to external libraries/sources: 
  * - CONRAD, a biomedical library which is being used here for thin plate spline interpolation in 3D. Just the necessary 
