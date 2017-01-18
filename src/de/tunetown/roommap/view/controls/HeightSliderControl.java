@@ -55,7 +55,7 @@ public class HeightSliderControl extends SliderControl {
 
 	@Override
 	protected String getLabelText() {
-		return "Height (m):";
+		return "Height [m]";
 	}
 	
 	

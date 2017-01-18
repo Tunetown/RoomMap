@@ -28,12 +28,12 @@ public class FrequencySliderControl extends SliderControl {
 
 	@Override
 	public double getMin() {
-		return getMain().getMeasurements().getMinFrequency();
+		return doStep(getMain().getMeasurements().getMinFrequency());
 	}
 
 	@Override
 	public double getMax() {
-		return getMain().getMeasurements().getMaxFrequency();
+		return doStep(getMain().getMeasurements().getMaxFrequency());
 	}
 
 	@Override
@@ -43,7 +43,8 @@ public class FrequencySliderControl extends SliderControl {
 	}
 
 	@Override
-	protected double getStep(double value) {
+	public double getStep(double value) {
+		// NOTE: This must not be value dependent, because this would make problems with precalculation!
 		return 0.5;
 	}
 
@@ -54,6 +55,6 @@ public class FrequencySliderControl extends SliderControl {
 
 	@Override
 	protected String getLabelText() {
-		return "Frequency (Hz):";
+		return "Frequency [Hz]";
 	}
 }

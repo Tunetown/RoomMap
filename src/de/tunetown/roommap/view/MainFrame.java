@@ -21,7 +21,7 @@ public class MainFrame extends JFrame {
 	}
 	
 	public void init() {
-		mainPanel = new MainPanel(main, this);
+		mainPanel = new MainPanel(main);
 		
 		// Add this main GUI instance to the main frame (this contains all elements)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -9,6 +9,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -92,7 +93,7 @@ public abstract class SliderControl extends Control {
 	 * @param value
 	 * @return
 	 */
-	protected double getStep(double value) {
+	public double getStep(double value) {
 		return Double.NaN;
 	}
 
@@ -105,7 +106,13 @@ public abstract class SliderControl extends Control {
 		// Label
 		label = new JLabel(getLabelText());
 		label.setPreferredSize(new Dimension(parent.getMaxLabelWidth(SliderControl.class), 0));
+		label.setHorizontalAlignment(SwingConstants.RIGHT);
 		add(label);
+		
+		// SPacer
+		JLabel spacer = new JLabel("");
+		spacer.setPreferredSize(new Dimension(10,0));
+		add(spacer);
 		
 		// Frequency Slider
 		slider = new JSlider(JSlider.HORIZONTAL, 0, resolution, 0);
@@ -149,7 +156,7 @@ public abstract class SliderControl extends Control {
 				repaintControls();
 		    }
 		});
-		input.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));
+		input.setMaximumSize(new Dimension(100, 30));
 		add(input);
 		
 		// Initial update
@@ -173,7 +180,7 @@ public abstract class SliderControl extends Control {
 	}
 	
 	/**
-	 * Set control value TODO cleanup
+	 * Set control value 
 	 * 
 	 * @param value
 	 */

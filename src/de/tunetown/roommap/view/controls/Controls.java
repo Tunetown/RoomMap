@@ -17,24 +17,28 @@ public class Controls extends JPanel {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
-	
 	private ArrayList<Control> controls = new ArrayList<Control>();
 
 	public Controls(Main main) {
 		super();
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.main = main;
-		init();
+		
+		// Create controls
+		initControls();
+
+		// Add registered controls to the panel
+		addControls();
+		
+		// Initial update. This sets the initial values of all controls to the current values in the program.
+		updateControlValues();
+
 	}
 	
-	public void updateControlLabels() {
-		for(Control c : controls) c.updateLabel();
-	}
-
 	/**
 	 * Initialize all controls
 	 */
-	private void init() {
+	private void initControls() {
 		controls.add(new FrequencySliderControl(main, this));
 		
 		Control hsl = new HeightSliderControl(main, this);
@@ -48,14 +52,8 @@ public class Controls extends JPanel {
 		controls.add(new NormalizeByFreqCheckboxControl(main, this));
 		controls.add(new ProjectPointsCheckboxControl(main, this));
 		controls.add(new GridCheckboxControl(main, this));
-		controls.add(new PrecalculationCheckboxControl(main, this));
 		controls.add(new PooledInterpolationCheckboxControl(main, this));
-
-		// Add registered controls to the panel
-		addControls();
-		
-		// Initial update. This sets the initial values of all controls
-		updateControlValues();
+		controls.add(new PrecalculationCheckboxControl(main, this));
 	}
 	
 	private void addControls() {
@@ -64,14 +62,29 @@ public class Controls extends JPanel {
 			add(c);
 		}
 	}
+	
+	@SuppressWarnings("rawtypes")
+	public Control getControl(Class cl) {
+		for(Control c : controls) {
+			if (cl.isInstance(c)) return c;
+		}
+		return null;
+	}
 
 	/**
-	 * Update all controls
+	 * Update all control values
 	 */
 	public void updateControlValues() {
 		for(Control c : controls) c.updateValue();
 	}
 	
+	/**
+	 * Update all control labels
+	 */
+	public void updateControlLabels() {
+		for(Control c : controls) c.updateLabel();
+	}
+
 	@SuppressWarnings("rawtypes")
 	public int getMaxLabelWidth(Class cla) {
 		int ret = 0;

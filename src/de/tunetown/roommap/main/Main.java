@@ -8,9 +8,11 @@ import javax.swing.UIManager;
 
 import de.tunetown.roommap.model.Measurements;
 import de.tunetown.roommap.view.MainFrame;
+import de.tunetown.roommap.view.controls.FrequencySliderControl;
+import de.tunetown.roommap.view.controls.SliderControl;
 
 /**
- * Application class for RoomMap. This application is used to evaluate field measurements made with REW and
+ * This application is used to evaluate field measurements made with REW and
  * exported there as text files. The file name has to contain the coordinates of the measurement mic
  * position (x,y,z) separated by spaces (see examples folder).
  * 
@@ -35,17 +37,17 @@ import de.tunetown.roommap.view.MainFrame;
  * 
  * TODO:
  * Current state:
- * - Check and fix interaction between controls (bug: resolution changes on margin change) 
  * - Keep aspect ratio of window on frame resize
  * 
  * Next new features:
  * - Publish to Win and OSX
+ * - Store window size, control values in temp file (like SNIPE)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
  * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
  * 
  * Will not happen in near future:
- * - Frequency: Interpolate instead of average (PRIO LOW, not necessary)
+ * - Frequency: Interpolate instead of average (PRIO LOW, not necessary if enough raw data is there)
  * - 2.00 Import image PNG to lay over data
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 
@@ -69,7 +71,7 @@ public class Main {
 	private boolean showGrid = true;
 	
 	private boolean pooledInterpolation = true;
-	private boolean precalculation = false;
+	private boolean precalculation = false; 
 	
 	/**
 	 * Main method
@@ -119,10 +121,15 @@ public class Main {
 		frame = new MainFrame(this);
 		frame.init();
 		
-		// Start interpolator coefficient pre-calculation in background threads
-		if (this.getPrecalculation()) measurements.getInterpolatorBuffer().startPrecalculation(20, 200, 0.5); // TODO Derive from control
+		// Start interpolator coefficient pre-calculation in background threads if enabled (TODO not working)
+		if (getPrecalculation()) startPrecalculation();
 	}
 	
+	private void startPrecalculation() {
+		SliderControl fc = (SliderControl)frame.getMainPanel().getControls().getControl(FrequencySliderControl.class);
+		if (fc != null) measurements.getInterpolatorBuffer().startPrecalculation(fc.getMin(), fc.getMax(), fc.getStep(0)); 
+	}
+
 	public void stopPrecalculation() {
 		if (!getPrecalculation()) return;
 		measurements.getInterpolatorBuffer().stopPrecalculation();
@@ -215,7 +222,7 @@ public class Main {
 			if (measurements.getInterpolatorBuffer().isPrecalculationStarted()) {
 				measurements.getInterpolatorBuffer().resumePrecalculation();
 			} else {
-				measurements.getInterpolatorBuffer().startPrecalculation(20, 200, 0.5); // TODO Derive from control
+				startPrecalculation();
 			}
 		} else {
 			measurements.getInterpolatorBuffer().stopPrecalculation();

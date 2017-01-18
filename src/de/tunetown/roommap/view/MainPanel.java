@@ -20,17 +20,14 @@ public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	private Main main;
-	//private JFrame frame;
 	
 	private Controls controls;
 	private OutputGraphics graphics;
 	private Legend legend;
 
-	public MainPanel(Main main, JFrame frame) {
+	public MainPanel(Main main) {
 		super(new BorderLayout(3,3));
 		this.main = main;
-		//this.frame = frame;
-		
 		init();
 	}
 	

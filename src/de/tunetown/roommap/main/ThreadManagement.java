@@ -1,5 +1,12 @@
 package de.tunetown.roommap.main;
 
+/**
+ * This class just manages how much threads each calculation process will get. The
+ * pooling of threads etc. is then done by the processes themselves.
+ * 
+ * @author tweber
+ *
+ */
 public class ThreadManagement {
 
 	private int cpusPrecalculation;

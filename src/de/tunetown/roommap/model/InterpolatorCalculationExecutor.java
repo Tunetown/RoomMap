@@ -29,7 +29,7 @@ public class InterpolatorCalculationExecutor extends Thread {
 		if (buffer.hasInterpolator(freq)) return;
 		interpolator = buffer.createInterpolator(freq);
 		buffer.addInterpolator(freq, interpolator);
-		//System.out.println("Calculated interpolator for " + freq);
+		System.out.println("Precalculated interpolator coefficients for " + freq + " Hz");
 	}
 
 	public void pauseExecution() {

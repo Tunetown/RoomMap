@@ -54,6 +54,6 @@ public class ResolutionSliderControl extends SliderControl {
 
 	@Override
 	protected String getLabelText() {
-		return "Resolution (m):";
+		return "Resolution [m]";
 	}
 }

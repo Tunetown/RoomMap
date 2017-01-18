@@ -54,6 +54,6 @@ public class MarginSliderControl extends SliderControl {
 
 	@Override
 	protected String getLabelText() {
-		return "Margin (m):";
+		return "Margin [m]";
 	}
 }

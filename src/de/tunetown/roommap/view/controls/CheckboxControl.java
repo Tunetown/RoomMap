@@ -3,10 +3,8 @@ package de.tunetown.roommap.view.controls;
 import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
-
 import de.tunetown.roommap.main.Main;
 
 public abstract class CheckboxControl extends Control {
@@ -41,6 +39,8 @@ public abstract class CheckboxControl extends Control {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				changeValue(e.getStateChange() == ItemEvent.SELECTED);
+				updateDependentControls();
+				repaintControls();
 			}
 		});
 		add(checkbox);
