@@ -5,16 +5,13 @@ import de.tunetown.roommap.main.Main;
 public class ProjectPointsCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public ProjectPointsCheckboxControl(Main main, Controls parent) {
-		super(parent);
-		this.main = main;
+		super(parent, main);
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getPointProjection());
+		setValue(getMain().getPointProjection());
 	}
 
 	@Override
@@ -24,8 +21,7 @@ public class ProjectPointsCheckboxControl extends CheckboxControl {
 
 	@Override
 	protected void changeValue(boolean value) {
-		main.setPointProjection(value);
-		main.repaint();
+		getMain().setPointProjection(value);
 	}
 
 	@Override

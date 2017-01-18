@@ -7,27 +7,23 @@ import de.tunetown.roommap.main.Main;
 public class ResolutionSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public ResolutionSliderControl(Main main, Controls parent) {
-		super(parent, 4);
-		this.main = main;
+		super(parent, main, 4);
 	}
 	
 	@Override
 	protected void changeValue(double val) {
-		main.setResolution(val);
-		main.repaint();
+		getMain().setResolution(val);
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getResolution();
+		return getMain().getResolution();
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getResolution());
+		setValue(getMain().getResolution());
 	}
 
 	@Override

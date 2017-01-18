@@ -7,6 +7,8 @@ import java.awt.event.ItemListener;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 
+import de.tunetown.roommap.main.Main;
+
 public abstract class CheckboxControl extends Control {
 	private static final long serialVersionUID = 1L;
 
@@ -14,8 +16,8 @@ public abstract class CheckboxControl extends Control {
 	
 	private JCheckBox checkbox;
 	
-	public CheckboxControl(Controls parent) {
-		super();
+	public CheckboxControl(Controls parent, Main main) {
+		super(main);
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.parent = parent;
 	}

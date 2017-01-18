@@ -7,28 +7,23 @@ import de.tunetown.roommap.main.Main;
 public class MarginSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public MarginSliderControl(Main main, Controls parent) {
-		super(parent, 4);
-		this.main = main;
+		super(parent, main, 4);
 	}
 	
 	@Override
 	protected void changeValue(double val) {
-		main.setMargin(val);
-		parent.updateControlValues(); // On a margin change, we also update the height slider value and labels
-		main.repaint();
+		getMain().setMargin(val);
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getMargin();
+		return getMain().getMargin();
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getMargin());
+		setValue(getMain().getMargin());
 	}
 
 	@Override

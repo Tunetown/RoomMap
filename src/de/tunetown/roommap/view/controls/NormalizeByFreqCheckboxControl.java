@@ -5,16 +5,13 @@ import de.tunetown.roommap.main.Main;
 public class NormalizeByFreqCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public NormalizeByFreqCheckboxControl(Main main, Controls parent) {
-		super(parent);
-		this.main = main;
+		super(parent, main);
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getNormalizeByFrequency());
+		setValue(getMain().getNormalizeByFrequency());
 	}
 
 	@Override
@@ -24,8 +21,7 @@ public class NormalizeByFreqCheckboxControl extends CheckboxControl {
 
 	@Override
 	protected void changeValue(boolean value) {
-		main.setNormalizeByFrequency(value);
-		main.repaint();
+		getMain().setNormalizeByFrequency(value);
 	}
 
 	@Override

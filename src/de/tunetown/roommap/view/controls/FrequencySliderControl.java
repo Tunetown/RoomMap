@@ -7,37 +7,33 @@ import de.tunetown.roommap.main.Main;
 public class FrequencySliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public FrequencySliderControl(Main main, Controls parent) {
-		super(parent, 3);
-		this.main = main;
+		super(parent, main, 3);
 	}
 
 	@Override
 	protected void changeValue(double val) {
-		main.setFrequency(val);
-		main.repaint();
+		getMain().setFrequency(val);
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getFrequency();
+		return getMain().getFrequency();
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getFrequency());
+		setValue(getMain().getFrequency());
 	}
 
 	@Override
 	public double getMin() {
-		return main.getMeasurements().getMinFrequency();
+		return getMain().getMeasurements().getMinFrequency();
 	}
 
 	@Override
 	public double getMax() {
-		return main.getMeasurements().getMaxFrequency();
+		return getMain().getMeasurements().getMaxFrequency();
 	}
 
 	@Override

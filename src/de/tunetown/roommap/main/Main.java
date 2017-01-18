@@ -36,7 +36,6 @@ import de.tunetown.roommap.view.MainFrame;
  * TODO:
  * Current state:
  * - Check and fix interaction between controls (bug: resolution changes on margin change) 
- * - Rework layout of controls (fixed size while precalculating)
  * - Keep aspect ratio of window on frame resize
  * 
  * Next new features:

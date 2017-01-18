@@ -12,6 +12,8 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import de.tunetown.roommap.main.Main;
+
 public abstract class SliderControl extends Control {
 	private static final long serialVersionUID = 1L;
 
@@ -26,16 +28,17 @@ public abstract class SliderControl extends Control {
 	
 	private boolean temporarilyDisableSlider = false;
 	
-	public SliderControl(Controls parent) {
-		this(parent, 0);
+	public SliderControl(Controls parent, Main main) {
+		this(parent, main, 2);
 	}
 
-	public SliderControl(Controls parent, int labelCount) {
-		super();
+	public SliderControl(Controls parent, Main main, int labelCount) {
+		super(main);
 		this.setLayout(new BoxLayout(this, BoxLayout.LINE_AXIS));
 		
 		this.parent = parent;
 		this.labelCount = labelCount;
+		if (this.labelCount < 2) this.labelCount = 2;
 	}
 
 	/**
@@ -120,6 +123,8 @@ public abstract class SliderControl extends Control {
 				if (value == determineValue()) return;
 				changeValue(value);
 				input.setText(formatValue(value));
+				updateDependentControls();
+				repaintControls();
 			}
 		});
 		add(slider);
@@ -140,6 +145,8 @@ public abstract class SliderControl extends Control {
 				temporarilyDisableSlider = true;
 				changeValue(val); 
 				slider.setValue(convertToSlider(val));
+				updateDependentControls();
+				repaintControls();
 		    }
 		});
 		input.setMaximumSize(new Dimension(Integer.MAX_VALUE, 30));

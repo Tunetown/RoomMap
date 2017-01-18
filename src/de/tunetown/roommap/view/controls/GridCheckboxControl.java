@@ -5,16 +5,13 @@ import de.tunetown.roommap.main.Main;
 public class GridCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public GridCheckboxControl(Main main, Controls parent) {
-		super(parent);
-		this.main = main;
+		super(parent, main);
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getShowGrid());
+		setValue(getMain().getShowGrid());
 	}
 
 	@Override
@@ -24,8 +21,7 @@ public class GridCheckboxControl extends CheckboxControl {
 
 	@Override
 	protected void changeValue(boolean value) {
-		main.setShowGrid(value);
-		main.repaint();
+		getMain().setShowGrid(value);
 	}
 	
 	@Override

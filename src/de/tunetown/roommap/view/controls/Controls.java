@@ -36,8 +36,14 @@ public class Controls extends JPanel {
 	 */
 	private void init() {
 		controls.add(new FrequencySliderControl(main, this));
-		controls.add(new HeightSliderControl(main, this));
-		controls.add(new MarginSliderControl(main, this));
+		
+		Control hsl = new HeightSliderControl(main, this);
+		controls.add(hsl);
+		
+		Control msl = new MarginSliderControl(main, this);
+		msl.addDependentControl(hsl);
+		controls.add(msl);
+		
 		controls.add(new ResolutionSliderControl(main, this));
 		controls.add(new NormalizeByFreqCheckboxControl(main, this));
 		controls.add(new ProjectPointsCheckboxControl(main, this));

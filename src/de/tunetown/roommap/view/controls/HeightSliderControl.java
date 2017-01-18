@@ -7,38 +7,34 @@ import de.tunetown.roommap.main.Main;
 public class HeightSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public HeightSliderControl(Main main, Controls parent) {
-		super(parent, 4);
-		this.main = main;
+		super(parent, main, 4);
 	}
 
 	@Override
 	protected void changeValue(double val) {
-		main.setViewZ(val);
-		main.repaint();
+		getMain().setViewZ(val);
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getViewZ();
+		return getMain().getViewZ();
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getViewZ());
+		setValue(getMain().getViewZ());
 		updateSliderAttributes();
 	}
 
 	@Override
 	public double getMin() {
-		return main.getMeasurements().getMinZ() - main.getMargin();
+		return getMain().getMeasurements().getMinZ() - getMain().getMargin();
 	}
 
 	@Override
 	public double getMax() {
-		return main.getMeasurements().getMaxZ() + main.getMargin();
+		return getMain().getMeasurements().getMaxZ() + getMain().getMargin();
 	}
 	
 	@Override

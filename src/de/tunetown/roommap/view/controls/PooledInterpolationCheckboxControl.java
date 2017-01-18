@@ -6,16 +6,13 @@ import de.tunetown.roommap.main.ThreadManagement;
 public class PooledInterpolationCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	
-	private Main main;
-	
 	public PooledInterpolationCheckboxControl(Main main, Controls parent) {
-		super(parent);
-		this.main = main;
+		super(parent, main);
 	}
 
 	@Override
 	public void updateValue() {
-		setValue(main.getPooledInterpolation());
+		setValue(getMain().getPooledInterpolation());
 	}
 
 	@Override
@@ -25,8 +22,7 @@ public class PooledInterpolationCheckboxControl extends CheckboxControl {
 
 	@Override
 	protected void changeValue(boolean value) {
-		main.setPooledInterpolation(value);
-		main.repaint();
+		getMain().setPooledInterpolation(value);
 	}
 
 	@Override
