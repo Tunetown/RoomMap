@@ -47,7 +47,6 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
  * 
  * Will not happen in near future:
- * - Frequency: Interpolate instead of average (PRIO LOW, not necessary if enough raw data is there)
  * - 2.00 Import image PNG to lay over data
  * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 

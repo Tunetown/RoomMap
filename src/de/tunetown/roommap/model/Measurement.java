@@ -157,8 +157,10 @@ public class Measurement {
 		int low = frequencies.size()-1;
 		while(low > 0 && frequencies.get(low) > freq) low--;
 
-		// TODO interpolate cleanly
-		return (spl.get(high) + spl.get(low)) / 2;
+		if (high == low) return spl.get(low);
+		
+		double freqRatio = (freq - frequencies.get(low)) / (frequencies.get(high) - frequencies.get(low));
+		return (spl.get(high) - spl.get(low)) * freqRatio + spl.get(low);
 	}
 
 	public double getX() {
