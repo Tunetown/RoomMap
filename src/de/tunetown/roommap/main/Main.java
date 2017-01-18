@@ -38,6 +38,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
+ * - Applet 
+ * 
  * Next new features:
  * - Publish to Applet
  * - Store window size, control values in temp file (like SNIPE)
