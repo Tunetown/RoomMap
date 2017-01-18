@@ -63,17 +63,17 @@ public class Main extends JApplet {
 	private MainFrame frame;
 	private Measurements measurements;
 	
-	// Defaults
+	// TODO Defaults derive from data as much as possible
 	private double frequency = 0;  
 	private double viewZ = 0;       
-	private double margin = 0.3; // TODO?
+	private double margin = 0.3; 
 	private double resolution = 0.2;       // Resolution (model units, not pixels!)
 	private boolean normalizeByFrequency = false;
 	private boolean projectionOfPoints = false;
 	private boolean showGrid = true;
 	
 	private boolean pooledInterpolation = true;
-	private boolean precalculation = false; 
+	private boolean precalculation = false;  // This must be false at program start!!
 	
 	/**
 	 * Main method for standalone usage
@@ -139,9 +139,6 @@ public class Main extends JApplet {
 		// Create and initialize application frame and menu. Order is critical here for proper display.
 		frame = new MainFrame(this);
 		frame.init();
-		
-		// Start interpolator coefficient pre-calculation in background threads if enabled (TODO not working)
-		if (getPrecalculation()) startPrecalculation();
 	}
 	
 	private void startPrecalculation() {

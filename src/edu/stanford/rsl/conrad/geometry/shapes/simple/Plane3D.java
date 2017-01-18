@@ -309,7 +309,6 @@ public class Plane3D extends AbstractSurface {
 
 	@Override
 	public AbstractShape tessellate(double accuracy) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

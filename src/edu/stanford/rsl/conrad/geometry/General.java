@@ -550,7 +550,6 @@ public abstract class General {
 							pt = points.get(i-1);
 							bwpoint.write(nameTag+(i-1)+"\t"+i+"id"+nameTag + "\t" +pt.get(0)+"\t"+pt.get(1)+"\t"+pt.get(2)+"\n");
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
@@ -573,7 +572,6 @@ public abstract class General {
 						pt = points.get(points.size()-1);
 						bwpoint.write(nameTag+(points.size()-1)+"\t"+0+"id"+nameTag + "\t" +pt.get(0)+"\t"+pt.get(1)+"\t"+pt.get(2)+"\n");
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}

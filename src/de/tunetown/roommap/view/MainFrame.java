@@ -31,28 +31,9 @@ public class MainFrame extends JFrame {
 		pack();
 		setLocationByPlatform(true);
 		setVisible(true);
-		/* TODO
-		JFrame wrapper = this;
-		addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                resizePreview(mainPanel, wrapper);
-            }
-        });
-        */
 	}
 	
 	public MainPanel getMainPanel() {
 		return mainPanel;
 	}
-	
-	/*
-	private static void resizePreview(JPanel innerPanel, JFrame container) {
-        int w = container.getWidth();
-        int h = container.getHeight();
-        System.out.println(2);
-        int size =  Math.min(w, h);
-        innerPanel.setPreferredSize(new Dimension(size, size));
-        container.revalidate();
-    }*/
 }
