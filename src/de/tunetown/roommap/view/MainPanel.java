@@ -1,10 +1,7 @@
 package de.tunetown.roommap.view;
 
 import java.awt.BorderLayout;
-
-import javax.swing.JFrame;
 import javax.swing.JPanel;
-
 import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.view.controls.Controls;
 import de.tunetown.roommap.view.data.OutputGraphics;
