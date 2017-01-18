@@ -4,43 +4,43 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
-public class ResolutionControl extends Control {
+public class MarginSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
 	
-	public ResolutionControl(Main main, Controls parent) {
-		super(parent, "Resolution (m):", 4);
+	public MarginSliderControl(Main main, Controls parent) {
+		super(parent, 4);
 		this.main = main;
-		init();
 	}
 	
 	@Override
 	protected void changeValue(double val) {
-		main.setResolution(val);
+		main.setMargin(val);
+		parent.updateControlValues(); // On a margin change, we also update the height slider value and labels
 		main.repaint();
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getResolution();
+		return main.getMargin();
 	}
 
 	@Override
-	public void update() {
-		setValue(main.getResolution());
+	public void updateValue() {
+		setValue(main.getMargin());
 	}
 
 	@Override
 	public double getMin() {
-		return 0.05;
+		return 0;
 	}
 
 	@Override
 	public double getMax() {
-		return 0.5;
+		return 1;
 	}
-
+	
 	@Override
 	protected String formatValue(double value) {
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -50,5 +50,15 @@ public class ResolutionControl extends Control {
 	@Override
 	public double getStep(double value) {
 		return 0.05;
+	}
+	
+	@Override
+	protected int getLabelWidth() {
+		return 130;
+	}
+
+	@Override
+	protected String getLabelText() {
+		return "Margin (m):";
 	}
 }

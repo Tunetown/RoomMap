@@ -274,8 +274,8 @@ public class OutputGraphics extends JPanel {
 	 * @param g
 	 */
 	private void paintPoints(Graphics g) {
-		int diaX = convertModelToViewX(main.getResolution()/4);
-		int diaY = convertModelToViewY(main.getResolution()/4);
+		int diaX = convertModelToViewX(main.getResolution()/2);
+		int diaY = convertModelToViewY(main.getResolution()/2);
 		if (diaX < ViewProperties.POINTS_MIN_DIAMETER) diaX = ViewProperties.POINTS_MIN_DIAMETER;
 		if (diaX > ViewProperties.POINTS_MAX_DIAMETER) diaX = ViewProperties.POINTS_MAX_DIAMETER;
 		if (diaY < ViewProperties.POINTS_MIN_DIAMETER) diaY = ViewProperties.POINTS_MIN_DIAMETER;

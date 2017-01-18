@@ -4,44 +4,42 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
-public class MarginControl extends Control {
+public class FrequencySliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
 	
-	public MarginControl(Main main, Controls parent) {
-		super(parent, "Margin (m):", 4);
+	public FrequencySliderControl(Main main, Controls parent) {
+		super(parent, 3);
 		this.main = main;
-		init();
 	}
-	
+
 	@Override
 	protected void changeValue(double val) {
-		main.setMargin(val);
-		parent.updateControls(); // On a mragin change, we also update the height slider value and labels
+		main.setFrequency(val);
 		main.repaint();
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getMargin();
+		return main.getFrequency();
 	}
 
 	@Override
-	public void update() {
-		setValue(main.getMargin());
+	public void updateValue() {
+		setValue(main.getFrequency());
 	}
 
 	@Override
 	public double getMin() {
-		return 0;
+		return main.getMeasurements().getMinFrequency();
 	}
 
 	@Override
 	public double getMax() {
-		return 1;
+		return main.getMeasurements().getMaxFrequency();
 	}
-	
+
 	@Override
 	protected String formatValue(double value) {
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -49,8 +47,17 @@ public class MarginControl extends Control {
 	}
 
 	@Override
-	public double getStep(double value) {
-		return 0.05;
+	protected double getStep(double value) {
+		return 0.5;
 	}
 
+	@Override
+	protected int getLabelWidth() {
+		return 130;
+	}
+
+	@Override
+	protected String getLabelText() {
+		return "Frequency (Hz):";
+	}
 }

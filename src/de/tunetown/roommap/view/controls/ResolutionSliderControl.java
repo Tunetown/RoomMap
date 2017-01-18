@@ -4,44 +4,42 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
-public class HeightControl extends Control {
+public class ResolutionSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
 	
-	public HeightControl(Main main, Controls parent) {
-		super(parent, "Height (m):", 4);
+	public ResolutionSliderControl(Main main, Controls parent) {
+		super(parent, 4);
 		this.main = main;
-		init();
 	}
-
+	
 	@Override
 	protected void changeValue(double val) {
-		main.setViewZ(val);
+		main.setResolution(val);
 		main.repaint();
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getViewZ();
+		return main.getResolution();
 	}
 
 	@Override
-	public void update() {
-		setValue(main.getViewZ());
-		updateSliderAttributes();
+	public void updateValue() {
+		setValue(main.getResolution());
 	}
 
 	@Override
 	public double getMin() {
-		return main.getMeasurements().getMinZ() - main.getMargin();
+		return 0.05;
 	}
 
 	@Override
 	public double getMax() {
-		return main.getMeasurements().getMaxZ() + main.getMargin();
+		return 0.5;
 	}
-	
+
 	@Override
 	protected String formatValue(double value) {
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -52,5 +50,14 @@ public class HeightControl extends Control {
 	public double getStep(double value) {
 		return 0.05;
 	}
+	
+	@Override
+	protected int getLabelWidth() {
+		return 130;
+	}
 
+	@Override
+	protected String getLabelText() {
+		return "Resolution (m):";
+	}
 }

@@ -4,43 +4,43 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
-public class FrequencyControl extends Control {
+public class HeightSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	
 	private Main main;
 	
-	public FrequencyControl(Main main, Controls parent) {
-		super(parent, "Frequency (Hz):", 3);
+	public HeightSliderControl(Main main, Controls parent) {
+		super(parent, 4);
 		this.main = main;
-		init();
 	}
 
 	@Override
 	protected void changeValue(double val) {
-		main.setFrequency(val);
+		main.setViewZ(val);
 		main.repaint();
 	}
 
 	@Override
 	protected double determineValue() {
-		return main.getFrequency();
+		return main.getViewZ();
 	}
 
 	@Override
-	public void update() {
-		setValue(main.getFrequency());
+	public void updateValue() {
+		setValue(main.getViewZ());
+		updateSliderAttributes();
 	}
 
 	@Override
 	public double getMin() {
-		return main.getMeasurements().getMinFrequency();
+		return main.getMeasurements().getMinZ() - main.getMargin();
 	}
 
 	@Override
 	public double getMax() {
-		return main.getMeasurements().getMaxFrequency();
+		return main.getMeasurements().getMaxZ() + main.getMargin();
 	}
-
+	
 	@Override
 	protected String formatValue(double value) {
 		DecimalFormat df = new DecimalFormat("#.##");
@@ -48,7 +48,19 @@ public class FrequencyControl extends Control {
 	}
 
 	@Override
-	protected double getStep(double value) {
-		return 0.5;
+	public double getStep(double value) {
+		return 0.05;
 	}
+
+	@Override
+	protected int getLabelWidth() {
+		return 130;
+	}
+
+	@Override
+	protected String getLabelText() {
+		return "Height (m):";
+	}
+	
+	
 }

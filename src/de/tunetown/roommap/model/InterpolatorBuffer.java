@@ -99,15 +99,16 @@ public class InterpolatorBuffer {
 		}
 	}
 
-	public int getAll() {
+	/**
+	 * Returns the precalculation status in [0..1]. 0: Not started, 1: finished
+	 * 
+	 * @return
+	 */
+	public double getLoadedPerc() {
 		if (executors == null) return 0;
-		return executors.size();
+		return (double)interpolators.size() / (double)executors.size();
 	}
-
-	public int getSize() {
-		return interpolators.size();
-	}
-
+	
 	public boolean hasInterpolator(double freq) {
 		return (interpolators.get(freq) != null);
 	}
