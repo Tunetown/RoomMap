@@ -2,6 +2,7 @@ package de.tunetown.roommap.main;
 
 import java.io.File;
 
+import javax.swing.JApplet;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
@@ -37,11 +38,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
  * 
  * TODO:
- * Current state:
- * - Keep aspect ratio of window on frame resize
- * 
  * Next new features:
- * - Publish to Win and OSX
+ * - Publish to Applet
  * - Store window size, control values in temp file (like SNIPE)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
@@ -56,7 +54,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * @version 0.1
  *
  */
-public class Main {
+public class Main extends JApplet {
+	private static final long serialVersionUID = 1L;
 
 	private MainFrame frame;
 	private Measurements measurements;
@@ -74,7 +73,7 @@ public class Main {
 	private boolean precalculation = false; 
 	
 	/**
-	 * Main method
+	 * Main method for standalone usage
 	 *  
 	 * @param args
 	 */
@@ -94,16 +93,33 @@ public class Main {
 			@Override
 			public void run() {
 				Main appl = new Main();
-				appl.init();
+				appl.initialize();
 			}
 		});	
 	}
+	
+	/**
+	 * Init method for applet usage
+	 * 
+	 */
+	public void init() {
+        try {
+            SwingUtilities.invokeAndWait(new Runnable() {
+                public void run() {
+                	Main appl = new Main();
+    				appl.initialize();
+                }
+            });
+        } catch (Exception e) {
+            System.err.println("createGUI didn't complete successfully");
+        }
+    }
 
 	/**
 	 * Initialize the application (called by main() method)
 	 * 
 	 */
-	private void init() {
+	private void initialize() {
 		// Load data
 		JFileChooser j = new JFileChooser("/Users/tweber/git/RoomMap/examples"); // TODO remove
 		j.setMultiSelectionEnabled(true);

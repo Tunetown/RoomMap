@@ -1,0 +1,87 @@
+<project name="RoomMap" default="run-app" basedir="." xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	<property environment="env"/>
+	
+	<taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath=".:./resources:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/lib/ant-javafx.jar"/> 
+		
+	<property name="current.dir"         value="." />
+	<property name="src.dir"             value="src"/>
+	<property name="lib.dir"             value="lib"/>
+	<property name="build.dir"           value="build" />
+	<property name="build.jar.dir"       value="${build.dir}/jar" />
+	<property name="build.resources.dir" value="${build.dir}/resources" />
+	<property name="release.dir"         value="release" />
+	<property name="release.app.dir"     value="${release.dir}/macosx" />
+	
+	<property name="appname"             value="RoomMap" />
+	<property name="mainclass"           value="de.tunetown.roommap.main.Main" />
+	
+	<!-- Classpath for compilation -->
+	<path id="classpath">
+	    <fileset dir="${lib.dir}" includes="**/*.jar"/>
+	</path>
+	
+	<!-- Cleanup before building --> 
+	<target name="clean" >
+		<delete dir="${build.dir}"/>
+		<delete dir="${release.dir}"/>
+	</target>
+
+	<!-- Compile to build dir --> 
+	<target name="compile" depends="clean">
+		<mkdir dir="${build.resources.dir}"/>
+		
+		<javac srcdir="${src.dir}" 
+			   destdir="${build.resources.dir}" 
+			   classpathref="classpath" 
+			   includeantruntime="false" 
+		/>
+
+		<!-- Copy external libraries to resources dir, to include them in the jar -->
+		<copy todir="${build.resources.dir}">
+		    <fileset dir="${lib.dir}">  
+		       <include name="**/*.*"/>
+		    </fileset>
+		</copy>
+	</target> 
+	
+	<!-- Create JAR package -->  
+	<target name="jar" depends="compile">
+		<mkdir dir="${build.jar.dir}"/> 
+		
+		<jar destfile="${build.jar.dir}/${appname}.jar" basedir="${build.resources.dir}">
+			<zipgroupfileset dir="${build.resources.dir}" includes="*.jar" />
+			<manifest>
+				<attribute name="Main-Class" value="${mainclass}"/>
+				<!-- <attribute name="Class-Path" value="${build.resources.dir}/*.jar"/> -->
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="bundle" depends="jar">
+		<mkdir dir="${release.app.dir}"/>
+		
+		<fx:deploy nativeBundles="all" verbose="true" outdir="${release.app.dir}" outfile="${appname}">
+			<fx:info copyright="2017 - Thomas Weber - www.TuneTown.de" title="${appname}"/>
+			
+			<fx:application version="0.1" id="${appname}" toolkit="swing" name="${appname}" mainClass="${mainclass}"/>
+			
+			<fx:platform j2se="1.8+" basedir=""> <!-- Here, the empty basedir takes care to NOT include the 160MB JRE in the app bundle. Remove to include the JRE before final deployment. -->
+				<fx:jvmarg value="-Xdock:name=${appname}"/>
+			</fx:platform>
+	         
+			<fx:resources>
+				<fx:fileset dir="${build.jar.dir}" includes="*.jar"/>
+				<!-- <fx:fileset dir="${resources.dir}" includes="ProBroDefaultProjectDef.xml"/> -->
+			</fx:resources>
+		</fx:deploy>
+	</target>
+	
+	<target name="run-jar" depends="jar">
+		<java jar="${release.jar.dir}/${appname}.jar" fork="true"/>
+	</target>
+
+	<target name="run-app" depends="bundle">
+		<!-- This is called like that to also get the console output of the program in ant -->
+		<exec executable="${release.app.dir}/bundles/${appname}.app/Contents/MacOS/${appname}" />
+	</target>
+</project>

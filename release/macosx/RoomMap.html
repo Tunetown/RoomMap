@@ -1,0 +1,48 @@
+<html><head>
+  <SCRIPT src="http://java.com/js/dtjava.js"></SCRIPT>
+<script>
+    function launchApplication(jnlpfile) {
+        dtjava.launch(            {
+                url : 'RoomMap.jnlp'
+            },
+            {
+                javafx : '2.2+',
+                jvmargs : '-Xdock:name=RoomMap '
+            },
+            {}
+        );
+        return false;
+    }
+</script>
+
+<script>
+    function javafxEmbed_RoomMap() {
+        dtjava.embed(
+            {
+                id : 'RoomMap',
+                toolkit : 'swing',
+                url : 'RoomMap_browser.jnlp',
+                placeholder : 'javafx-app-placeholder',
+                width : 0,
+                height : 0
+            },
+            {
+                javafx : '2.2+',
+                jvmargs : '-Xdock:name=RoomMap '
+            },
+            {
+                onGetSplash : function() {}
+            }
+        );
+    }
+    <!-- Embed FX application into web page once page is loaded -->
+    dtjava.addOnloadCallback(javafxEmbed_RoomMap);
+</script>
+
+</head><body>
+<h2>Test page for <b>RoomMap</b></h2>
+  <b>Webstart:</b> <a href='RoomMap.jnlp' onclick="return launchApplication('RoomMap.jnlp');">click to launch this app as webstart</a><br><hr><br>
+
+  <!-- Applet will be inserted here -->
+  <div id='javafx-app-placeholder'></div>
+</body></html>

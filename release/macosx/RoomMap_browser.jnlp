@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0" xmlns:jfx="http://javafx.com" href="RoomMap_browser.jnlp">
+  <information>
+    <title>RoomMap</title>
+    <vendor>Unknown vendor</vendor>
+    <description>Sample JavaFX 2.0 application.</description>
+    <offline-allowed/>
+  </information>
+  <resources>
+    <jfx:javafx-runtime version="2.2+" href="http://javadl.sun.com/webapps/download/GetFile/javafx-latest/windows-i586/javafx2.jnlp"/>
+  </resources>
+  <resources>
+    <j2se version="1.8+" java-vm-args="-Xdock:name=RoomMap "  href="http://java.sun.com/products/autodl/j2se"/>
+    <jar href="RoomMap.jar" size="4394966" download="eager" />
+  </resources>
+  <applet-desc  width="0" height="0" main-class="de.tunetown.roommap.main.Main"  name="RoomMap" >
+  </applet-desc>
+  <update check="background"/>
+</jnlp>
