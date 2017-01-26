@@ -43,13 +43,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * 
  * Next new features:
  * - Publish to Applet
- * - Store window size, control values in temp file (like SNIPE)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * 
- * Will not happen in near future:
- * - 2.00 Import image PNG to lay over data
- * - 4.00 visualize in 3d like amroc (one color only, with alpha)
  * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de

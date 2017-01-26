@@ -3,17 +3,20 @@
 	
 	<taskdef resource="com/sun/javafx/tools/ant/antlib.xml" uri="javafx:com.sun.javafx.tools.ant" classpath=".:./resources:/Library/Java/JavaVirtualMachines/jdk1.8.0_05.jdk/Contents/Home/lib/ant-javafx.jar"/> 
 		
-	<property name="current.dir"         value="." />
-	<property name="src.dir"             value="src"/>
-	<property name="lib.dir"             value="lib"/>
-	<property name="build.dir"           value="build" />
-	<property name="build.jar.dir"       value="${build.dir}/jar" />
-	<property name="build.resources.dir" value="${build.dir}/resources" />
-	<property name="release.dir"         value="release" />
-	<property name="release.app.dir"     value="${release.dir}/macosx" />
+	<property name="current.dir"          value="." />
+	<property name="src.dir"              value="src"/>
+	<property name="lib.dir"              value="lib"/>
+	<property name="build.dir"            value="build" />
+	<property name="build.jar.dir"        value="${build.dir}/jar" />
+	<property name="build.resources.dir"  value="${build.dir}/resources" />
+	<property name="resources.dir"        value="resources" />
+	<property name="resources.applet.dir" value="${resources.dir}/applet" />
+	<property name="release.dir"          value="release" />
+	<property name="release.app.dir"      value="${release.dir}/macosx" />
+	<property name="release.applet.dir"   value="${release.dir}/applet" />
 	
-	<property name="appname"             value="RoomMap" />
-	<property name="mainclass"           value="de.tunetown.roommap.main.Main" />
+	<property name="appname"              value="RoomMap" />
+	<property name="mainclass"            value="de.tunetown.roommap.main.Main" />
 	
 	<!-- Classpath for compilation -->
 	<path id="classpath">
@@ -23,7 +26,6 @@
 	<!-- Cleanup before building --> 
 	<target name="clean" >
 		<delete dir="${build.dir}"/>
-		<delete dir="${release.dir}"/>
 	</target>
 
 	<!-- Compile to build dir --> 
@@ -58,6 +60,7 @@
 	</target>
 	
 	<target name="bundle" depends="jar">
+		<delete dir="${release.app.dir}"/>
 		<mkdir dir="${release.app.dir}"/>
 		
 		<fx:deploy nativeBundles="all" verbose="true" outdir="${release.app.dir}" outfile="${appname}">
@@ -76,6 +79,21 @@
 		</fx:deploy>
 	</target>
 	
+	<target name="applet" depends="jar">
+		<delete dir="${release.applet.dir}"/>
+		<mkdir dir="${release.applet.dir}"/>
+		
+		<copy todir="${release.applet.dir}">
+		    <file name="${build.jar.dir}/${appname}.jar" />
+		</copy>
+		
+		<copy todir="${release.applet.dir}">
+		    <fileset dir="${resources.applet.dir}">  
+		       <include name="**/*.*"/>
+		    </fileset>
+		</copy>
+	</target>
+	
 	<target name="run-jar" depends="jar">
 		<java jar="${release.jar.dir}/${appname}.jar" fork="true"/>
 	</target>
@@ -83,5 +101,14 @@
 	<target name="run-app" depends="bundle">
 		<!-- This is called like that to also get the console output of the program in ant -->
 		<exec executable="${release.app.dir}/bundles/${appname}.app/Contents/MacOS/${appname}" />
+	</target>
+	
+	<target name="run-applet" depends="applet">
+		<!-- <exec executable="${release.app.dir}/bundles/${appname}.app/Contents/MacOS/${appname}" /> -->
+		<property name="report.file" value="${release.applet.dir}/index.html" />
+
+		<exec executable="open" spawn="yes">
+		    <arg value="${report.file}" />
+		</exec>
 	</target>
 </project>
