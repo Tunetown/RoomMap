@@ -71,6 +71,7 @@ public class Main extends JApplet {
 	private boolean normalizeByFrequency = false;
 	private boolean projectionOfPoints = false;
 	private boolean showGrid = true;
+	private boolean showWavelength = false;
 	
 	private boolean pooledInterpolation = true;
 	private boolean precalculation = false;  // This must be false at program start!!
@@ -228,8 +229,12 @@ public class Main extends JApplet {
 		return resolution;
 	}
 
-	public void updatePrecalculationStats() { 
+	public void updateControlLabels() { 
 		frame.getMainPanel().getControls().updateControlLabels();
+	}
+
+	public void updateControlValues() { 
+		frame.getMainPanel().getControls().updateControlValues();
 	}
 
 	public void setPrecalculation(boolean b) {
@@ -247,6 +252,14 @@ public class Main extends JApplet {
 
 	public boolean getPrecalculation() {
 		return precalculation;
+	}
+
+	public boolean getShowWavelength() {
+		return showWavelength;
+	}
+
+	public void setShowWavelength(boolean value) {
+		showWavelength = value;
 	}
 }
 

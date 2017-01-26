@@ -6,6 +6,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +45,37 @@ public class OutputGraphics extends JPanel {
 	private int fontSize = 10;
 	private int labelWidth = 20;
 	
+	private int mouseX = 0;
+	private int mouseY = 0;
+	
 	public OutputGraphics(Main main) {
 		this.main = main;
 		
 		Dimension dim = getPaintDimension(maxSize, maxSize);
 		this.setPreferredSize(dim);
 		this.setMinimumSize(dim);
+
+		addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+		        if (e.getButton() == MouseEvent.BUTTON1) {
+		        	setMouseAt(e.getX(), e.getY());
+		        }
+		    }
+		});
+	}
+
+	protected void setMouseAt(int x, int y) {
+		this.mouseX = x;
+		this.mouseY = y;
+		
+		if (!main.getShowWavelength()) {
+			main.setShowWavelength(true);
+			//main.updateControlValues();  // TODO update checkbox
+			main.repaint();
+		} else {
+			repaint();
+		}	
 	}
 
 	/**
@@ -102,6 +129,30 @@ public class OutputGraphics extends JPanel {
 		}
 		paintAxes(g);
 		paintPoints(g);
+		paintQWLCircle(g);
+	}
+
+	private void paintQWLCircle(Graphics g) {
+		if (!main.getShowWavelength()) return;
+		if (mouseX == -1 || mouseY == -1) return;
+		
+		int radX = this.convertModelToViewX(main.getMeasurements().getWavelength(main.getFrequency()));
+		int radY = this.convertModelToViewY(main.getMeasurements().getWavelength(main.getFrequency()));
+		
+		g.setColor(Color.LIGHT_GRAY); // TODO
+		g.fillOval(mouseX, mouseY, 4, 4); // TODO
+		
+		g.setColor(Color.black); // TODO
+		g.drawOval(mouseX - radX/4, mouseY - radY/4, 2*radX/4, 2*radY/4);
+		
+		g.setColor(Color.LIGHT_GRAY); // TODO
+		g.drawOval(mouseX - radX/2, mouseY - radY/2, 2*radX/2, 2*radY/2);
+		
+		g.setColor(Color.black); // TODO
+		g.drawOval(mouseX - 3*radX/4, mouseY - 3*radY/4, 2*3*radX/4, 2*3*radY/4);
+
+		g.setColor(Color.LIGHT_GRAY); // TODO
+		g.drawOval(mouseX - radX, mouseY - radY, 2*radX, 2*radY);
 	}
 
 	private void paintAxes(Graphics g) {

@@ -276,4 +276,8 @@ public class Measurements {
 	public InterpolatorBuffer getInterpolatorBuffer() {
 		return interpolators;
 	}
+
+	public double getWavelength(double frequency) {
+		return 343 / frequency;
+	}
 }

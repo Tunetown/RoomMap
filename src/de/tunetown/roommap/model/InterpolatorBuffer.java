@@ -35,7 +35,7 @@ public class InterpolatorBuffer {
 		
 		ThinPlateSplineInterpolation n = createInterpolator(freq);
 		interpolators.put(freq, n);
-		main.updatePrecalculationStats();
+		main.updateControlLabels();
 		return n;
 	}
 	
@@ -79,7 +79,7 @@ public class InterpolatorBuffer {
 	public void addInterpolator(double freq, ThinPlateSplineInterpolation i) {
 		synchronized(this) {
 			interpolators.put(freq, i);
-			main.updatePrecalculationStats();
+			main.updateControlLabels();
 		}
 	}
 
