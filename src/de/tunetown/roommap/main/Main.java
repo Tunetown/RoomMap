@@ -12,7 +12,7 @@ import de.tunetown.roommap.view.MainFrame;
 import de.tunetown.roommap.view.controls.FrequencySliderControl;
 import de.tunetown.roommap.view.controls.SliderControl;
 
-/**
+/** 
  * This application is used to evaluate field measurements made with REW and
  * exported there as text files. The file name has to contain the coordinates of the measurement mic
  * position (x,y,z) separated by spaces (see examples folder).
