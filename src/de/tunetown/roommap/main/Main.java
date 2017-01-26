@@ -42,7 +42,7 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * - EXE release
  * 
  * Next new features:
- * - Publish to Applet
+ * - Publish to Applet (on server)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
  * 
