@@ -54,7 +54,7 @@ public class Legend extends JPanel {
 		int lineWidth = getWidth()-2*margin-textWidth;
 		for(int y=margin; y<this.getHeight()-margin; y+=resolution) {
 			double spl = getSpl(y, viewMax, max, min);
-			g.setColor(o.getOutColor(spl));
+			g.setColor(o.getOutColor(spl, 1));
 			g.fillRect(margin, y, lineWidth, resolution);
 		}
 		

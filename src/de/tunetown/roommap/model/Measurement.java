@@ -164,6 +164,21 @@ public class Measurement {
 		return (spl.get(high) - spl.get(low)) * freqRatio + spl.get(low);
 	}
 
+	/**
+	 * Calculates the distance to a given point
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @return
+	 */
+	public double distanceTo(double x, double y, double z) {
+		double x2 = x - this.x;
+		double y2 = y - this.y;
+		double z2 = z - this.z;
+		return Math.sqrt(x2*x2 + y2*y2 + z2*z2); // TODO accelerate? Jafama?
+	}
+
 	public double getX() {
 		return x;
 	}

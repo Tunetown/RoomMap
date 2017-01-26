@@ -53,6 +53,7 @@ public class Controls extends JPanel {
 		controls.add(new ProjectPointsCheckboxControl(main, this));
 		controls.add(new GridCheckboxControl(main, this));
 		controls.add(new WavelengthCheckboxControl(main, this));
+		controls.add(new HideSenselessDataCheckboxControl(main, this));
 		controls.add(new PooledInterpolationCheckboxControl(main, this));
 		controls.add(new PrecalculationCheckboxControl(main, this));
 	}

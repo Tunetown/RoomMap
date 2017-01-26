@@ -219,16 +219,52 @@ public class OutputGraphics extends JPanel {
 			double x1 = convertViewToModelX(x);
 			for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
 				double y1 = convertViewToModelY(y);
-				if (!isInside(x1, y1, modelZ)) continue;
-				
+
 				double rx = x1 - main.getMargin() + main.getMeasurements().getMinX(); 
 				double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
+				double rel;
+				if (main.getHideSenselessData()) {
+					rel = main.getMeasurements().getPointRelevancy(rx, ry, modelZ, main.getFrequency());
+				} else {
+					rel = 1;
+				}
+				if (rel <= 0) continue; 
+				
 				double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
 				
-				g.setColor(getOutColor(spl));
+				g.setColor(getOutColor(spl, rel));
 				g.fillRect(x - resX/2, y - resY/2, resX, resY);
 			}
 		}
+	}
+	
+	public List<PaintBuffer> calculateX(int x) {
+		List<PaintBuffer> ret = new ArrayList<PaintBuffer>();
+		
+		double modelZ = main.getViewZ();
+		Dimension d = getPaintDimension();
+		int resX = convertModelToViewX(main.getResolution());
+		int resY = convertModelToViewX(main.getResolution());
+		double x1 = convertViewToModelX(x);
+
+		for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
+			double y1 = convertViewToModelY(y);
+
+			double rx = x1 - main.getMargin() + main.getMeasurements().getMinX();
+			double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
+			double rel;
+			if (main.getHideSenselessData()) {
+				rel = main.getMeasurements().getPointRelevancy(rx, ry, modelZ, main.getFrequency());
+			} else {
+				rel = 1;
+			}
+			if (rel <= 0) continue;
+			
+			double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
+
+			ret.add(new PaintBuffer(getOutColor(spl, rel), x - resX/2, y - resY/2, resX, resY));
+		}
+		return ret;
 	}
 
 	/**
@@ -276,47 +312,6 @@ public class OutputGraphics extends JPanel {
 			e.printStackTrace();
 		}
 		main.resumePrecalculation();
-	}
-
-	public List<PaintBuffer> calculateX(int x) {
-		List<PaintBuffer> ret = new ArrayList<PaintBuffer>();
-		
-		double modelZ = main.getViewZ();
-		Dimension d = getPaintDimension();
-		int resX = convertModelToViewX(main.getResolution());
-		int resY = convertModelToViewX(main.getResolution());
-		double x1 = convertViewToModelX(x);
-
-		for(int y=0; y<d.getHeight()+resY/2; y+=resY) {
-			double y1 = convertViewToModelY(y);
-			if (!isInside(x1, y1, modelZ)) continue; 
-
-			double rx = x1 - main.getMargin() + main.getMeasurements().getMinX();
-			double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
-			double spl = main.getMeasurements().getSpl(rx, ry, modelZ, main.getFrequency());
-
-			ret.add(new PaintBuffer(getOutColor(spl), x - resX/2, y - resY/2, resX, resY));
-		}
-		return ret;
-	}
-	
-	/**
-	 * Are these model coordinates inside the rectangular boundaries of the model data points (+ margin)?
-	 * (deactivated)
-	 * 
-	 * @param x
-	 * @param y
-	 * @param z
-	 * @return
-	 */
-	private boolean isInside(double x, double y, double z) {
-		return true;
-		/*
-		double m = main.getMargin();
-		return x >= main.getMeasurements().getMinX() - m && x <= main.getMeasurements().getMaxX() + m &&
-				y >= main.getMeasurements().getMinY() - m && y <= main.getMeasurements().getMaxY() + m &&
-				z >= main.getMeasurements().getMinZ() - m && z <= main.getMeasurements().getMaxZ() + m;
-				//*/
 	}
 
 	/**
@@ -393,7 +388,7 @@ public class OutputGraphics extends JPanel {
 	 * @param spl
 	 * @return
 	 */
-	public Color getOutColor(double spl) {
+	public Color getOutColor(double spl, double alpha) {
 		if (Double.isNaN(spl)) return ViewProperties.DATA_COLOR_NAN;
 		
 		double minSpl;
@@ -410,7 +405,8 @@ public class OutputGraphics extends JPanel {
 		double val = (spl - minSpl) / (maxSpl - minSpl);
 
 		Rainbow rainbow = new Rainbow();
-		return rainbow.colourAt(100 - (int)(val * 100));
+		Color ret = rainbow.colourAt(100 - (int)(val * 100));
+		return new Color(ret.getRed(), ret.getGreen(), ret.getBlue(), (int)(alpha*255)); // TODO protect alpha overflow? Test...
 	}
 	
 	/**

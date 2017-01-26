@@ -74,7 +74,37 @@ public class Measurements {
 	public double getSpl(double x, double y, double z, double freq) {
 		return getInterpolator(freq).interpolate(new PointND(x, y, z)).getElement(0);
 	}
+
+	/**
+	 * Get wavelength of frequency in meters
+	 * 
+	 * @param frequency
+	 * @return
+	 */
+	public double getWavelength(double frequency) {
+		return 343 / frequency; // TODO const
+	}
 	
+	/**
+	 * Determines relevancy of a point in regards of Nyquist sampling theorem.
+	 * A point must be at minimum near one data point, with maximum distance = lambda(freq)/4  
+	 * 
+	 * @param x
+	 * @param y
+	 * @param z
+	 * @param freq
+	 * @return in [0..1]
+	 */
+	public double getPointRelevancy(double x, double y, double z, double freq) {
+		double d = this.getWavelength(freq)/4;
+		
+		for (Measurement m : measurements) {
+			double dist = m.distanceTo(x, y, z);
+			if (dist <= d) return 1;
+		}
+		return 0; 
+	}
+
 	/**
 	 * Get buffered interpolator instance
 	 * 
@@ -275,9 +305,5 @@ public class Measurements {
 
 	public InterpolatorBuffer getInterpolatorBuffer() {
 		return interpolators;
-	}
-
-	public double getWavelength(double frequency) {
-		return 343 / frequency;
 	}
 }

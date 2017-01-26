@@ -46,7 +46,6 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * - Store window size, control values in temp file (like SNIPE)
  * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
  * 		- show on f axis also
- * - 1.00 Do not paint any data points exceeding the current Z layer (do not extrapolate)
  * 
  * Will not happen in near future:
  * - 2.00 Import image PNG to lay over data
@@ -75,6 +74,7 @@ public class Main extends JApplet {
 	
 	private boolean pooledInterpolation = true;
 	private boolean precalculation = false;  // This must be false at program start!!
+	private boolean hideSenselessData = true; 
 	
 	/**
 	 * Main method for standalone usage
@@ -260,6 +260,14 @@ public class Main extends JApplet {
 
 	public void setShowWavelength(boolean value) {
 		showWavelength = value;
+	}
+
+	public void setHideSenselessData(boolean b) {
+		hideSenselessData = b;
+	}
+
+	public boolean getHideSenselessData() {
+		return hideSenselessData;
 	}
 }
 
