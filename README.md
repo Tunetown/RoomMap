@@ -1,8 +1,8 @@
 # RoomMap
-Sound Pressure (SPL) Mapper for analysis of the distribution of sound pressure across a room.
+Sound Pressure (SPL) Mapper for analysis of the distribution of sound pressure levels across a room.
 
 This application is used to evaluate field measurements made with REW (Room EQ Wizard), in order to gain
-a better overview about the distribution of sound pressure levels in a room at given frequencies. While 
+a better overview about the distribution of sound pressure levels in a room at low frequencies. While 
 doing acoustical room treatments, this can help identifying the locations in a room where a specific 
 frequency is building up significantly, for example.
 
@@ -29,6 +29,7 @@ Also, you can download the examples provided with RoomMap (folder [examples](htt
 Proceed as follows:
 - In your room, mark a grid of (for example) 1 meter distance on the floor with some tape.
 TODO pic 
+Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough.
 - At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The [Shannon/Nyquist sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) applies here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
 - For each measurement, write the coordinates in REW´s description fields like this:
 TODO
