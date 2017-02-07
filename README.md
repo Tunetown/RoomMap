@@ -11,7 +11,7 @@ frequency is building up significantly, for example.
 The program is fully implemented in Java using Swing, the minimum version requirement is Java 1.8. A complex installation is in general not necessary:
 
 ### Mac OS
-For Mac OS X users (minimum is OS 10.8 Mountain Lion), there is a DMG package ready for download: https://github.com/Tunetown/RoomMap/tree/master/release/macosx/bundles
+For Mac OS X users (minimum is OS 10.8 Mountain Lion), there is a DMG package ready for [download](https://github.com/Tunetown/RoomMap/tree/master/release/macosx/bundles)
 However, also OS X users can manually start the JAR package as described for Windows users, if the DMG should not work.
 
 ### Windows
@@ -27,8 +27,9 @@ After launching, the program asks you to select some files. These files have to 
 Also, you can download the examples provided with the program (folder "examples"), which can give you a hint how things work here, comments on these examples follow later in this document.
 
 Proceed as follows:
-- In your room, mark a grid of (for example) 1 meter distance on the floor with some tape. 
-- At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. Here, the Shannon/Nyquist sampling theorem applies (https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem). If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
+- In your room, mark a grid of (for example) 1 meter distance on the floor with some tape.
+TODO pic 
+- At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The Shannon/Nyquist sampling theorem applies (https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
 - For each measurement, write the coordinates in REW´s description fields like this:
 TODO
 The syntax is:
