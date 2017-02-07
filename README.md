@@ -11,19 +11,19 @@ frequency is building up significantly, for example.
 The program is fully implemented in Java using Swing, the minimum version requirement is Java 1.8. A complex installation is in general not necessary:
 
 ### Mac OS
-For Mac OS X users (minimum is OS 10.8 Mountain Lion), there is a DMG package ready for [download](https://github.com/Tunetown/RoomMap/tree/master/release/macosx/bundles)
+For Mac OS X users (minimum is OS 10.8 Mountain Lion), there is a DMG package ready for [download](https://github.com/Tunetown/RoomMap/tree/master/release/macosx/bundles).
 However, also OS X users can manually start the JAR package as described for Windows users, if the DMG should not work.
 
 ### Windows
 Currently there is no installer or EXE file for Windows users (yet), but as for all Java applications, you can
-just download the JAR package RoomMap.jar (https://github.com/Tunetown/RoomMap/tree/master/release/macosx) and run it manually from the command line. If you need advice on this, see this documentation under 'JAR Files as Applications': https://docs.oracle.com/javase/tutorial/deployment/jar/run.html
+just download the JAR package [RoomMap.jar](https://github.com/Tunetown/RoomMap/tree/master/release/macosx) and run it manually from the command line. If you need advice on this, see [this documentation](https://docs.oracle.com/javase/tutorial/deployment/jar/run.html) under 'JAR Files as Applications'. 
 
 ### Linux
 The application has not been tested with Linux, but just running the JAR file with the correct Java JRE should work (see Windows).   
 
 ## Procedure of Measurement
 
-After launching, the program asks you to select some files. These files have to be created with REW (Room EQ Wizard, https://www.roomeqwizard.com/) first, which is an open-source, free Java program to make measurements with a measurement mic.  If you don´t have experience with REW already, there is plenty of information and tutorials around the web about this.
+After launching, the program asks you to select some files. These files have to be created with REW ([Room EQ Wizard](https://www.roomeqwizard.com/)) first, which is an open-source, free Java program to make measurements with a measurement mic.  If you don´t have experience with REW already, there is plenty of information and tutorials around the web about this.
 Also, you can download the examples provided with the program (folder "examples"), which can give you a hint how things work here, comments on these examples follow later in this document.
 
 Proceed as follows:
