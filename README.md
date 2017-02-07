@@ -34,15 +34,18 @@ The application has not been tested with Linux yet, but just running the JAR fil
 
 ## Procedure of Measurement
 
-After launching, the program asks you to select some files. These files have to be created with REW ([Room EQ Wizard](https://www.roomeqwizard.com/)) first, which is an open-source, free Java program to make measurements with a measurement mic.  If you don�t have experience with REW already, there is plenty of information and tutorials around the web about this.
-Also, you can download the examples provided with RoomMap (folder [examples](https://github.com/Tunetown/RoomMap/tree/master/examples)), which can give you a hint how things work here, comments on these examples follow later in this document.
+After launching, the program asks you to select some files. These files have to be created with REW (Room EQ Wizard, [download from here](https://www.roomeqwizard.com/)) first, which is an open-source, free Java program to make acoustical room measurements with a measurement microphone.  If you don�t have experience with REW already, there is plenty of information and tutorials around the web about this.
+
+Optionally, you can first download the examples provided with RoomMap (folder [examples](https://github.com/Tunetown/RoomMap/tree/master/examples)), which can give you a hint how things work. Comments on these examples follow later in this document.
 
 Proceed as follows:
-- In your room, mark a grid of (for example) 1 meter distance on the floor with some tape.
+- In your room, mark a grid of (for example) 1 meter distance on the floor with some tape. Start in one corner (preferably the one behind the left speaker at the bottom), which will be your 0 0 0 point, and work from there until the whole room is "rasterized".
 
   ![markings](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/markings.jpg) 
 
-  Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough. Also, if your room has a non-rectangular shape like an attic for example, this is no problem at all. Just take care to have enough measuring points, and to distribute them well. 
+  Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough, compared to the wavelengths we have in lower bass regions below say 200 Hz. 
+  
+  Also, if your room has a non-rectangular shape like an attic for example, this is no problem at all.
   
 - At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. It is a good idea to use some kind of remote control like VNC to trigger measuring for example with a smart phone. All in all the process is not taking too long if done effectively: For example, an attic room (used for creating the RoomMap examples) with size of about 4,5m x 8m took only about 2 hours for measuring.
 
