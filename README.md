@@ -69,7 +69,7 @@ In general, you set the frequency you are interested in, and then, with the heig
 
 Also, the SPL maps give some hint if a specific low frequency problem is of modal nature (like in the 40 Hz example above), or if it is caused by speaker boundary interferences (SBIR). In the given example, 83 Hz has a severe dip in frequency response. The SPL map for 83 Hz shows that the pressure is mostly building up behind the left speaker (which is running alone for these measurements), so this is most likely caused by SBIR. Putting a wavelength circle at speaker position also verifies that 1/4 wavelength of 83 Hz (ca. 1.1 meters) indicates that the left wall might be the issue: 
 
-![RM3](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM3.jpg)
+![RM4](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM4.jpg)
 
 
 ### Controls
