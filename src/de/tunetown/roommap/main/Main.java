@@ -13,25 +13,9 @@ import de.tunetown.roommap.view.controls.FrequencySliderControl;
 import de.tunetown.roommap.view.controls.SliderControl;
 
 /** 
- * This application is used to evaluate field measurements made with REW and
- * exported there as text files. The file name has to contain the coordinates of the measurement mic
- * position (x,y,z) separated by spaces (see examples folder).
+ * Application main class for RoomMap. Can be used for a standalone application or as an applet.
  * 
- * The SPL distribution is shown at a specific height (adjust with slider) and at a specific frequency (adjust with slider 
- * or text input). The graph shows the pressure (SPL) distribution interpolated among the data points (shown as gray dots),
- * visualized from blue (lowest level) to red (highest level).
- * 
- * Just try it with the delivered examples: When the program asks you for files, select all
- * files inside one example folder and hit OK. 
- * 
- * TODO:
- * - Applet release
- * - EXE release
- * 
- * Next new features:
- * - Publish to Applet (on server)
- * - 3.00 !!!! Option: Show aggregated over function of frequency (ngauss, -tanh) 
- * 		- show on f axis also
+ * For details/usage, see the README.md file in the repository.
  * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
