@@ -30,7 +30,10 @@ Currently there is no installer or EXE file for Windows users (yet), but as for 
 just download the JAR package [RoomMap.jar](https://github.com/Tunetown/RoomMap/tree/master/release/macosx) and run it manually from the command line. If you need advice on this, see [this documentation](https://docs.oracle.com/javase/tutorial/deployment/jar/run.html) under 'JAR Files as Applications' and this [video](https://www.youtube.com/watch?v=2jdK8A863q8) (randomly picked) to see how to run a java program from the Windows command line. The application has been tested successfully with Windows 7 and 8.1. 
 
 ### Linux
-The application has not been tested with Linux yet, but just running the JAR file with the correct Java JRE >= JRE 1.8 should work well as the program does not access any complicated resources of the system.   
+The application has not been tested with Linux yet, but just running the JAR file with the correct Java JRE >= JRE 1.8 should work well as the program does not access any complicated resources of the system.
+
+### Eclipse
+If you want to build the application by yourself: It has been developed on Mac OS 10.8 using Eclipse Luna (4.4.1). The complete project is contained in this repository.   
 
 ## Procedure of Measurement
 
