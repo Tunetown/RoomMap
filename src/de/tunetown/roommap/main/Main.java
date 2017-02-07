@@ -24,19 +24,6 @@ import de.tunetown.roommap.view.controls.SliderControl;
  * Just try it with the delivered examples: When the program asks you for files, select all
  * files inside one example folder and hit OK. 
  * 
- * Features:
- * - Mulithreaded thin plate spline interpolation 
- * - Precalculation of interpolation coefficients for each selectable frequency, in background (multithreaded)
- * 
- * Dependencies to external libraries/sources: 
- * - CONRAD, a biomedical library which is being used here for thin plate spline interpolation in 3D. Just the necessary 
- *   classes are included as source, slightly modified to kill eclipse warnings etc.
- * - rainbowvis: This is also included as source, and used for Color interpolation. This has also been modified to produce
- *   Color instances instead of CSS strings.
- * - ij.jar: Used by CONRAD, included as jar archive
- * - Jama-1.0.2.jar: Used by CONRAD, included as jar archive
- * - jpop.0.7.5.jar: Used by CONRAD, included as jar archive
- * 
  * TODO:
  * - Applet release
  * - EXE release
