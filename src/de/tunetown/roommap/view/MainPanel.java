@@ -10,7 +10,7 @@ import de.tunetown.roommap.view.legend.Legend;
 /**
  * Main UI panel, holding all components
  * 
- * @author xwebert
+ * @author tweber
  *
  */
 public class MainPanel extends JPanel {
@@ -39,6 +39,11 @@ public class MainPanel extends JPanel {
 		add(legend, BorderLayout.WEST);
 	}
 	
+	/**
+	 * Returns the controls panel
+	 * 
+	 * @return
+	 */
 	public Controls getControls() {
 		return controls;
 	}

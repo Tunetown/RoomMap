@@ -3,6 +3,12 @@ package de.tunetown.roommap.view.controls;
 import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.main.ThreadManagement;
 
+/**
+ * Option for interpolator pre-calculation
+ * 
+ * @author tweber
+ *
+ */
 public class PrecalculationCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

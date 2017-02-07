@@ -6,7 +6,7 @@ import de.tunetown.roommap.main.Main;
 /**
  * Main frame for the application
  * 
- * @author xwebert
+ * @author tweber
  *
  */
 public class MainFrame extends JFrame {

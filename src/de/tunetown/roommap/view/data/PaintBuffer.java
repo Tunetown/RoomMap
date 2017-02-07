@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.data;
 
 import java.awt.Color;
 
+/**
+ * Buffer class to store results of multithreaded interpolation
+ *  
+ * @author tweber
+ *
+ */
 public class PaintBuffer {
 	
 	private Color color;

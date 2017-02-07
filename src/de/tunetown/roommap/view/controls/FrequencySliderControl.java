@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Frequency slider
+ * 
+ * @author tweber
+ *
+ */
 public class FrequencySliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	

@@ -31,10 +31,20 @@ public class ThreadManagement {
 		}
 	}
 	
+	/**
+	 * Returns the number of threads available for interpolation
+	 * 
+	 * @return
+	 */
 	public int getNumOfProcessorsInterpolation() {
 		return cpusInterpolation;
 	}
 	
+	/**
+	 * Returns the number of threads available for pre-calculation of interpolators
+	 * 
+	 * @return
+	 */
 	public int getNumOfProcessorsInterpolatorPrecalculation() {
 		return cpusPrecalculation;
 	}

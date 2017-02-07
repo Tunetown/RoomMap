@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Option to show/hide the wavelength circles when clicking on the data output panel
+ * 
+ * @author tweber
+ *
+ */
 public class WavelengthCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

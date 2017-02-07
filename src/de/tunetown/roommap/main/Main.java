@@ -57,7 +57,9 @@ public class Main extends JApplet {
 	private MainFrame frame;
 	private Measurements measurements;
 	
-	// TODO Defaults derive from data as much as possible
+	/**
+	 * User controllable properties. These are all managed here centrally.
+	 */
 	private double frequency = 0;  
 	private double viewZ = 0;       
 	private double margin = 0.3; 
@@ -137,21 +139,81 @@ public class Main extends JApplet {
 		frame.init();
 	}
 	
+	/**
+	 * Update the control labels from the real application values
+	 * 
+	 */
+	public void updateControlLabels() { 
+		frame.getMainPanel().getControls().updateControlLabels();
+	}
+
+	/**
+	 * Update the controls themselves from the real application values
+	 * 
+	 */
+	public void updateControlValues() { 
+		frame.getMainPanel().getControls().updateControlValues();
+	}
+
+	/**
+	 * Enable/disable/resume pre-calculation of interpolators
+	 * 
+	 * @param b
+	 */
+	public void setPrecalculation(boolean b) {
+		precalculation = b;
+		if (precalculation) {
+			if (measurements.getInterpolatorBuffer().isPrecalculationStarted()) {
+				measurements.getInterpolatorBuffer().resumePrecalculation();
+			} else {
+				startPrecalculation();
+			}
+		} else {
+			measurements.getInterpolatorBuffer().stopPrecalculation();
+		}
+	}
+
+	/**
+	 * Start pre-calculation of interpolators
+	 * 
+	 */
 	private void startPrecalculation() {
 		SliderControl fc = (SliderControl)frame.getMainPanel().getControls().getControl(FrequencySliderControl.class);
 		if (fc != null) measurements.getInterpolatorBuffer().startPrecalculation(fc.getMin(), fc.getMax(), fc.getStep(0)); 
 	}
 
+	/**
+	 * Stop pre-calculation of interpolators
+	 * 
+	 */
 	public void stopPrecalculation() {
 		if (!getPrecalculation()) return;
 		measurements.getInterpolatorBuffer().stopPrecalculation();
 	}
 
+	/**
+	 * Resume pre-calculation of interpolators
+	 * 
+	 */
 	public void resumePrecalculation() {
 		if (!getPrecalculation()) return;
 		measurements.getInterpolatorBuffer().resumePrecalculation();
 	}
 
+	/**
+	 * Is pre-calculation of interpolators being done?
+	 * 
+	 * @return
+	 */
+	public boolean getPrecalculation() {
+		return precalculation;
+	}
+
+	/**
+	 * Returns the model instance
+	 * 
+	 * @return
+	 */
 	public Measurements getMeasurements() {
 		return measurements;
 	}
@@ -222,31 +284,6 @@ public class Main extends JApplet {
 
 	public double getResolution() {
 		return resolution;
-	}
-
-	public void updateControlLabels() { 
-		frame.getMainPanel().getControls().updateControlLabels();
-	}
-
-	public void updateControlValues() { 
-		frame.getMainPanel().getControls().updateControlValues();
-	}
-
-	public void setPrecalculation(boolean b) {
-		precalculation = b;
-		if (precalculation) {
-			if (measurements.getInterpolatorBuffer().isPrecalculationStarted()) {
-				measurements.getInterpolatorBuffer().resumePrecalculation();
-			} else {
-				startPrecalculation();
-			}
-		} else {
-			measurements.getInterpolatorBuffer().stopPrecalculation();
-		}
-	}
-
-	public boolean getPrecalculation() {
-		return precalculation;
 	}
 
 	public boolean getShowWavelength() {

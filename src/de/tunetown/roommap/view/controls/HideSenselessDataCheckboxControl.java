@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.controls;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Checkbox to hide data which is not accurate according to the sampling theorem
+ * 
+ * @author tweber
+ *
+ */
 public class HideSenselessDataCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

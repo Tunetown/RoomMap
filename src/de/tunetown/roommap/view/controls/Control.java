@@ -6,6 +6,12 @@ import javax.swing.JPanel;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Generic base class for all controls 
+ * 
+ * @author tweber
+ *
+ */
 public abstract class Control extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -27,22 +33,6 @@ public abstract class Control extends JPanel {
 	 */
 	public abstract void updateValue();
 
-	public void addDependentControl(Control c) {
-		dependentControls.add(c);
-	}
-	
-	protected void updateDependentControls() {
-		for(Control c : dependentControls) c.updateValue();
-	}
-	
-	protected void repaintControls() {
-		main.repaint();
-	}
-	
-	protected Main getMain() {
-		return main;
-	}
-
 	/**
 	 * Has to set the correct label text
 	 */
@@ -59,4 +49,30 @@ public abstract class Control extends JPanel {
 	 * Returns the label text
 	 */
 	protected abstract String getLabelText();
+
+	/**
+	 * Adds one control as a dependent control, meaning that when a control changes value, 
+	 * all its dependent controls also will be updated
+	 * 
+	 * @param c
+	 */
+	public void addDependentControl(Control c) {
+		dependentControls.add(c);
+	}
+	
+	/**
+	 * Update dependent controls. These have to be registered before with addDependentControl().
+	 * 
+	 */
+	protected void updateDependentControls() {
+		for(Control c : dependentControls) c.updateValue();
+	}
+	
+	protected void repaintControls() {
+		main.repaint();
+	}
+	
+	protected Main getMain() {
+		return main;
+	}
 }

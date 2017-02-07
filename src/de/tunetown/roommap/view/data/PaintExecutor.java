@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.data;
 
 import java.util.concurrent.Callable;
 
+/**
+ * Pooled executor for multithreaded interpolation. Calls the interpolation algorithm implemented in OutputGraphics.
+ * 
+ * @author tweber
+ *
+ */
 @SuppressWarnings("rawtypes")
 public class PaintExecutor implements Callable {
 
@@ -15,9 +21,7 @@ public class PaintExecutor implements Callable {
 	
 	@Override
 	public Object call() throws Exception {
-		//System.out.println(x + " started");
 		Object ret = o.calculateX(x);
-		//System.out.println(x + " finished");
 		return ret;
 	}
 

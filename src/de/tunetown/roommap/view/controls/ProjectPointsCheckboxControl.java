@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.controls;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Option for point pseudo-3d projection
+ * 
+ * @author tweber
+ *
+ */
 public class ProjectPointsCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

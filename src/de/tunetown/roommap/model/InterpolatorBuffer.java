@@ -10,6 +10,14 @@ import de.tunetown.roommap.main.ThreadManagement;
 import edu.stanford.rsl.conrad.geometry.shapes.simple.PointND;
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
+/**
+ * This class manages the interpolator instances for each frequency. Each frequency 
+ * has an own interpolator which is buffered to be reused next time the same 
+ * frequency is selected.
+ * 
+ * @author tweber
+ *
+ */
 public class InterpolatorBuffer {
 
 	private Main main;
@@ -23,6 +31,10 @@ public class InterpolatorBuffer {
 		this.main = main;
 	}
 	
+	/**
+	 * Create interpolator-compatible points array from the model instance
+	 * 
+	 */
 	private void createPoints() {
 		points = new ArrayList<PointND>();
 		for(Measurement m : main.getMeasurements().getMeasurements()) {
@@ -30,6 +42,12 @@ public class InterpolatorBuffer {
 		}
 	}
 
+	/**
+	 * Returns the interpolator for a given frequency
+	 * 
+	 * @param freq
+	 * @return
+	 */
 	public ThinPlateSplineInterpolation getInterpolator(double freq) {
 		if (interpolators.get(freq) != null) return interpolators.get(freq); 
 		
@@ -39,6 +57,12 @@ public class InterpolatorBuffer {
 		return n;
 	}
 	
+	/**
+	 * Creates a new interpolator
+	 * 
+	 * @param freq
+	 * @return
+	 */
 	public ThinPlateSplineInterpolation createInterpolator(double freq) {
 		ArrayList<PointND> values = new ArrayList<PointND>();
 		
@@ -48,6 +72,10 @@ public class InterpolatorBuffer {
 		return new ThinPlateSplineInterpolation(3, points, values);
 	}
 
+	/**
+	 * Initialize point arrays etc.
+	 * 
+	 */
 	public void initialize() {
 		createPoints();
 		interpolators = new HashMap<Double, ThinPlateSplineInterpolation>();
@@ -58,7 +86,14 @@ public class InterpolatorBuffer {
 	public boolean isPrecalculationStarted() {
 		return pool != null;
 	}
-	
+
+	/**
+	 * Starts pre-calculation of interpolators
+	 * 
+	 * @param min minimum frequency
+	 * @param max maximum frequency
+	 * @param step frequency step
+	 */
 	public void startPrecalculation(double min, double max, double step) {
 		ThreadManagement m = new ThreadManagement();
 		if (m.getNumOfProcessorsInterpolatorPrecalculation() == 0) return;
@@ -85,7 +120,6 @@ public class InterpolatorBuffer {
 
 	public void stopPrecalculation() {
 		if (pool == null || executors == null) return;
-		//System.out.println("Stopping precalculation");
 		for(InterpolatorCalculationExecutor e : executors) {
 			e.pauseExecution();
 		} 
@@ -93,7 +127,6 @@ public class InterpolatorBuffer {
 
 	public void resumePrecalculation() {
 		if (pool == null || executors == null) return;
-		//System.out.println("Resuming precalculation");
 		for(InterpolatorCalculationExecutor e : executors) {
 			e.resumeExecution();
 		}
@@ -109,6 +142,12 @@ public class InterpolatorBuffer {
 		return (double)interpolators.size() / (double)executors.size();
 	}
 	
+	/**
+	 * Is there already a pre-calculated interpolator for a given frequency?
+	 * 
+	 * @param freq
+	 * @return
+	 */
 	public boolean hasInterpolator(double freq) {
 		return (interpolators.get(freq) != null);
 	}

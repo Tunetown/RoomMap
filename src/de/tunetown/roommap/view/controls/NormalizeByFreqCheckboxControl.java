@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.controls;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Option to normalize SPL for the selected frequency
+ * 
+ * @author tweber
+ *
+ */
 public class NormalizeByFreqCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

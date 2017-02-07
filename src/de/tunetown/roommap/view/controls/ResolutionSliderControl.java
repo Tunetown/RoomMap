@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Slider for resolution
+ * 
+ * @author tweber
+ *
+ */
 public class ResolutionSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	

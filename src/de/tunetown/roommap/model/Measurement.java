@@ -7,8 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Represents one measurement at one spatial point in the room, givven 
- * by x, y and z coordinaties parsed from the file name.
+ * Represents one measurement at one spatial point in the room, given 
+ * by x, y and z coordinates parsed from the file name.
  * 
  * @author tweber
  *
@@ -43,6 +43,11 @@ public class Measurement {
 		System.out.println ("SUCCESS: Parsed " + frequencies.size() + " data points at " + x + " " + y + " " + z);
 	}
 
+	/**
+	 * Is everything valid about this measurement?
+	 * 
+	 * @return
+	 */
 	public boolean isValid() {
 		return frequencies != null &&
 			   frequencies.size() > 0 && 
@@ -125,9 +130,12 @@ public class Measurement {
 	/**
 	 * For any frequency, this approximates the SPL value.
 	 * 
-	 * NOTE: Currently, this returns the next bigger frequencyÂ´s SPL, or
+	 * NOTE: Currently, this returns the next bigger frequency´s SPL, or
 	 * NaN if frequency is too high. Interpolation is not necessary as long as the 
 	 * data is precise enough. REW export files usually are.
+	 * 
+	 * NOTE: Obsolete. Use getSpl instead which does correct interpolation 
+	 * between frequencies.
 	 * 
 	 * @param freq
 	 */
@@ -176,7 +184,7 @@ public class Measurement {
 		double x2 = x - this.x;
 		double y2 = y - this.y;
 		double z2 = z - this.z;
-		return Math.sqrt(x2*x2 + y2*y2 + z2*z2); // TODO accelerate? Jafama?
+		return Math.sqrt(x2*x2 + y2*y2 + z2*z2); 
 	}
 
 	public double getX() {

@@ -24,7 +24,7 @@ public class Measurements {
 	}
 	
 	/**
-	 * Load and parse REW data files
+	 * Load and parse multiple REW data files
 	 * 
 	 * @param files
 	 */
@@ -55,7 +55,7 @@ public class Measurements {
 	}
 	
 	/**
-	 * Get measurements container
+	 * Get measurements list
 	 * 
 	 * @return
 	 */
@@ -64,7 +64,7 @@ public class Measurements {
 	}
 	
 	/**
-	 * Returns the interpolated SPL level at a given point
+	 * Returns the interpolated SPL level at a given point and frequency
 	 * 
 	 * @param x
 	 * @param y
@@ -76,18 +76,18 @@ public class Measurements {
 	}
 
 	/**
-	 * Get wavelength of frequency in meters
+	 * Get the wavelength of a frequency in meters
 	 * 
 	 * @param frequency
 	 * @return
 	 */
 	public double getWavelength(double frequency) {
-		return 343 / frequency; // TODO const
+		return ModelProperties.SPEED_OF_SOUND / frequency; 
 	}
 	
 	/**
-	 * Determines relevancy of a point in regards of Nyquist sampling theorem.
-	 * A point must be at minimum near one data point, with maximum distance = lambda(freq)/4  
+	 * Determines the accuracy of a point in regards of the Nyquist sampling theorem.
+	 * A point must be near at least one data point within a maximum distance = lambda(freq)/4.
 	 * 
 	 * @param x
 	 * @param y
@@ -95,7 +95,7 @@ public class Measurements {
 	 * @param freq
 	 * @return in [0..1]
 	 */
-	public double getPointRelevancy(double x, double y, double z, double freq) {
+	public double getPointAccuracy(double x, double y, double z, double freq) {
 		double d = this.getWavelength(freq)/4;
 		
 		for (Measurement m : measurements) {
@@ -106,7 +106,7 @@ public class Measurements {
 	}
 
 	/**
-	 * Get buffered interpolator instance
+	 * Get buffered interpolator instance for a given frequency
 	 * 
 	 * @param freq
 	 * @return
@@ -117,6 +117,10 @@ public class Measurements {
 		}
 	}
 
+	/**
+	 * Reset all buffered interpolators
+	 * 
+	 */
 	public void resetInterpolators() {
 		interpolators.initialize();
 	}

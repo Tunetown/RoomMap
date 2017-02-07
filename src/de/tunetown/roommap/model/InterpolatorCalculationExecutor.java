@@ -2,6 +2,12 @@ package de.tunetown.roommap.model;
 
 import edu.stanford.rsl.tutorial.motion.estimation.ThinPlateSplineInterpolation;
 
+/**
+ * Pooled executor for pre-calculating interpolators
+ * 
+ * @author tweber
+ *
+ */
 public class InterpolatorCalculationExecutor extends Thread {
 
 	private InterpolatorBuffer buffer;

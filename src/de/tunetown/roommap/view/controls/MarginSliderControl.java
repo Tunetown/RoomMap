@@ -4,6 +4,12 @@ import java.text.DecimalFormat;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Slider for the margin
+ * 
+ * @author tweber
+ *
+ */
 public class MarginSliderControl extends SliderControl {
 	private static final long serialVersionUID = 1L;
 	

@@ -35,23 +35,13 @@ public class OutputGraphics extends JPanel {
 	
 	private Main main;
 	
-	// TODO constants
-	private int maxSize = 800;             // Initial max. Size of data panel (pixels)
-	
-	private double projectionDepth = 50;  // Depth of 3d data point projection
-	private int minAlpha = 20;
-	private int maxAlpha = 255;
-
-	private int fontSize = 10;
-	private int labelWidth = 20;
-	
 	private int mouseX = 0;
 	private int mouseY = 0;
 	
 	public OutputGraphics(Main main) {
 		this.main = main;
 		
-		Dimension dim = getPaintDimension(maxSize, maxSize);
+		Dimension dim = getPaintDimension(ViewProperties.INITIAL_WINDOW_SIZE, ViewProperties.INITIAL_WINDOW_SIZE);
 		this.setPreferredSize(dim);
 		this.setMinimumSize(dim);
 
@@ -59,13 +49,19 @@ public class OutputGraphics extends JPanel {
 		    @Override
 		    public void mouseClicked(MouseEvent e) {
 		        if (e.getButton() == MouseEvent.BUTTON1) {
-		        	setMouseAt(e.getX(), e.getY());
+		        	setWavelengthAnchor(e.getX(), e.getY());
 		        }
 		    }
 		});
 	}
 
-	protected void setMouseAt(int x, int y) {
+	/**
+	 * This sets the wavelength visualization circle center to the given point.
+	 * 
+	 * @param x
+	 * @param y
+	 */
+	protected void setWavelengthAnchor(int x, int y) {
 		this.mouseX = x;
 		this.mouseY = y;
 		
@@ -84,7 +80,6 @@ public class OutputGraphics extends JPanel {
 	 * @return
 	 */
 	private Dimension getPaintDimension() {
-		// TODO buffer
 		return getPaintDimension(getWidth(), getHeight());
 	}
 	
@@ -104,15 +99,19 @@ public class OutputGraphics extends JPanel {
 		int w;
 		int h;
 		if (modelRatio > panelRatio) {
-			w = viewWidth - labelWidth;
+			w = viewWidth - ViewProperties.LABEL_WIDTH;
 			h = (int)(w / modelRatio);
 		} else {
-			h = viewHeight - labelWidth;
+			h = viewHeight - ViewProperties.LABEL_WIDTH;
 			w = (int)(h * modelRatio);
 		}
 		return new Dimension(w, h);
 	}
 
+	/**
+	 * Main paint method
+	 * 
+	 */
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -122,56 +121,74 @@ public class OutputGraphics extends JPanel {
 		
 		ThreadManagement m = new ThreadManagement();
 		
+		// Interpolated data
 		if (main.getPooledInterpolation() && m.getNumOfProcessorsInterpolation() > 1) {
 			paintDataPooled(g);
 		} else {
 			paintData(g);
 		}
-		paintAxes(g);
+		
+		// Axis labels and grid
+		paintAxisLabels(g);
+		
+		// Data points
 		paintPoints(g);
-		paintQWLCircle(g);
+		
+		// Wavelength circles
+		paintWavelengthCircles(g);
 	}
 
-	private void paintQWLCircle(Graphics g) {
+	/**
+	 * Paint the wavelength circles if enabled. These circles are drawn with radius of 1/4 wavelength,
+	 * 2/4, 3/4 and full wavelength to visualize the waveform properties roughly. 
+	 * 
+	 * @param g
+	 */
+	private void paintWavelengthCircles(Graphics g) {
 		if (!main.getShowWavelength()) return;
 		if (mouseX == -1 || mouseY == -1) return;
 		
 		int radX = this.convertModelToViewX(main.getMeasurements().getWavelength(main.getFrequency()));
 		int radY = this.convertModelToViewY(main.getMeasurements().getWavelength(main.getFrequency()));
 		
-		g.setColor(Color.LIGHT_GRAY); // TODO
-		g.fillOval(mouseX, mouseY, 4, 4); // TODO
+		g.setColor(ViewProperties.WAVELENGTH_CIRCLES_COLOR_HALF); 
+		g.fillOval(mouseX, mouseY, ViewProperties.WAVELENGTH_CIRCLES_POINT_DIAMETER, ViewProperties.WAVELENGTH_CIRCLES_POINT_DIAMETER); 
 		
-		g.setColor(Color.black); // TODO
+		g.setColor(ViewProperties.WAVELENGTH_CIRCLES_COLOR_QUARTER); 
 		g.drawOval(mouseX - radX/4, mouseY - radY/4, 2*radX/4, 2*radY/4);
 		
-		g.setColor(Color.LIGHT_GRAY); // TODO
+		g.setColor(ViewProperties.WAVELENGTH_CIRCLES_COLOR_HALF); 
 		g.drawOval(mouseX - radX/2, mouseY - radY/2, 2*radX/2, 2*radY/2);
 		
-		g.setColor(Color.black); // TODO
+		g.setColor(ViewProperties.WAVELENGTH_CIRCLES_COLOR_QUARTER);
 		g.drawOval(mouseX - 3*radX/4, mouseY - 3*radY/4, 2*3*radX/4, 2*3*radY/4);
 
-		g.setColor(Color.LIGHT_GRAY); // TODO
+		g.setColor(ViewProperties.WAVELENGTH_CIRCLES_COLOR_HALF);
 		g.drawOval(mouseX - radX, mouseY - radY, 2*radX, 2*radY);
 	}
 
-	private void paintAxes(Graphics g) {
+	/**
+	 * Paints the axis labels and grid
+	 * 
+	 * @param g
+	 */
+	private void paintAxisLabels(Graphics g) {
 		Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2.setFont(new Font("Helvetica", Font.PLAIN, fontSize)); 
+        g2.setFont(new Font("Helvetica", Font.PLAIN, ViewProperties.FONT_SIZE)); 
         DecimalFormat df = new DecimalFormat("#.##");
         double margin = main.getMargin();
         double res = 1;
         
         if (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() >= 20) res = 2; 
         if (main.getMeasurements().getMaxX() - main.getMeasurements().getMinX() >= 100) res = 10; 
-        int vy = getHeight() - fontSize - 2;
+        int vy = getHeight() - ViewProperties.FONT_SIZE - 2;
         double x = new Double((int)main.getMeasurements().getMinX());
         while(x <= main.getMeasurements().getMaxX()) {
 			int vx = convertModelToViewX(x + margin - main.getMeasurements().getMinX());
 			
 			g2.setColor(ViewProperties.FGCOLOR);
-        	g2.drawString(df.format(x), vx - fontSize/4, vy + fontSize);
+        	g2.drawString(df.format(x), vx - ViewProperties.FONT_SIZE/4, vy + ViewProperties.FONT_SIZE);
         	
         	if (main.getShowGrid()) {
 	        	g2.setColor(ViewProperties.GRIDCOLOR);
@@ -184,13 +201,13 @@ public class OutputGraphics extends JPanel {
         res = 1;
         if (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() >= 20) res = 2; 
         if (main.getMeasurements().getMaxY() - main.getMeasurements().getMinY() >= 100) res = 10; 
-        int vx = getWidth() - fontSize/4 - 2;
+        int vx = getWidth() - ViewProperties.FONT_SIZE/4 - 2;
         double y = new Double((int)main.getMeasurements().getMinY());
         while(y <= main.getMeasurements().getMaxY()) {
         	int vy2 = convertModelToViewY(y + margin - main.getMeasurements().getMinY());
         	
         	g2.setColor(ViewProperties.FGCOLOR);
-        	g2.drawString(df.format(y), vx - fontSize/4, vy2 + fontSize/2);
+        	g2.drawString(df.format(y), vx - ViewProperties.FONT_SIZE/4, vy2 + ViewProperties.FONT_SIZE/2);
         	
         	if (main.getShowGrid()) {
 	        	g2.setColor(ViewProperties.GRIDCOLOR);
@@ -201,11 +218,12 @@ public class OutputGraphics extends JPanel {
         }
         
         g2.setColor(ViewProperties.FGCOLOR);
-    	g2.drawString("m", getWidth() - fontSize - 2, getHeight() - fontSize - 2);
+    	g2.drawString("m", getWidth() - ViewProperties.FONT_SIZE - 2, getHeight() - ViewProperties.FONT_SIZE - 2);
 	}
 
 	/**
-	 * Paint data visualization
+	 * Paint data visualization, non-pooled. The same algorithm is also contained in calculateX, which is used
+	 * when pooled interpolation is enabled. WHEN CHANGING THIS, YOU ALSO MUST CHANGE calculateX()!
 	 * 
 	 * @param g
 	 */
@@ -224,7 +242,7 @@ public class OutputGraphics extends JPanel {
 				double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 				double rel;
 				if (main.getHideSenselessData()) {
-					rel = main.getMeasurements().getPointRelevancy(rx, ry, modelZ, main.getFrequency());
+					rel = main.getMeasurements().getPointAccuracy(rx, ry, modelZ, main.getFrequency());
 				} else {
 					rel = 1;
 				}
@@ -238,6 +256,13 @@ public class OutputGraphics extends JPanel {
 		}
 	}
 	
+	/**
+	 * Calculation for pooled interpolation. The same algorithm is also contained in paintData, which is used
+	 * when pooled interpolation is disabled. WHEN CHANGING THIS, YOU ALSO MUST CHANGE paintData()!
+	 * 
+	 * @param x
+	 * @return
+	 */
 	public List<PaintBuffer> calculateX(int x) {
 		List<PaintBuffer> ret = new ArrayList<PaintBuffer>();
 		
@@ -254,7 +279,7 @@ public class OutputGraphics extends JPanel {
 			double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 			double rel;
 			if (main.getHideSenselessData()) {
-				rel = main.getMeasurements().getPointRelevancy(rx, ry, modelZ, main.getFrequency());
+				rel = main.getMeasurements().getPointAccuracy(rx, ry, modelZ, main.getFrequency());
 			} else {
 				rel = 1;
 			}
@@ -315,7 +340,7 @@ public class OutputGraphics extends JPanel {
 	}
 
 	/**
-	 * Paint points visualization
+	 * Paint data points visualization
 	 * 
 	 * @param g
 	 */
@@ -339,7 +364,7 @@ public class OutputGraphics extends JPanel {
 	}
 
 	/**
-	 * Simple 3d projection of room data points
+	 * Simple 3d projection of room data points (X)
 	 * 
 	 * @param x
 	 * @param z
@@ -349,12 +374,12 @@ public class OutputGraphics extends JPanel {
 		if (!main.getPointProjection()) return x; 
 		Dimension d = getPaintDimension();
 		int x0 = x - (int)(d.getWidth() / 2);
-		x0 = x0 - (int)(z * x0 / projectionDepth) ;
+		x0 = x0 - (int)(z * x0 / ViewProperties.POINT_PROJECTION_DEPTH) ;
 		return x0 + (int)(d.getWidth() / 2);
 	}
 	
 	/**
-	 * Simple 3d projection of room data points
+	 * Simple 3d projection of room data points (Y)
 	 * 
 	 * @param y
 	 * @param z
@@ -364,21 +389,21 @@ public class OutputGraphics extends JPanel {
 		if (!main.getPointProjection()) return y;
 		Dimension d = getPaintDimension();
 		int y0 = y - (int)(d.getHeight() / 2);
-		y0 = y0 - (int)(z * y0 / projectionDepth) ;
+		y0 = y0 - (int)(z * y0 / ViewProperties.POINT_PROJECTION_DEPTH) ;
 		return y0 + (int)(d.getHeight() / 2);
 	}
 
 	/**
-	 * Alpha value for 3d projection
+	 * Alpha value for simple 3d projection
 	 * 
 	 * @param z
 	 * @return
 	 */
 	private int getAlpha(double z) {
 		if (Math.abs(z) <= 0.5) {
-			return (int)(minAlpha + (maxAlpha - minAlpha) * (0.5 - Math.abs(z)) * 2);
+			return (int)(ViewProperties.MIN_ALPHA + (ViewProperties.MAX_ALPHA - ViewProperties.MIN_ALPHA) * (0.5 - Math.abs(z)) * 2);
 		} else {
-			return minAlpha;
+			return ViewProperties.MIN_ALPHA;
 		}
 	}
 
@@ -410,7 +435,7 @@ public class OutputGraphics extends JPanel {
 	}
 	
 	/**
-	 * Coordinate conversion
+	 * Coordinate conversion UI to model (X)
 	 * 
 	 * @param x
 	 * @return
@@ -420,7 +445,7 @@ public class OutputGraphics extends JPanel {
 	}
 
 	/**
-	 * Coordinate conversion
+	 * Coordinate conversion UI to model (Y)
 	 * 
 	 * @param y
 	 * @return
@@ -430,7 +455,7 @@ public class OutputGraphics extends JPanel {
 	}
 
 	/**
-	 * Coordinate conversion
+	 * Coordinate conversion model to UI (X)
 	 * 
 	 * @param x
 	 * @return
@@ -440,7 +465,7 @@ public class OutputGraphics extends JPanel {
 	}
 	
 	/**
-	 * Coordinate conversion
+	 * Coordinate conversion model to UI (Y)
 	 * 
 	 * @param y
 	 * @return

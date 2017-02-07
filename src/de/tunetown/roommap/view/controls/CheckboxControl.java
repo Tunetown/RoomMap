@@ -7,6 +7,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Generic base class for checkbox options
+ * 
+ * @author tweber
+ *
+ */
 public abstract class CheckboxControl extends Control {
 	private static final long serialVersionUID = 1L;
 

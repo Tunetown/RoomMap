@@ -2,6 +2,12 @@ package de.tunetown.roommap.view.controls;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Grid enable checkbox
+ * 
+ * @author tweber
+ *
+ */
 public class GridCheckboxControl extends CheckboxControl {
 	private static final long serialVersionUID = 1L;
 	

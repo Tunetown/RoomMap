@@ -13,6 +13,12 @@ import de.tunetown.roommap.main.Main;
 import de.tunetown.roommap.view.ViewProperties;
 import de.tunetown.roommap.view.data.OutputGraphics;
 
+/**
+ * Legend panel
+ * 
+ * @author tweber
+ *
+ */
 public class Legend extends JPanel {
 	private static final long serialVersionUID = 1L;
 
@@ -37,8 +43,10 @@ public class Legend extends JPanel {
 		g.setColor(ViewProperties.BGCOLOR);
 		g.fillRect(0, 0, getWidth(), getHeight());
 		
+		// Here we work with a dummy instance of OutputGraphics
 		OutputGraphics o = new OutputGraphics(main);
 
+		// Get min / max SPL
 		double min;
 		double max;
 		if (main.getNormalizeByFrequency()) { 

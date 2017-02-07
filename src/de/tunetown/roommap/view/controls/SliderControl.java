@@ -15,6 +15,12 @@ import javax.swing.event.ChangeListener;
 
 import de.tunetown.roommap.main.Main;
 
+/**
+ * Generic base class for slider options
+ * 
+ * @author tweber
+ *
+ */
 public abstract class SliderControl extends Control {
 	private static final long serialVersionUID = 1L;
 
@@ -209,14 +215,30 @@ public abstract class SliderControl extends Control {
 		return Double.parseDouble(input.getText());
 	}
 	
+	/**
+	 * Convert value from model to slider
+	 * 
+	 * @param value
+	 * @return
+	 */
 	private int convertToSlider(double value) {
 		return (int)((value - getMin()) / (getMax() - getMin()) * resolution);
 	}
 	
+	/**
+	 * Convert value from slider to model
+	 * 
+	 * @param sl
+	 * @return
+	 */
 	private double convertFromSlider(int sl) {
 		return ((double)sl / resolution) * (getMax() - getMin()) + getMin();
 	}
 	
+	/**
+	 * Update the label 
+	 * 
+	 */
 	@Override
 	protected void updateLabel() {
 		label.setText(getLabelText());

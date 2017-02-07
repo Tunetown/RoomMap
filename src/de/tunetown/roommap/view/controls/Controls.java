@@ -36,7 +36,7 @@ public class Controls extends JPanel {
 	}
 	
 	/**
-	 * Initialize all controls
+	 * Initialize all controls as instances first
 	 */
 	private void initControls() {
 		controls.add(new FrequencySliderControl(main, this));
@@ -58,6 +58,10 @@ public class Controls extends JPanel {
 		controls.add(new PrecalculationCheckboxControl(main, this));
 	}
 	
+	/**
+	 * Add all initialized controls to the panel
+	 * 
+	 */
 	private void addControls() {
 		for(Control c : controls) {
 			c.init();
@@ -65,6 +69,12 @@ public class Controls extends JPanel {
 		}
 	}
 	
+	/**
+	 * Returns the first control of a given class type
+	 * 
+	 * @param cl
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public Control getControl(Class cl) {
 		for(Control c : controls) {
@@ -87,6 +97,12 @@ public class Controls extends JPanel {
 		for(Control c : controls) c.updateLabel();
 	}
 
+	/**
+	 * Returns the width of the largest label of all controls of a given class type
+	 * 
+	 * @param cla
+	 * @return
+	 */
 	@SuppressWarnings("rawtypes")
 	public int getMaxLabelWidth(Class cla) {
 		int ret = 0;
