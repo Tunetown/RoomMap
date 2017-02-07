@@ -50,7 +50,7 @@ public class Controls extends JPanel {
 		
 		controls.add(new ResolutionSliderControl(main, this));
 		controls.add(new NormalizeByFreqCheckboxControl(main, this));
-		controls.add(new ProjectPointsCheckboxControl(main, this));
+		//controls.add(new ProjectPointsCheckboxControl(main, this));
 		controls.add(new GridCheckboxControl(main, this));
 		controls.add(new WavelengthCheckboxControl(main, this));
 		controls.add(new HideSenselessDataCheckboxControl(main, this));
