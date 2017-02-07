@@ -46,9 +46,12 @@ Proceed as follows:
   In words: X coordinate in meters, followed by space, then Y, then space again, then Z (all in meters). You can also use non-integer values, in this case, use the dot (.) as the decimal separator (commas will not work). 
   It is also allowed to do additional measurements with less grid distance in areas where more accuracy is needed. In this case, just specify the coordinates correctly, the interpolation of the program can handle this nicely. 
 - Export the measurements from REW as text files. This is done in the menu:
+
   ![REW2](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/REW2.jpg)
+  
   REW then creates one file per measurement, which contains the SPL for given frequencies. The file name will contain the coordinates as entered before in REW.
 - Launch the RoomMap program, browse to the folder where you stored the REW export files, and select all of them. Then hit "Open". The program will soon show you a first SPL map of your room :)
+
   ![RM1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM1.jpg)
 
 ## Operation Tips
