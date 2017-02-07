@@ -39,6 +39,7 @@ Proceed as follows:
 - For each measurement, write the coordinates in REW´s description fields like this: 
 
   ![REW1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/REW1.jpg)
+  
   The syntax is:
   X Y Z
   In words: X coordinate in meters, followed by space, then Y, then space again, then Z (all in meters). You can also use non-integer values, in this case, use the dot (.) as the decimal separator (commas will not work). 
