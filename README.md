@@ -101,13 +101,13 @@ On the opposite, in the screenshot farther above, the 40 Hz mode is building up 
 - *Precalc. in Background with X Threads* Additionally to the last option, changes in frequency can be accelerated by precalculating the interpolator coefficients for all frequencies in advance. To do this, check this option after startup and wait until calculation has finished. Frequency changes are usually much faster after that.   
 
 ## Examples
-The examples delivered with RoomMap should help getting started with the program. They are created in an attic room of about 4,5 x 8 meters, while in the back part the room is halfed to host a small bathroom. See the data points in the visualization to get a picture. Also, the room�s side walls are completely slanted from the floor up, until they meet at about 3 meters above the floor, being an attic room. Provided examples are:
+The [examples](https://github.com/Tunetown/RoomMap/tree/master/examples) delivered with RoomMap should help getting started with the program. They are created in an attic room of about 4,5 x 8 meters, while in the back part the room is halfed to host a small bathroom. See the data points in the visualization to get a picture. Also, the room�s side walls are completely slanted from the floor up, until they meet at about 3 meters above the floor, this being an attic room, with walls built from double layered drywall, a glass front, and concrete floor with laminate. Provided examples are:
 
-- *realtest1*: First room measurements, not very accurate, measured with relatively high noise floor. Anyway, it shows the capabilities of the program pretty good. Left speaker only, located at about 1 / 0 / 1.5 meters in the room (x/y/z), pointing towards the room middle.
+- *realtest1*: First room measurements, measured with relatively high noise floor. Anyway, it shows the capabilities of the program pretty good. Left speaker only, located at about 1 / 0 / 1.5 meters in the room (x/y/z), pointing towards the room middle, where the listening position was.
 
-- *simple16*: Generated testing example, not really useful
+- *simple16*: Generated testing example, not really useful, just ignore this 
  
-- *simpleCube8*: Generated testing example, not really useful 
+- *simpleCube8*: Generated testing example, not really useful, just ignore this  
 
 ## Licensing 
 This program is licensed as free, open-source software under the GNU Public License (GPLv3).
