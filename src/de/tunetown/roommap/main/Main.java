@@ -13,9 +13,10 @@ import de.tunetown.roommap.view.controls.FrequencySliderControl;
 import de.tunetown.roommap.view.controls.SliderControl;
 
 /** 
- * Application main class for RoomMap. Can be used for a standalone application or as an applet.
- * 
+ * Application main class for RoomMap. Can be used for a standalone application or as an applet. 
  * For details/usage, see the README.md file in the repository.
+ * 
+ * Licensed under GNU Public License (GPLv3).
  * 
  * @author Thomas Weber, 2016/2017
  * @see www.tunetown.de
