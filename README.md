@@ -1,6 +1,9 @@
 # RoomMap
 Sound Pressure (SPL) Mapper for analysis of the distribution of sound pressure levels across a room.
 
+![RM2](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM2.jpg)
+
+
 This application is used to evaluate field measurements made with REW (Room EQ Wizard), in order to gain
 a better overview about the distribution of sound pressure levels in a room at low frequencies. While 
 doing acoustical room treatments, this can help identifying the locations in a room where a specific 
@@ -53,6 +56,8 @@ Proceed as follows:
 - Launch the RoomMap program, browse to the folder where you stored the REW export files, and select all of them. Then hit "Open". The program will soon show you a first SPL map of your room :)
 
   ![RM1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM1.jpg)
+  
+  Here for example, the first axial room mode (and the only one because this is no rectangular room) of about 40 Hz distributes like expected: Between front and back walls.
 
 ## Operation Tips
 TODO
