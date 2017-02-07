@@ -11,7 +11,7 @@
   </resources>
   <resources>
     <j2se version="1.8+" java-vm-args="-Xdock:name=RoomMap "  href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="RoomMap.jar" size="4397972" download="eager" />
+    <jar href="RoomMap.jar" size="4396511" download="eager" />
   </resources>
   <applet-desc  width="0" height="0" main-class="de.tunetown.roommap.main.Main"  name="RoomMap" >
   </applet-desc>

@@ -130,7 +130,7 @@ public class Measurement {
 	/**
 	 * For any frequency, this approximates the SPL value.
 	 * 
-	 * NOTE: Currently, this returns the next bigger frequency´s SPL, or
+	 * NOTE: Currently, this returns the next bigger frequencys SPL, or
 	 * NaN if frequency is too high. Interpolation is not necessary as long as the 
 	 * data is precise enough. REW export files usually are.
 	 * 

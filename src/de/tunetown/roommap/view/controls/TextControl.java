@@ -2,7 +2,6 @@ package de.tunetown.roommap.view.controls;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
-
 import de.tunetown.roommap.main.Main;
 
 /**
