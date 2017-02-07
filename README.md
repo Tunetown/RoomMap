@@ -30,6 +30,7 @@ Also, you can download the examples provided with RoomMap (folder [examples](htt
 
 Proceed as follows:
 - In your room, mark a grid of (for example) 1 meter distance on the floor with some tape.
+
   ![markings](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/markings.jpg) 
 
   Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough. Also, if your room has a non-rectangular shape like an attic for example, this is no problem at all. Just take care to have enough measuring points, and to distribute them well. 
