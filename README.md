@@ -4,7 +4,9 @@ Sound Pressure (SPL) Mapper for analysis of the distribution of sound pressure l
 This application is used to evaluate field measurements made with REW (Room EQ Wizard), in order to gain
 a better overview about the distribution of sound pressure levels in a room at low frequencies. While 
 doing acoustical room treatments, this can help identifying the locations in a room where a specific 
-frequency is building up significantly, for example.
+frequency is building up significantly, for example. 
+
+The program is especially useful when analyzing rooms which are not rectangular or non-symmetric. Modal behaviour can not be calculated properly for such rooms, but this program can deliver a good overview of the room´s low frequency distribution. 
 
 ## Installation / Requirements
 
@@ -29,7 +31,8 @@ Also, you can download the examples provided with RoomMap (folder [examples](htt
 Proceed as follows:
 - In your room, mark a grid of (for example) 1 meter distance on the floor with some tape.
 ![markings](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/markings.png) 
-Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough.
+
+Because we will analyze low frequencies mainly, accuracy is not too critical here, +/- 5cm is enough. Also, if your room has a non-rectangular shape like an attic for example, this is no problem at all. Just take care to have enough measuring points, and to distribute them well. 
 - At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The [Shannon/Nyquist sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) applies here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
 - For each measurement, write the coordinates in REW´s description fields like this:
 TODO
