@@ -19,11 +19,11 @@ Currently, the application is released in beta state. It is fully functional, bu
 
 ## Installation / Requirements
 
-The program is fully implemented in Java, the minimum version requirement is Java 1.8. A complex installation is in general not necessary:
+The program is fully implemented in Java, the minimum version requirement is Java 1.8. A complex installation is not necessary.
 
 ### Mac OS
 For Mac OS X users (minimum tested version is 10.8 Mountain Lion), there is a DMG package ready for [download](https://github.com/Tunetown/RoomMap/tree/master/release/macosx/bundles).
-However, also OS X users can manually start the JAR package as described for Windows users, if the DMG should not work.
+Just copy the contained application to your programs folder or wherever you want. However, OS X users can also manually start the JAR package from the console similar as described for Windows/Linux users, if the DMG should not work.
 
 ### Windows
 Currently there is no installer or EXE file for Windows users (yet), but as for all Java applications, you can
