@@ -1,8 +1,8 @@
 # RoomMap
+
 Sound Pressure (SPL) Mapper for analysis of the distribution of sound pressure levels across a room.
 
 ![RM2](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM2.jpg)
-
 
 This application is used to evaluate field measurements made with REW (Room EQ Wizard), in order to gain
 a better overview about the distribution of sound pressure levels in a room at low frequencies. While 
@@ -10,6 +10,12 @@ doing acoustical room treatments, this can help identifying the locations in a r
 frequency is building up significantly, for example. 
 
 The program is especially useful when analyzing rooms which are not rectangular or non-symmetric. Modal behaviour can not be calculated properly for such rooms, but this program can deliver a good overview of the room´s low frequency distribution. 
+
+Currently, the application is released in beta state. It is fully functional, but there are some minor cosmetic flaws, as well as the release packages for some platforms are not ready yet. If there are any bugs etc., please inform me and i will see if i can do something.
+
+## Version History
+
+- Version 0.1 (07.02.2017): Initial release in beta state. 
 
 ## Installation / Requirements
 

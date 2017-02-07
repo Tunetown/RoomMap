@@ -41,6 +41,8 @@ import de.tunetown.roommap.view.controls.SliderControl;
 public class Main extends JApplet {
 	private static final long serialVersionUID = 1L;
 
+	private static final String version = "0.1";
+	
 	private MainFrame frame;
 	private Measurements measurements;
 	
@@ -288,6 +290,10 @@ public class Main extends JApplet {
 
 	public boolean getHideInaccurateData() {
 		return hideInaccurateData;
+	}
+
+	public String getVersion() {
+		return version;
 	}
 }
 

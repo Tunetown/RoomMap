@@ -39,6 +39,8 @@ public class Controls extends JPanel {
 	 * Initialize all controls as instances first
 	 */
 	private void initControls() {
+		controls.add(new VersionTextControl(main, this));
+		
 		controls.add(new FrequencySliderControl(main, this));
 		
 		Control hsl = new HeightSliderControl(main, this);
