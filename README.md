@@ -116,7 +116,7 @@ The [examples](https://github.com/Tunetown/RoomMap/tree/master/examples) deliver
 This program is licensed as free, open-source software under the GNU Public License (GPLv3).
 
 ### Dependencies to External Libraries
-The following external libraries are used by this program: 
+The following external libraries are used by this program (all included in this repository): 
 - *CONRAD*: A library developed by the Stanford university in cooperation with Friedrich-Alexander Univerit�t Erlangen/Germany for cone-beam imaging in radiology, which is being used here just for thin plate spline interpolation in three-dimensional space. Only the needed sources are included directly in this project, only altered minimally for compatibility issues. See http://www5.cs.fau.de/conrad/ for details.
 - ij.jar: Dependency of *CONRAD*
 - Jama-1.0.2.jar: Dependency of *CONRAD*
