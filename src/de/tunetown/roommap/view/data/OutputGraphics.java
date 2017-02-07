@@ -241,7 +241,7 @@ public class OutputGraphics extends JPanel {
 				double rx = x1 - main.getMargin() + main.getMeasurements().getMinX(); 
 				double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 				double rel;
-				if (main.getHideSenselessData()) {
+				if (main.getHideInaccurateData()) {
 					rel = main.getMeasurements().getPointAccuracy(rx, ry, modelZ, main.getFrequency());
 				} else {
 					rel = 1;
@@ -278,7 +278,7 @@ public class OutputGraphics extends JPanel {
 			double rx = x1 - main.getMargin() + main.getMeasurements().getMinX();
 			double ry = y1 - main.getMargin() + main.getMeasurements().getMinY();
 			double rel;
-			if (main.getHideSenselessData()) {
+			if (main.getHideInaccurateData()) {
 				rel = main.getMeasurements().getPointAccuracy(rx, ry, modelZ, main.getFrequency());
 			} else {
 				rel = 1;

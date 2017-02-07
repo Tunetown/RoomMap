@@ -60,18 +60,19 @@ public class Main extends JApplet {
 	/**
 	 * User controllable properties. These are all managed here centrally.
 	 */
-	private double frequency = 0;  
-	private double viewZ = 0;       
-	private double margin = 0.3; 
-	private double resolution = 0.2;       // Resolution (model units, not pixels!)
-	private boolean normalizeByFrequency = false;
-	private boolean projectionOfPoints = false;
-	private boolean showGrid = true;
-	private boolean showWavelength = false;
+	private double frequency = 0;                   // Selected frequency
+	private double viewZ = 0;                       // View Z coordinate (height slider; model units, not pixels!)       
+	private double margin = 0.3;                    // Margin (model units, not pixels!)
+	private double resolution = 0.2;                // Resolution (model units, not pixels!)
 	
-	private boolean pooledInterpolation = true;
-	private boolean precalculation = false;  // This must be false at program start!!
-	private boolean hideSenselessData = true; 
+	private boolean normalizeByFrequency = false;   // Normalize SPL levels for the selected frequency
+	private boolean projectionOfPoints = false;     // Projection of points with a very simple 3d "approximation"
+	private boolean showGrid = true;                // Show coordinate grid
+	private boolean showWavelength = false;         // Show circles of quarter wavelengths around a selected point, selectable with the mouse
+	
+	private boolean pooledInterpolation = true;     // Use multiple threads for interpolation
+	private boolean precalculation = false;         // Pre-calculate interpolator coefficients for each frequency. NOTE: This must be false at program start!!
+	private boolean hideInaccurateData = true;       // Hide data which is not accurate enough according to the Nyquist sampling theorem 
 	
 	/**
 	 * Main method for standalone usage
@@ -294,12 +295,12 @@ public class Main extends JApplet {
 		showWavelength = value;
 	}
 
-	public void setHideSenselessData(boolean b) {
-		hideSenselessData = b;
+	public void setHideInaccurateData(boolean b) {
+		hideInaccurateData = b;
 	}
 
-	public boolean getHideSenselessData() {
-		return hideSenselessData;
+	public boolean getHideInaccurateData() {
+		return hideInaccurateData;
 	}
 }
 

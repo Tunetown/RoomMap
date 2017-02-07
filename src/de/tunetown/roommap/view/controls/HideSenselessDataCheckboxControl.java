@@ -17,7 +17,7 @@ public class HideSenselessDataCheckboxControl extends CheckboxControl {
 
 	@Override
 	public void updateValue() {
-		setValue(getMain().getHideSenselessData());
+		setValue(getMain().getHideInaccurateData());
 	}
 
 	@Override
@@ -27,7 +27,7 @@ public class HideSenselessDataCheckboxControl extends CheckboxControl {
 
 	@Override
 	protected void changeValue(boolean value) {
-		getMain().setHideSenselessData(value);
+		getMain().setHideInaccurateData(value);
 	}
 	
 	@Override
