@@ -36,7 +36,8 @@ Proceed as follows:
 - At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. It is a good idea to use some kind of remote control like VNC to trigger measuring for example with a smart phone. All in all the process is not taking too long if done effectively: For example, an attic room (used for creating the RoomMap examples) with size of about 4,5m x 8m took only about 2 hours for measuring.
 
   Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The [Shannon/Nyquist sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) applies here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
-- For each measurement, write the coordinates in REW´s description fields like this: ![REW1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/REW1.jpg)
+- For each measurement, write the coordinates in REW´s description fields like this: 
+  ![REW1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/REW1.jpg)
   The syntax is:
   X Y Z
   In words: X coordinate in meters, followed by space, then Y, then space again, then Z (all in meters). You can also use non-integer values, in this case, use the dot (.) as the decimal separator (commas will not work). 
