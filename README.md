@@ -50,7 +50,9 @@ Proceed as follows:
   
   Also, if your room has a non-rectangular shape like an attic for example, this is no problem at all.
   
-- At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. It is a good idea to use some kind of remote control like VNC to trigger measuring for example with a smart phone. All in all the process is not taking too long if done effectively: For example, an attic room (used for creating the RoomMap examples) with size of about 4,5m x 8m took only about 2 hours for measuring.
+- At each of these points, make measurements with REW at heights of (for example) 0m (floor), 1m, 2m and so on. This way you have "quantized" your room with measurements. 
+
+  To start the individual measurements, you can use VNC to remote control your computer from a smartphone or tablet. While pointing the mic at the measurement points in the room, always moving back to the PC can be cumbersome. With VNC, you can see your desktop from any mobile device and make the 2 necessary clicks to start the next measurement from there directly. By this method, the process is not taking too long if done effectively: For example, an attic room (used for creating the RoomMap examples) with size of about 4,5m x 8m took only about 3 hours for measuring, producing 264 files of 264 measuring points altogether.
 
   Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The [Shannon/Nyquist sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) applies here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
 - For each measurement, write the coordinates in REW�s description fields like this: 
