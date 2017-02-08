@@ -4,7 +4,7 @@ Sound Pressure (SPL) Mapper for analysis of the distribution of low frequency so
 
 ![RM2](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/RM2.jpg)
 
-This application is used to evaluate field measurements made with REW (Room EQ Wizard), in order to gain
+This application is used to evaluate field measurements made with the free software REW (Room EQ Wizard, [download from here](https://www.roomeqwizard.com/)), in order to gain
 a better overview about the distribution of sound pressure levels in a room at low frequencies. While 
 doing acoustical room treatments, this can help identifying the locations in a room where a specific 
 frequency is building up significantly, for example. 
@@ -116,6 +116,9 @@ The [examples](https://github.com/Tunetown/RoomMap/tree/master/examples) deliver
 - *simple16*: Generated testing example, not really useful, just ignore this 
  
 - *simpleCube8*: Generated testing example, not really useful, just ignore this  
+
+## Links
+https://www.roomeqwizard.com/
 
 ## Licensing 
 This program is licensed as free, open-source software under the GNU Public License (GPLv3).
