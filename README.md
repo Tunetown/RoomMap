@@ -9,7 +9,7 @@ a better overview about the distribution of sound pressure levels in a room at l
 doing acoustical room treatments, this can help identifying the locations in a room where a specific 
 frequency is building up significantly, for example. 
 
-The program is especially useful when analyzing rooms which are not rectangular or non-symmetric. Modal behaviour can not be calculated properly for such rooms, but this program can deliver a good overview of the room�s low frequency distribution. 
+The program is especially useful when analyzing rooms which are not rectangular or non-symmetric. Modal behaviour can not be calculated properly for such rooms, but this program can deliver a good overview of the room's low frequency distribution. 
 
 Currently, the application is released in beta state. It is fully functional, but there are some minor cosmetic flaws, as well as the release packages for some platforms are not ready yet. If there are any bugs etc., please inform me and i will take care of them.
 
@@ -37,7 +37,7 @@ If you want to build the application by yourself: It has been developed on Mac O
 
 ## Procedure of Measurement
 
-After launching, the program asks you to select some files. These files have to be created with REW (Room EQ Wizard, [download from here](https://www.roomeqwizard.com/)) first, which is an open-source, free Java program to make acoustical room measurements with a measurement microphone.  If you don�t have experience with REW already, there is plenty of information and tutorials around the web about this.
+After launching, the program asks you to select some files. These files have to be created with REW (Room EQ Wizard, [download from here](https://www.roomeqwizard.com/)) first, which is an open-source, free Java program to make acoustical room measurements with a measurement microphone.  If you don't have experience with REW already, there is plenty of information and tutorials around the web about this.
 
 Optionally, you can first download the examples provided with RoomMap (folder [examples](https://github.com/Tunetown/RoomMap/tree/master/examples)), which can give you a hint how things work. Comments on these examples follow later in this document.
 
@@ -55,7 +55,7 @@ Proceed as follows:
   To start the individual measurements, you can use VNC to remote control your computer from a smartphone or tablet. While pointing the mic at the measurement points in the room, always moving back to the PC can be cumbersome. With VNC, you can see your desktop from any mobile device and make the 2 necessary clicks to start the next measurement from there directly. By this method, the process is not taking too long if done effectively: For example, an attic room (used for creating the RoomMap examples) with size of about 4,5m x 8m took only about 3 hours for measuring, producing 264 files of 264 measuring points altogether.
 
   Parameters of REW are not critical, a short sweep of 128k will be enough, also it does not make sense to measure up to high frequencies. The [Shannon/Nyquist sampling theorem](https://en.wikipedia.org/wiki/Nyquist%E2%80%93Shannon_sampling_theorem) applies here. If doing the grid with 1m distances, the maximum accurate frequency will be around 2m in wavelength, which corresponds to a maximum accurate frequency of about 170 Hz. However, the program will only visualize data which is within these accuracy borders anyway, but be aware of this.
-- For each measurement, write the coordinates in REW�s description fields like this: 
+- For each measurement, write the coordinates in REW's description fields like this: 
 
   ![REW1](https://github.com/Tunetown/RoomMap/blob/master/resources/doc/images/REW1.jpg)
   
@@ -109,7 +109,7 @@ On the opposite, in the screenshot farther above, the 40 Hz mode is building up 
 - *Precalc. in Background with X Threads* Additionally to the last option, changes in frequency can be accelerated by precalculating the interpolator coefficients for all frequencies in advance. To do this, check this option after startup and wait until calculation has finished. Frequency changes are usually much faster after that.   
 
 ## Examples
-The [examples](https://github.com/Tunetown/RoomMap/tree/master/examples) delivered with RoomMap should help getting started with the program. They are created in an attic room of about 4,5 x 8 meters, while in the back part the room is halfed to host a small bathroom. See the data points in the visualization to get a picture. Also, the room�s side walls are completely slanted from the floor up, until they meet at about 3 meters above the floor, this being an attic room, with walls built from double layered drywall, a glass front, and concrete floor with laminate. Provided examples are:
+The [examples](https://github.com/Tunetown/RoomMap/tree/master/examples) delivered with RoomMap should help getting started with the program. They are created in an attic room of about 4,5 x 8 meters, while in the back part the room is halfed to host a small bathroom. See the data points in the visualization to get a picture. Also, the room's side walls are completely slanted from the floor up, until they meet at about 3 meters above the floor, this being an attic room, with walls built from double layered drywall, a glass front, and concrete floor with laminate. Provided examples are:
 
 - *realtest1*: First room measurements, measured with relatively high noise floor. Anyway, it shows the capabilities of the program pretty good. Left speaker only, located at about 1 / 0 / 1.5 meters in the room (x/y/z), pointing towards the room middle, where the listening position was.
 
@@ -125,7 +125,7 @@ This program is licensed as free, open-source software under the GNU Public Lice
 
 ### Dependencies to External Libraries
 The following external libraries are used by this program (all included in this repository): 
-- *CONRAD*: A library developed by the Stanford university in cooperation with Friedrich-Alexander Univerit�t Erlangen/Germany for cone-beam imaging in radiology, which is being used here just for thin plate spline interpolation in three-dimensional space. Only the needed sources are included directly in this project, only altered minimally for compatibility issues. See http://www5.cs.fau.de/conrad/ for details.
+- *CONRAD*: A library developed by the Stanford university in cooperation with Friedrich-Alexander Univerity Erlangen/Germany for cone-beam imaging in radiology, which is being used here just for thin plate spline interpolation in three-dimensional space. Only the needed sources are included directly in this project, only altered minimally for compatibility issues. See http://www5.cs.fau.de/conrad/ for details.
 - ij.jar: Dependency of *CONRAD*
 - Jama-1.0.2.jar: Dependency of *CONRAD*
 - jpop.0.7.5.jar: Dependency of *CONRAD*
